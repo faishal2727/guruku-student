@@ -1,0 +1,62 @@
+name: guruku_student
+description: "A new Flutter project."
+publish_to: 'none'
+version: 1.0.0+1
+
+environment:
+  sdk: '>=3.3.0 <4.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+  cupertino_icons: ^1.0.6
+  midtrans_snap: ^1.0.1
+  webview_flutter: ^4.8.0
+  equatable: ^2.0.5
+  freezed_annotation: ^2.4.1
+  http: ^1.2.1
+  get_it: ^7.6.7
+  bloc: ^8.1.2
+  flutter_bloc: ^8.1.3
+  animated_text_kit: ^4.2.2
+  dartz: ^0.10.1
+  shared_preferences: ^2.2.2
+  sqflite: ^2.3.3+1
+  awesome_dialog: ^3.2.0
+  google_fonts: ^6.2.1
+  restart_app: ^1.2.1
+  flutter_svg: ^2.0.10+1
+  carousel_slider: ^4.2.1
+  google_maps_flutter: ^2.6.0
+  geocoding: ^2.2.0
+  location: ^5.0.3
+  google_maps_flutter_web: ^0.5.6+2
+  image_picker: ^1.0.7
+  readmore: ^2.2.0
+  shimmer: ^3.0.0
+  lottie: ^3.1.0
+  flutter_otp_text_field: ^1.1.2+1
+  syncfusion_flutter_calendar: ^25.1.42
+  table_calendar: ^3.1.1
+  geolocator: ^8.0.1 
+  permission_handler: ^8.0.0
+  cached_network_image: ^3.3.1
+  intl: ^0.19.0
+  flutter_local_notifications: ^17.1.2
+  rxdart: ^0.27.7
+  android_alarm_manager_plus: ^4.0.3
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^3.0.0
+  freezed: ^2.4.7
+  build_runner: ^2.4.8
+flutter:
+  uses-material-design: true
+  assets:
+    - assets/images/
+    - assets/lotties/
+    - assets/calender_bg/
+    - assets/json/
+
