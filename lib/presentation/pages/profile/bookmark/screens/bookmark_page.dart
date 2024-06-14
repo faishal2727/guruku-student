@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:guruku_student/common/constants.dart';
 import 'package:guruku_student/common/shared_widgets/empty_section.dart';
 import 'package:guruku_student/common/utils.dart';
 import 'package:guruku_student/presentation/blocs/bookmark/bookmark_teacher_bloc.dart';
@@ -39,9 +40,10 @@ class _BookmarkPageState extends State<BookmarkPage> with RouteAware {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Bookmark'),
+        backgroundColor: pr11,
       ),
       body: Padding(
-        padding: const EdgeInsets.all(16),
+        padding: const EdgeInsets.all(8),
         child: BlocBuilder<BookmarkTeacherBloc, BookmarkTeacherState>(
           builder: (context, state) {
             if (state is BookmarkTeacherLoading) {

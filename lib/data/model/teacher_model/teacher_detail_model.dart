@@ -1,7 +1,8 @@
 // ignore_for_file: must_be_immutable
 
 import 'package:equatable/equatable.dart';
-import 'package:guruku_student/data/model/schedule_model.dart'; // Import model ScheduleModel
+import 'package:guruku_student/data/model/schedule_model.dart';
+import 'package:guruku_student/data/model/teacher_model/histories_model.dart';
 import 'package:guruku_student/domain/entity/teacher/teacher_detail.dart';
 
 class TeacherDetailModel extends Equatable {
@@ -12,7 +13,7 @@ class TeacherDetailModel extends Equatable {
   String? avatar;
   String? picture;
   String? phone;
-  List<ScheduleModel> schedule; // Menggunakan ScheduleModel
+  List<ScheduleModel> schedule;
   String? typeTeaching;
   String? price;
   String? description;
@@ -21,6 +22,7 @@ class TeacherDetailModel extends Equatable {
   String? lat;
   String? lon;
   String? address;
+  List<HistoriesModel> histories;
 
   TeacherDetailModel({
     required this.id,
@@ -38,6 +40,7 @@ class TeacherDetailModel extends Equatable {
     required this.lat,
     required this.lon,
     required this.address,
+    required this.histories,
   });
 
   factory TeacherDetailModel.fromJson(Map<String, dynamic> json) {
@@ -50,14 +53,16 @@ class TeacherDetailModel extends Equatable {
       picture: json["data"]["picture"],
       phone: json["data"]["phone"],
       schedule: List<ScheduleModel>.from(
-        json["data"]["schedule"].map((x) => ScheduleModel.fromJson(x))),
-      typeTeaching: json["type_teaching"],
+          json["data"]["schedule"].map((x) => ScheduleModel.fromJson(x))),
+      typeTeaching: json["data"]["type_teaching"],
       price: json["data"]["price"],
       description: json["data"]["description"],
       education: json["data"]["education"],
       lat: json["data"]["lat"],
       lon: json["data"]["lon"],
       address: json["data"]["address"],
+      histories: List<HistoriesModel>.from(
+          json["data"]["histories"].map((x) => HistoriesModel.fromJson(x))),
     );
   }
 
@@ -78,6 +83,7 @@ class TeacherDetailModel extends Equatable {
         "lat": lat,
         "lon": lon,
         "addess": address,
+        "histories": List<dynamic>.from(histories.map((x) => x.toJson())),
       };
 
   TeacherDetail toEntity() {
@@ -98,6 +104,7 @@ class TeacherDetailModel extends Equatable {
       lat: lat,
       lon: lon,
       address: address,
+      histories: histories.map((hist) => hist.toEntity()).toList(),
     );
   }
 

@@ -5,7 +5,7 @@ import 'package:guruku_student/common/exception.dart';
 import 'package:guruku_student/common/failure.dart';
 import 'package:guruku_student/data/datasources/local/auth_local_data_source.dart';
 import 'package:guruku_student/data/datasources/remote/auth_remote_data_source.dart';
-import 'package:guruku_student/data/model/login_response_model.dart';
+import 'package:guruku_student/data/model/login_model/login_response_model.dart';
 import 'package:guruku_student/domain/entity/auth/forgot_pw_response.dart';
 import 'package:guruku_student/domain/entity/auth/login_response.dart';
 import 'package:guruku_student/domain/entity/auth/refresh_otp.dart';

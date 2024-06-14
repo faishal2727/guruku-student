@@ -53,19 +53,21 @@ class CategoryWidget extends StatelessWidget {
               ),
               InkWell(
                 onTap: () {
-                  Navigator.pushNamed(context, TeacherIndonesianPage.ROUTE_NAME);
+                  Navigator.pushNamed(
+                      context, TeacherIndonesianPage.ROUTE_NAME);
                 },
                 child: const CardCategory(
                   category: 'Bahasa',
                   icons: Icons.book,
                 ),
               ),
-               InkWell(
+              InkWell(
                 onTap: () {
-                  Navigator.pushNamed(context, TeacherIndonesianPage.ROUTE_NAME);
+                  Navigator.pushNamed(
+                      context, TeacherIndonesianPage.ROUTE_NAME);
                 },
                 child: const CardCategory(
-                  category: 'Bahasa',
+                  category: 'Kimia',
                   icons: Icons.book,
                 ),
               ),

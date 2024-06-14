@@ -16,13 +16,12 @@ class _ChoosePaymentPageState extends State<ChoosePaymentPage> {
       appBar: AppBar(
         title: Text(
           'Metode Pembayaran',
-          style: AppTextStyle.heading5.setSemiBold().copyWith(color: pr11),
+          style: AppTextStyle.heading5.setRegular(),
         ),
-        backgroundColor: pr13,
-        iconTheme: const IconThemeData(color: pr11),
+        backgroundColor: Colors.white,
       ),
       body: Padding(
-        padding: const EdgeInsets.all(16.0),
+        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 16),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -30,63 +29,161 @@ class _ChoosePaymentPageState extends State<ChoosePaymentPage> {
               'Pilih Metode Pembayaran',
               style: AppTextStyle.body2.setSemiBold(),
             ),
-            ExpansionTile(
-              title: Text(
-                'Transfer Bank',
-                style: AppTextStyle.body3.setMedium(),
+            const SizedBox(height: 8),
+            Card(
+              color: Colors.white,
+              elevation: 2,
+              child: Theme(
+                data: Theme.of(context).copyWith(
+                  dividerColor: Colors.transparent,
+                ),
+                child: ExpansionTile(
+                  leading: const Icon(Icons.account_balance_wallet),
+                  title: Text(
+                    'Transfer Bank',
+                    style: Theme.of(context)
+                        .textTheme
+                        .headlineSmall!
+                        .copyWith(fontSize: 16),
+                  ),
+                  children: [
+                    Card(
+                      margin: const EdgeInsets.symmetric(
+                          horizontal: 12, vertical: 4),
+                      color: AppColors.neutral.ne01,
+                      elevation: 1,
+                      child: ListTile(
+                        leading: Image.asset("assets/payment/bni.webp"),
+                        title: Text(
+                          'Bank BNI',
+                          style: Theme.of(context)
+                              .textTheme
+                              .bodyMedium!
+                              .copyWith(fontSize: 14),
+                        ),
+                        onTap: () {
+                          Navigator.pop(context, {
+                            'name': 'Transfer Bank - Bank BNI',
+                            'paymentType': 'bank_transfer',
+                            'bankVa': 'bni'
+                          });
+                        },
+                      ),
+                    ),
+                    Card(
+                      margin: const EdgeInsets.symmetric(
+                          horizontal: 12, vertical: 4),
+                      color: AppColors.neutral.ne01,
+                      elevation: 1,
+                      child: ListTile(
+                        leading: const Icon(Icons.account_balance, color: pr13),
+                        title: Text(
+                          'Bank BRI',
+                          style: Theme.of(context)
+                              .textTheme
+                              .bodyMedium!
+                              .copyWith(fontSize: 14),
+                        ),
+                        onTap: () {
+                          Navigator.pop(context, {
+                            'name': 'Transfer Bank - Bank BRI',
+                            'paymentType': 'bank_transfer',
+                            'bankVa': 'bri'
+                          });
+                        },
+                      ),
+                    ),
+                    Card(
+                      margin: const EdgeInsets.fromLTRB(12, 4, 12, 16),
+                      color: AppColors.neutral.ne01,
+                      elevation: 1,
+                      child: ListTile(
+                        leading: const Icon(Icons.account_balance, color: pr13),
+                        title: Text(
+                          'Bank BCA',
+                          style: Theme.of(context)
+                              .textTheme
+                              .bodyMedium!
+                              .copyWith(fontSize: 14),
+                        ),
+                        onTap: () {
+                          Navigator.pop(context, {
+                            'name': 'Transfer Bank - Bank BCA',
+                            'paymentType': 'bank_transfer',
+                            'bankVa': 'bca'
+                          });
+                        },
+                      ),
+                    ),
+                  ],
+                ),
               ),
-              children: [
-                ListTile(
-                  title:
-                      Text('Bank BNI', style: AppTextStyle.body3.setMedium()),
-                  onTap: () {
-                    Navigator.pop(context, 'Transfer Bank - Bank BNI');
-                  },
-                ),
-                ListTile(
-                  title:
-                      Text('Bank BRI', style: AppTextStyle.body3.setMedium()),
-                  onTap: () {
-                    Navigator.pop(context, 'Transfer Bank - Bank BRI');
-                  },
-                ),
-                ListTile(
-                  title:
-                      Text('Bank BCA', style: AppTextStyle.body3.setMedium()),
-                  onTap: () {
-                    Navigator.pop(context, 'Transfer Bank - Bank BCA');
-                  },
-                ),
-              ],
             ),
-            ExpansionTile(
-              title: Text(
-                'Agen',
-                style: AppTextStyle.body3.setMedium(),
+            const SizedBox(
+              height: 8,
+            ),
+            Card(
+              color: Colors.white,
+              elevation: 2,
+              child: Theme(
+                data: Theme.of(context).copyWith(
+                  dividerColor: Colors.transparent,
+                ),
+                child: ExpansionTile(
+                  title: Text(
+                    'Agen',
+                    style: Theme.of(context)
+                        .textTheme
+                        .headlineSmall!
+                        .copyWith(fontSize: 16),
+                  ),
+                  children: [
+                    Card(
+                      margin: const EdgeInsets.symmetric(
+                          horizontal: 12, vertical: 4),
+                      color: AppColors.neutral.ne01,
+                      elevation: 1,
+                      child: ListTile(
+                        title: Text(
+                          'Indomaret',
+                          style: Theme.of(context)
+                              .textTheme
+                              .bodyMedium!
+                              .copyWith(fontSize: 14),
+                        ),
+                        onTap: () {
+                          Navigator.pop(context, {
+                            'name': 'Agen - Indomaret',
+                            'paymentType': 'agent',
+                            'bankVa': 'indomaret'
+                          });
+                        },
+                      ),
+                    ),
+                    Card(
+                      margin: const EdgeInsets.fromLTRB(12, 4, 12, 16),
+                      color: AppColors.neutral.ne01,
+                      elevation: 1,
+                      child: ListTile(
+                        title: Text(
+                          'Alfamart',
+                          style: Theme.of(context)
+                              .textTheme
+                              .bodyMedium!
+                              .copyWith(fontSize: 14),
+                        ),
+                        onTap: () {
+                          Navigator.pop(context, {
+                            'name': 'Agen - Alfamart',
+                            'paymentType': 'agent',
+                            'bankVa': 'alfamart'
+                          });
+                        },
+                      ),
+                    ),
+                  ],
+                ),
               ),
-              children: [
-                ListTile(
-                  title:
-                      Text('Indomaret', style: AppTextStyle.body3.setMedium()),
-                  onTap: () {
-                    Navigator.pop(context, 'Agen - Indomaret');
-                  },
-                ),
-                ListTile(
-                  title:
-                      Text('Alfamart', style: AppTextStyle.body3.setMedium()),
-                  onTap: () {
-                    Navigator.pop(context, 'Agen - Alfamart');
-                  },
-                ),
-                ListTile(
-                  title:
-                      Text('Alfamidi', style: AppTextStyle.body3.setMedium()),
-                  onTap: () {
-                    Navigator.pop(context, 'Agen - Alfamidi');
-                  },
-                ),
-              ],
             ),
           ],
         ),

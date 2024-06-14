@@ -48,10 +48,9 @@ class _DetailProfilePageState extends State<DetailProfilePage> {
         elevation: 0,
         title: Text(
           'Detail Profile',
-          style: AppTextStyle.heading5.setSemiBold().copyWith(color: pr11),
+          style: AppTextStyle.heading5.setSemiBold(),
         ),
-        backgroundColor: pr13,
-        iconTheme: const IconThemeData(color: pr11),
+        backgroundColor: pr11,
       ),
       body: BlocBuilder<ProfileBloc, ProfileState>(
         builder: (context, state) {

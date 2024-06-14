@@ -3,8 +3,8 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:guruku_student/common/exception.dart';
 import 'package:guruku_student/data/model/detail_profile_response_model.dart';
-import 'package:guruku_student/data/model/update_profile_request_model..dart';
-import 'package:guruku_student/data/model/update_profile_response_model.dart';
+import 'package:guruku_student/data/model/profile_model/update_profile_request_model..dart';
+import 'package:guruku_student/data/model/profile_model/update_profile_response_model.dart';
 import 'package:http/http.dart' as http;
 import 'package:http_parser/http_parser.dart';
 
@@ -24,7 +24,7 @@ class ProfileRemoteDataSourceImpl implements ProfileRemoteDataSource {
   @override
   Future<DetailProfileResponseModel> getDetailProfile(String token) async {
     final response = await client.get(
-      Uri.parse('http://10.0.2.2:3010/v1/user/current-user'),
+      Uri.parse('https://faizal.simagang.my.id/faisol/v1/user/current-user'),
       headers: {
         'Authorization': 'Bearer $token',
       },
@@ -43,7 +43,7 @@ class ProfileRemoteDataSourceImpl implements ProfileRemoteDataSource {
   @override
   Future<UpdateProfileResponseModel> updateProfile(
       UpdateProfileRequestModel updateData, String token) async {
-    final uri = Uri.parse('http://10.0.2.2:3010/v1/user/update');
+    final uri = Uri.parse('https://faizal.simagang.my.id/faisol/v1/user/update');
 
     final response = await client.put(
       uri,
@@ -68,7 +68,7 @@ class ProfileRemoteDataSourceImpl implements ProfileRemoteDataSource {
   Future<UpdateProfileResponseModel> updateAvatar(
       List<int> bytes, String fileName, String token) async {
     try {
-      final uri = Uri.parse('http://10.0.2.2:3010/v1/user/update');
+      final uri = Uri.parse('https://faizal.simagang.my.id/faisol/v1/user/update');
       var request = http.MultipartRequest('PUT', uri);
 
       final multiPartFile = http.MultipartFile.fromBytes(

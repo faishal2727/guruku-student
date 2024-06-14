@@ -3,9 +3,9 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:guruku_student/common/exception.dart';
 import 'package:guruku_student/data/model/bookmark_teacher_response_model.dart';
-import 'package:guruku_student/data/model/teacher_detail_model.dart';
-import 'package:guruku_student/data/model/teacher_model.dart';
-import 'package:guruku_student/data/model/teacher_response.dart';
+import 'package:guruku_student/data/model/teacher_model/teacher_detail_model.dart';
+import 'package:guruku_student/data/model/teacher_model/teacher_model.dart';
+import 'package:guruku_student/data/model/teacher_model/teacher_response.dart';
 import 'package:http/http.dart' as http;
 
 abstract class TeacherRemoteDataSource {
@@ -31,7 +31,7 @@ class TeacherRemoteDataSourceImpl implements TeacherRemoteDataSource {
   @override
   Future<List<TeacherModel>> getAllTeacher() async {
     final response =
-        await client.get(Uri.parse('http://10.0.2.2:3010/v1/teacher'));
+        await client.get(Uri.parse('https://faizal.simagang.my.id/faisol/v1/teacher'));
     if (response.statusCode == 200) {
       return TeacherResponse.fromJson(json.decode(response.body)).data;
     } else {
@@ -42,7 +42,7 @@ class TeacherRemoteDataSourceImpl implements TeacherRemoteDataSource {
   @override
   Future<TeacherDetailModel> getTeacherDetail(int id) async {
     final response =
-        await client.get(Uri.parse('http://10.0.2.2:3010/v1/teacher/$id'));
+        await client.get(Uri.parse('https://faizal.simagang.my.id/faisol/v1/teacher/$id'));
     if (response.statusCode == 200) {
       final jsonResponse = json.decode(response.body);
       return TeacherDetailModel.fromJson(jsonResponse);
@@ -54,13 +54,13 @@ class TeacherRemoteDataSourceImpl implements TeacherRemoteDataSource {
   @override
   Future<List<TeacherModel>> getTeacherMath() async {
     final response = await client
-        .get(Uri.parse('http://10.0.2.2:3010/v1/teacher-category/Matematika'));
+        .get(Uri.parse('https://faizal.simagang.my.id/faisol/v1/teacher-category/Matematika'));
     if (response.statusCode == 200) {
       List<TeacherModel> teacherList =
           TeacherResponse.fromJson(json.decode(response.body)).data;
-      print('Daftar Guru Matematika:');
+      debugPrint('Daftar Guru Matematika:');
       for (TeacherModel teacher in teacherList) {
-        print('Nama: ${teacher.name}, Mata Pelajaran: ${teacher.name}');
+        debugPrint('Nama: ${teacher.name}, Mata Pelajaran: ${teacher.name}');
       }
       return teacherList;
     } else {
@@ -71,7 +71,7 @@ class TeacherRemoteDataSourceImpl implements TeacherRemoteDataSource {
   @override
   Future<List<TeacherModel>> getTeacherBilogy() async {
     final response = await client
-        .get(Uri.parse('http://10.0.2.2:3010/v1/teacher-category/Biology'));
+        .get(Uri.parse('https://faizal.simagang.my.id/faisol/v1/teacher-category/Biology'));
     if (response.statusCode == 200) {
       return TeacherResponse.fromJson(json.decode(response.body)).data;
     } else {
@@ -82,7 +82,7 @@ class TeacherRemoteDataSourceImpl implements TeacherRemoteDataSource {
   @override
   Future<List<TeacherModel>> getTeacherEnglish() async {
     final response = await client
-        .get(Uri.parse('http://10.0.2.2:3010/v1/teacher-category/English'));
+        .get(Uri.parse('https://faizal.simagang.my.id/faisol/v1/teacher-category/English'));
     if (response.statusCode == 200) {
       return TeacherResponse.fromJson(json.decode(response.body)).data;
     } else {
@@ -93,7 +93,7 @@ class TeacherRemoteDataSourceImpl implements TeacherRemoteDataSource {
   @override
   Future<List<TeacherModel>> getTeacherIndonesian() async {
     final response = await client
-        .get(Uri.parse('http://10.0.2.2:3010/v1/teacher-category/Indonesia'));
+        .get(Uri.parse('https://faizal.simagang.my.id/faisol/v1/teacher-category/Indonesia'));
     if (response.statusCode == 200) {
       return TeacherResponse.fromJson(json.decode(response.body)).data;
     } else {
@@ -104,7 +104,7 @@ class TeacherRemoteDataSourceImpl implements TeacherRemoteDataSource {
   @override
   Future<List<TeacherModel>> getSearchTeacher(String query) async {
     final Uri uri = Uri.parse(
-        'http://10.0.2.2:3010/v1/teacher-search?type_teaching=$query&teacher=$query');
+        'https://faizal.simagang.my.id/faisol/v1/teacher-search?type_teaching=$query&teacher=$query');
 
     debugPrint('Request URL: $uri');
 
@@ -128,7 +128,7 @@ class TeacherRemoteDataSourceImpl implements TeacherRemoteDataSource {
     required int idTeacher,
     required String token,
   }) async {
-    final uri = Uri.parse('http://10.0.2.2:3010/v1/$idTeacher');
+    final uri = Uri.parse('https://faizal.simagang.my.id/faisol/v1/bookmark/$idTeacher');
     final response = await client.post(
       uri,
       headers: {

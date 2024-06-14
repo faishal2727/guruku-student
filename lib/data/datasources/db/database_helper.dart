@@ -1,6 +1,6 @@
 // ignore_for_file: prefer_conditional_assignment
 
-import 'package:guruku_student/data/model/teacher_table.dart';
+import 'package:guruku_student/data/model/teacher_model/teacher_table.dart';
 import 'package:sqflite/sqflite.dart';
 
 class DatabaseHelper {

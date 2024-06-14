@@ -6,7 +6,7 @@ import 'package:guruku_student/common/exception.dart';
 import 'package:guruku_student/common/failure.dart';
 import 'package:guruku_student/data/datasources/local/teacher_local_data_source.dart';
 import 'package:guruku_student/data/datasources/remote/teacher_remote_data_source.dart';
-import 'package:guruku_student/data/model/teacher_table.dart';
+import 'package:guruku_student/data/model/teacher_model/teacher_table.dart';
 import 'package:guruku_student/domain/entity/teacher/bookmark_teacher_respone.dart';
 import 'package:guruku_student/domain/entity/teacher/teacher.dart';
 import 'package:guruku_student/domain/entity/teacher/teacher_detail.dart';

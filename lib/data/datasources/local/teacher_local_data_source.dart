@@ -1,6 +1,6 @@
 import 'package:guruku_student/common/exception.dart';
 import 'package:guruku_student/data/datasources/db/database_helper.dart';
-import 'package:guruku_student/data/model/teacher_table.dart';
+import 'package:guruku_student/data/model/teacher_model/teacher_table.dart';
 
 abstract class TeacherLocalDataSource {
   Future<String> insertBookmark(TeacherTable teacher);

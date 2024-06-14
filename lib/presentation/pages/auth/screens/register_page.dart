@@ -77,7 +77,6 @@ class _RegisterPageState extends State<RegisterPage> {
             );
             Navigator.pushReplacementNamed(context, VerifyOtpPage.ROUTE_NAME,
                 arguments: _emailController.text);
-
           }
         },
         child: SingleChildScrollView(

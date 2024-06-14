@@ -17,7 +17,6 @@ class DetailTeacherBloc extends Bloc<DetailTeacherEvent, DetailTeacherState> {
   Future<void> _onDetailTeacherEvent(
       OnDetailTeacherEvent event, Emitter<DetailTeacherState> emit) async {
     emit(DetailTeacherLoading());
-    await Future.delayed(const Duration(seconds: 2));
     final id = event.id;
     debugPrint("YUK $id");
 
@@ -29,6 +28,7 @@ class DetailTeacherBloc extends Bloc<DetailTeacherEvent, DetailTeacherState> {
         emit(DetailTeacherError(failure.message));
       },
       (detail) {
+         debugPrint("UDIN: $detail");
         emit(DetailTeacherHasData(detail));
         debugPrint("Schedule: ${detail.schedule}");
       },

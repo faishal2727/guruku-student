@@ -7,6 +7,11 @@ class AuthException implements Exception {
   AuthException({required this.message});
 }
 
+class OrderException implements Exception {
+  final String message;
+  OrderException({required this.message});
+}
+
 class DatabaseException implements Exception {
   final String message;
 

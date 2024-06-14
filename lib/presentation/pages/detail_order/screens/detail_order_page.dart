@@ -1,15 +1,11 @@
 // ignore_for_file: constant_identifier_names, unused_element, prefer_const_constructors
 
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:guruku_student/common/constants.dart';
-import 'package:guruku_student/common/enum_sate.dart';
 import 'package:guruku_student/common/themes/themes.dart';
-import 'package:guruku_student/presentation/blocs/payment/payment_bloc.dart';
 import 'package:guruku_student/presentation/pages/auth/widgets/my_text_form_field.dart';
 import 'package:guruku_student/presentation/pages/choose_payment/screens/choose_payment_page.dart';
 import 'package:guruku_student/presentation/pages/detail_order/widgets/button_payment.dart';
-import 'package:flutter/material.dart';
 
 class DetailOrderPage extends StatefulWidget {
   static const ROUTE_NAME = '/detail-order';
@@ -21,7 +17,7 @@ class DetailOrderPage extends StatefulWidget {
 
 class _DetailOrderPageState extends State<DetailOrderPage> {
   final TextEditingController _nameController = TextEditingController();
-  String _selectedPaymentMethod = 'Transfer Bank - Bank BNI'; // Default value
+  String _selectedPaymentMethod = 'Transfer Bank - Bank BNI'; 
 
   @override
   Widget build(BuildContext context) {
@@ -190,42 +186,3 @@ class _DetailOrderPageState extends State<DetailOrderPage> {
     );
   }
 }
-
-
-//   void _payment() {
-//     context.read<PaymentBloc>().add(
-//           DoPayment(
-//             orderId: 1,
-//             total: 50000,
-//             name: 'Adung',
-//           ),
-//         );
-//   }
-
-// BlocListener<PaymentBloc, PaymentState>(
-//         listener: (context, state) {
-//           if (state.statePayment == RequestStatePayment.error) {
-//             ScaffoldMessenger.of(context)
-//               ..removeCurrentSnackBar()
-//               ..showSnackBar(
-//                 SnackBar(
-//                   content: const Text(
-//                     'Gagal Mendpatkan Token Snap',
-//                     style: TextStyle(color: Colors.black),
-//                   ),
-//                   backgroundColor: Colors.red[400],
-//                 ),
-//               );
-//           } else if (state.statePayment == RequestStatePayment.loaded) {
-//             ScaffoldMessenger.of(context).showSnackBar(
-//               const SnackBar(
-//                 content: Text(
-//                   'Berhasil Mendapatkan Token Snape !',
-//                   style: TextStyle(color: Colors.white),
-//                 ),
-//                 backgroundColor: Colors.green,
-//               ),
-//             );
-//           }
-//         },
-//         child:

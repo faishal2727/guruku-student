@@ -4,7 +4,7 @@ import 'package:dartz/dartz.dart';
 import 'package:guruku_student/common/exception.dart';
 import 'package:guruku_student/common/failure.dart';
 import 'package:guruku_student/data/datasources/remote/profile_remote_data_source.dart';
-import 'package:guruku_student/data/model/update_profile_request_model..dart';
+import 'package:guruku_student/data/model/profile_model/update_profile_request_model..dart';
 import 'package:guruku_student/domain/entity/teacher/detail_profile_response.dart';
 import 'package:guruku_student/domain/entity/profile/update_profile_request.dart';
 import 'package:guruku_student/domain/entity/profile/update_profile_response.dart';

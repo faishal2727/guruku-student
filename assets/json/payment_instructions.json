@@ -1,0 +1,47 @@
+{
+    "data": [
+        {
+            "bank": "bri",
+            "payment_method": [
+                {
+                    "mBanking": [
+                        "1. Masuk ke Menu Mobile Banking BRI, kemudian, pilih Pembayaran > BRIVA.",
+                        "2. Masukan Nomor BRIVA",
+                        "3. Masukan PIN Anda kemudian pilih Send. Apabila pesan konfirmasi untuk transaksi menggunakan SMS muncul, pilih OK.Status transaksi akan dikirimkan memalui SMS dan dapat digunakansebagai bukti pembayaran."
+                    ]
+                },
+                {
+                    "iBanking": [
+                        "1. Pilih menu Pembayaran.",
+                        "2 Pada kolom navigasi kiri, dalam menu Pembayaran, pilih BRIVA.",
+                        "3 Pilih rekening asal, lalu pilih Isi Kode Bayar dan masukkan nomor Virtual Account 128 085640878746 kemudian pilih Kirim.",
+                        "4 Periksa informasi yang tertera di layar. Pastikan Merchant adalah Shopee, Total tagihan sudah benar dan username kamu jemsbrong_27. Jika benar, masukkan password iBanking and mToken kamu, kemudian klik Kirim"
+                    ]
+                }
+            ]
+        },
+        {
+            "bank": "bni",
+            "payment_method": [
+                {
+                    "mBanking": [
+                        "1.Pilih Transfer > Virtual Account Billing.",
+                        "2. Pilih Rekening Debet > Masukkan nomor Virtual Account pada menu Input Baru.",
+                        "3.Tagihan yang harus dibayar akan muncul pada layar konfirmasi.",
+                        "4. Periksa informasi yang tertera di layar. Pastikan Merchant adalah Shopee, Total tagihan sudah benar dan username kamu jemsbrong_27. Jika benar, masukkan password transaksi dan pilih Lanjut."
+                    ]
+                },
+                {
+                    "iBanking": [
+                        "1. Pilih Transfer > Virtual Account Billing.",
+                        "2. Masukkan nomor Virtual Account.",
+                        "3. Pilih Rekening Debet dan piliih Lanjut.",
+                        "4 Tagihan yang harus dibayar akan muncul pada layar konfirmasi.",
+                        "5. Periksa informasi yang tertera di layar. Pastikan Merchant adalah Shopee, Total tagihan sudah benar dan username kamu jemsbrong_27.",
+                        "6. Masukkan Kode Otentikasi Token Anda lalu klik Process."
+                    ]
+                }
+            ]
+        }
+    ]
+}

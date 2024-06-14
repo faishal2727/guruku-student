@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:guruku_student/common/themes/themes.dart';
 import 'package:guruku_student/presentation/blocs/login/login_bloc.dart';
+import 'package:guruku_student/presentation/pages/history_order/screens/history_order_page.dart';
 import 'package:guruku_student/presentation/pages/profile/bookmark/screens/bookmark_page.dart';
 import 'package:guruku_student/presentation/pages/profile/detail_profile/screens/detail_profile_page.dart';
 import 'package:guruku_student/presentation/pages/profile/faq/screens/faq_page.dart';
@@ -61,7 +62,9 @@ class _ProfilePageState extends State<ProfilePage> {
                 ),
                 const SizedBox(height: 8),
                 ProfileListItem(
-                  onTap: () {},
+                  onTap: () {
+                    Navigator.pushNamed(context, HistoryOrderPage.ROUTE_NAME);
+                  },
                   icon: Icons.shopping_bag,
                   menuProfile: 'Riwayat Pesanan',
                 ),

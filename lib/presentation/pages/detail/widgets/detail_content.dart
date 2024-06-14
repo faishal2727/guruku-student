@@ -2,7 +2,6 @@
 
 import 'dart:ui';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:guruku_student/common/constants.dart';
 import 'package:guruku_student/common/themes/themes.dart';
@@ -32,7 +31,7 @@ class _DetailContentState extends State<DetailContent> {
               Stack(
                 children: [
                   Image.network(
-                    widget.teacher.avatar ?? '',
+                    widget.teacher.picture ?? '',
                     width: MediaQuery.of(context).size.width,
                     height: MediaQuery.of(context).size.height,
                     fit: BoxFit.cover,
@@ -56,7 +55,7 @@ class _DetailContentState extends State<DetailContent> {
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(24),
                     child: Image.network(
-                      widget.teacher.avatar ?? '',
+                      widget.teacher.picture ?? '',
                       width: 280,
                       height: 350,
                       fit: BoxFit.cover,
@@ -67,13 +66,12 @@ class _DetailContentState extends State<DetailContent> {
             ],
           ),
           Container(
-            
             margin: const EdgeInsets.only(top: 48 + 8),
             child: DraggableScrollableSheet(
               builder: (context, scrollController) {
                 return Container(
                   decoration: BoxDecoration(
-                    color: Colors.grey.shade200,
+                    color: Colors.grey.shade100,
                     borderRadius: const BorderRadius.vertical(
                       top: Radius.circular(24),
                     ),
@@ -81,7 +79,7 @@ class _DetailContentState extends State<DetailContent> {
                   child: Stack(
                     children: [
                       Container(
-                        color: Colors.grey.shade200,
+                        color: Colors.grey.shade100,
                         margin: const EdgeInsets.only(top: 16),
                         child: SingleChildScrollView(
                           controller: scrollController,
@@ -133,8 +131,7 @@ class _DetailContentState extends State<DetailContent> {
                                       color: AppColors.primary.pr13,
                                     ),
                                     Text(
-                                      widget.teacher.typeTeaching ??
-                                          'Matematika',
+                                      widget.teacher.typeTeaching ?? "",
                                       style: AppTextStyle.body3
                                           .setSemiBold()
                                           .copyWith(
@@ -445,10 +442,8 @@ class _DetailContentState extends State<DetailContent> {
                                 Icons.favorite,
                                 color: pr13,
                               )
-                            : const Icon(
-                                Icons.favorite_border_outlined,
-                                color: pr13,
-                              ),
+                            : const Icon(Icons.favorite_border_outlined,
+                                color: pr13),
                       ],
                     ),
                   ),

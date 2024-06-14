@@ -16,7 +16,7 @@ class ShimmerCardUy extends StatelessWidget {
           width: 100.0,
           height: 100.0,
           decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(16),
+            borderRadius: BorderRadius.circular(8),
             color: Colors.white,
           ),
           child: const Center(

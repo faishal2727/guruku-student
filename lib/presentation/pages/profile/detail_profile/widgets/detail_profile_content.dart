@@ -15,47 +15,49 @@ class DetailProfileContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(16),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          DataUserWidget(
-            title: 'Username',
-            desc: profile.username ?? 'Data belum ada',
-          ),
-          const SizedBox(height: 8),
-          DataUserWidget(
-            title: 'Nama',
-            desc: profile.name ?? 'Data belum ada',
-          ),
-          const SizedBox(height: 8),
-          DataUserWidget(
-            title: 'Email',
-            desc: profile.email ?? 'Data belum ada',
-          ),
-          const SizedBox(height: 8),
-          DataUserWidget(
-            title: 'Nomor Hp',
-            desc: profile.phone ?? 'Data belum ada',
-          ),
-          const SizedBox(height: 8),
-          DataUserWidget(
-            title: 'Pendidikan',
-            desc: profile.education ?? 'Data belum ada',
-          ),
-          const SizedBox(height: 8),
-          DataUserWidget(
-            title: 'Tanggal Lahir',
-            desc: profile.bod != null ? _formatDate(profile.bod!) : 'Data belum ada',
-          ),
-          const SizedBox(height: 8),
-          DataUserWidget(
-            title: 'Alamat',
-            desc: profile.address ?? 'Data belum ada',
-          ),
-          const SizedBox(height: 16),
-          InkWell(
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const SizedBox(height: 24),
+        DataUserWidget(
+          title: 'Username',
+          desc: profile.username ?? 'Data belum ada',
+        ),
+        const SizedBox(height: 2),
+        DataUserWidget(
+          title: 'Nama',
+          desc: profile.name ?? 'Data belum ada',
+        ),
+        const SizedBox(height: 2),
+        DataUserWidget(
+          title: 'Email',
+          desc: profile.email ?? 'Data belum ada',
+        ),
+        const SizedBox(height: 2),
+        DataUserWidget(
+          title: 'Nomor Hp',
+          desc: profile.phone ?? 'Data belum ada',
+        ),
+        const SizedBox(height: 2),
+        DataUserWidget(
+          title: 'Pendidikan',
+          desc: profile.education ?? 'Data belum ada',
+        ),
+        const SizedBox(height: 2),
+        DataUserWidget(
+          title: 'Tanggal Lahir',
+          desc: profile.bod != null
+              ? _formatDate(profile.bod!)
+              : 'Data belum ada',
+        ),
+        const SizedBox(height: 2),
+        DataUserWidget(
+          title: 'Alamat',
+          desc: profile.address ?? 'Data belum ada',
+        ),
+        const SizedBox(height: 16),
+        Center(
+          child: InkWell(
             onTap: () {
               Navigator.push(context, MaterialPageRoute(builder: (context) {
                 return UpdateProfilePage(profile: profile);
@@ -67,8 +69,8 @@ class DetailProfileContent extends StatelessWidget {
                   .copyWith(fontWeight: FontWeight.bold, color: pr13),
             ),
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 

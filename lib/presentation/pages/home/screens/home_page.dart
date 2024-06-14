@@ -162,7 +162,7 @@ class _HomePageState extends State<HomePage> {
                 ),
                 const SizedBox(height: 8),
                 SizedBox(
-                  height: 500,
+                  height: 1000,
                   child: BlocBuilder<TeacherBloc, TeacherState>(
                     builder: (context, state) {
                       if (state is TeacherLoading) {

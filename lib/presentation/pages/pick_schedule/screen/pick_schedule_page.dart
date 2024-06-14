@@ -1,10 +1,10 @@
-// ignore_for_file: use_super_parameters, constant_identifier_names
-
+// Import statements
 import 'package:flutter/material.dart';
 import 'package:guruku_student/common/constants.dart';
 import 'package:guruku_student/common/themes/themes.dart';
 import 'package:guruku_student/domain/entity/teacher/teacher_detail.dart';
-import 'package:guruku_student/presentation/pages/detail_order/screens/detail_order_page.dart';
+import 'package:guruku_student/presentation/pages/pick_schedule/screen/order_content.dart';
+import 'package:guruku_student/presentation/pages/pick_schedule/widgets/event.dart';
 import 'package:table_calendar/table_calendar.dart';
 
 class PickSchedulePage extends StatefulWidget {
@@ -20,20 +20,32 @@ class PickSchedulePage extends StatefulWidget {
   State<PickSchedulePage> createState() => _PickSchedulePageState();
 }
 
+// State dari PickSchedulePage
 class _PickSchedulePageState extends State<PickSchedulePage> {
+  // ValueNotifier untuk menyimpan daftar event yang dipilih
   late final ValueNotifier<List<Event>> _selectedEvents;
+  // Format kalender yang digunakan, default bulan
   CalendarFormat _calendarFormat = CalendarFormat.month;
+  // Mode seleksi rentang tanggal
   RangeSelectionMode _rangeSelectionMode = RangeSelectionMode.toggledOff;
+  // Hari yang difokuskan saat ini
   DateTime _focusedDay = DateTime.now();
+  // Hari yang dipilih
   DateTime? _selectedDay;
+  // Awal rentang tanggal yang dipilih
   DateTime? _rangeStart;
+  // Akhir rentang tanggal yang dipilih
   DateTime? _rangeEnd;
+  // Waktu yang dipilih
+  String? _selectedTime;
 
   @override
   void initState() {
     super.initState();
 
+    // Mengatur hari yang dipilih menjadi hari saat ini
     _selectedDay = _focusedDay;
+    // Mendapatkan event untuk hari yang dipilih dan menginisialisasi _selectedEvents
     _selectedEvents = ValueNotifier(_getEventsForDay(_selectedDay!));
   }
 
@@ -43,6 +55,7 @@ class _PickSchedulePageState extends State<PickSchedulePage> {
     super.dispose();
   }
 
+  // Mendapatkan daftar event untuk hari tertentu
   List<Event> _getEventsForDay(DateTime day) {
     List<Event> events = [];
 
@@ -51,17 +64,35 @@ class _PickSchedulePageState extends State<PickSchedulePage> {
         if (schedule.day == _getDayOfWeek(day)) {
           DateTime dateTime = DateTime.parse(schedule.day);
           String formattedDate = _formatDate(dateTime);
-          events.add(Event(
-              schedule.day,
-              formattedDate,
-              schedule
-                  .time)); // Menggunakan schedule.day sebagai properti title
+          List<String> times = schedule.time;
+          List<String> availableTimes = [];
+
+          // Check if the time is already booked
+          for (String time in times) {
+            bool isBooked = widget.teacher.histories.any((history) {
+              DateTime bookedTime =
+                  DateTime.parse(history.meetingTime.toString());
+              return bookedTime.isAtSameMomentAs(dateTime.add(Duration(
+                hours: int.parse(time.split(':')[0]),
+                minutes: int.parse(time.split(':')[1]),
+              )));
+            });
+
+            if (!isBooked) {
+              availableTimes.add(time);
+            }
+          }
+
+          if (availableTimes.isNotEmpty) {
+            events.add(Event(schedule.day, formattedDate, availableTimes));
+          }
         }
       }
     }
     return events;
   }
 
+  // Mendapatkan daftar event untuk rentang tanggal tertentu
   List<Event> _getEventsForRange(DateTime start, DateTime end) {
     List<Event> events = [];
 
@@ -71,11 +102,28 @@ class _PickSchedulePageState extends State<PickSchedulePage> {
           if (schedule.day == _getDayOfWeek(day)) {
             DateTime dateTime = DateTime.parse(schedule.day);
             String formattedDate = _formatDate(dateTime);
-            events.add(Event(
-                schedule.day,
-                formattedDate,
-                schedule
-                    .time)); // Menggunakan schedule.day sebagai properti title
+            List<String> times = schedule.time;
+            List<String> availableTimes = [];
+
+            // Check if the time is already booked
+            for (String time in times) {
+              bool isBooked = widget.teacher.histories.any((history) {
+                DateTime bookedTime =
+                    DateTime.parse(history.meetingTime.toString());
+                return bookedTime.isAtSameMomentAs(dateTime.add(Duration(
+                  hours: int.parse(time.split(':')[0]),
+                  minutes: int.parse(time.split(':')[1]),
+                )));
+              });
+
+              if (!isBooked) {
+                availableTimes.add(time);
+              }
+            }
+
+            if (availableTimes.isNotEmpty) {
+              events.add(Event(schedule.day, formattedDate, availableTimes));
+            }
           }
         }
       }
@@ -83,12 +131,14 @@ class _PickSchedulePageState extends State<PickSchedulePage> {
     return events;
   }
 
+  // Memformat tanggal menjadi string dengan format tertentu
   String _formatDate(DateTime dateTime) {
     String formattedDate = "${_getDayOfWeekString(dateTime.weekday)}, "
         "${dateTime.day}-${dateTime.month}-${dateTime.year}";
     return formattedDate;
   }
 
+  // Mendapatkan nama hari dalam bahasa Indonesia
   String _getDayOfWeekString(int day) {
     switch (day) {
       case 1:
@@ -110,10 +160,12 @@ class _PickSchedulePageState extends State<PickSchedulePage> {
     }
   }
 
+  // Mendapatkan string hari dari objek DateTime
   String _getDayOfWeek(DateTime date) {
     return '${date.year}-${date.month.toString().padLeft(2, '0')}-${date.day.toString().padLeft(2, '0')}T00:00:00.000Z';
   }
 
+  // Fungsi yang dijalankan saat hari dipilih
   void _onDaySelected(DateTime selectedDay, DateTime focusedDay) {
     if (!isSameDay(_selectedDay, selectedDay)) {
       setState(() {
@@ -122,12 +174,14 @@ class _PickSchedulePageState extends State<PickSchedulePage> {
         _rangeStart = null;
         _rangeEnd = null;
         _rangeSelectionMode = RangeSelectionMode.toggledOff;
+        _selectedTime = null; // Reset waktu yang dipilih saat hari berubah
       });
 
       _selectedEvents.value = _getEventsForDay(selectedDay);
     }
   }
 
+  // Fungsi yang dijalankan saat rentang tanggal dipilih
   void _onRangeSelected(DateTime? start, DateTime? end, DateTime focusedDay) {
     setState(() {
       _selectedDay = null;
@@ -135,6 +189,8 @@ class _PickSchedulePageState extends State<PickSchedulePage> {
       _rangeStart = start;
       _rangeEnd = end;
       _rangeSelectionMode = RangeSelectionMode.toggledOn;
+      _selectedTime =
+          null; // Reset waktu yang dipilih saat rentang tanggal berubah
     });
 
     if (start != null && end != null) {
@@ -152,61 +208,76 @@ class _PickSchedulePageState extends State<PickSchedulePage> {
       appBar: AppBar(
         title: Text(
           'Pilih Pertemuan',
-          style: AppTextStyle.heading5.setSemiBold().copyWith(color: pr11),
+          style: AppTextStyle.heading5.setSemiBold(),
         ),
-        backgroundColor: pr13,
-        iconTheme: const IconThemeData(
-          color: Colors.white,
-        ),
+        backgroundColor: pr11,
       ),
       body: Column(
         children: [
-          TableCalendar<Event>(
-            firstDay: kFirstDay,
-            lastDay: kLastDay,
-            focusedDay: _focusedDay,
-            selectedDayPredicate: (day) => isSameDay(_selectedDay, day),
-            rangeStartDay: _rangeStart,
-            rangeEndDay: _rangeEnd,
-            calendarFormat: _calendarFormat,
-            rangeSelectionMode: _rangeSelectionMode,
-            eventLoader: _getEventsForDay,
-            startingDayOfWeek: StartingDayOfWeek.monday,
-            calendarStyle: const CalendarStyle(
-              outsideDaysVisible: false,
-              markerDecoration: BoxDecoration(
-                color: kRed,
-                shape: BoxShape.circle,
-              ),
-              selectedDecoration: BoxDecoration(
-                color: pr13,
-                shape: BoxShape.circle,
-              ),
-              disabledDecoration: BoxDecoration(
-                color: Color.fromARGB(19, 158, 158, 158),
-                shape: BoxShape.circle,
+          Card(
+            margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 16),
+            color: pr11,
+            child: Padding(
+              padding: const EdgeInsets.all(8),
+              child: TableCalendar<Event>(
+                firstDay: kFirstDay,
+                lastDay: kLastDay,
+                focusedDay: _focusedDay,
+                selectedDayPredicate: (day) => isSameDay(_selectedDay, day),
+                rangeStartDay: _rangeStart,
+                rangeEndDay: _rangeEnd,
+                calendarFormat: _calendarFormat,
+                rangeSelectionMode: _rangeSelectionMode,
+                eventLoader: _getEventsForDay,
+                startingDayOfWeek: StartingDayOfWeek.monday,
+                calendarStyle: const CalendarStyle(
+                  outsideDaysVisible: false,
+                  markerDecoration: BoxDecoration(
+                    color: kRed,
+                    shape: BoxShape.circle,
+                  ),
+                  selectedDecoration: BoxDecoration(
+                    color: pr13,
+                    shape: BoxShape.circle,
+                  ),
+                  disabledDecoration: BoxDecoration(
+                    color: Color.fromARGB(19, 158, 158, 158),
+                    shape: BoxShape.circle,
+                  ),
+                ),
+                enabledDayPredicate: (day) {
+                  return !day.isBefore(DateTime.now());
+                },
+                onDaySelected: _onDaySelected,
+                onRangeSelected: _onRangeSelected,
+                onFormatChanged: (format) {
+                  if (_calendarFormat != format) {
+                    setState(() {
+                      _calendarFormat = format;
+                    });
+                  }
+                },
+                onPageChanged: (focusedDay) {
+                  _focusedDay = focusedDay;
+                },
               ),
             ),
-            enabledDayPredicate: (day) {
-              return !day.isBefore(DateTime.now());
-            },
-            onDaySelected: _onDaySelected,
-            onRangeSelected: _onRangeSelected,
-            onFormatChanged: (format) {
-              if (_calendarFormat != format) {
-                setState(() {
-                  _calendarFormat = format;
-                });
-              }
-            },
-            onPageChanged: (focusedDay) {
-              _focusedDay = focusedDay;
-            },
           ),
-          const SizedBox(height: 8.0),
+
           Divider(
             color: pr14,
           ),
+          Visibility(
+            visible: false,
+            child: Column(
+              children: widget.teacher.histories.map((history) {
+                return Text(history.meetingTime.toString());
+              }).toList(),
+            ),
+          ),
+
+          // Menampilkan daftar event yang dipilih
+
           Expanded(
             child: ValueListenableBuilder<List<Event>>(
               valueListenable: _selectedEvents,
@@ -224,34 +295,69 @@ class _PickSchedulePageState extends State<PickSchedulePage> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(
-                            title,
-                            style: AppTextStyle.body3
-                                .setSemiBold()
-                                .copyWith(color: Colors.transparent),
+                          Visibility(
+                            visible: false,
+                            child: Text(
+                              title,
+                              style: AppTextStyle.body3
+                                  .setSemiBold()
+                                  .copyWith(color: Colors.transparent),
+                            ),
                           ),
+                          Text(
+                            'Waktu yang tesedia :',
+                            style: AppTextStyle.body2.setSemiBold(),
+                          ),
+                          const SizedBox(height: 8),
                           Text(
                             detailedTitle,
                             style: AppTextStyle.body3.setSemiBold(),
                           ),
-                          const SizedBox(height: 16),
+                          const SizedBox(height: 8),
                           ListView.builder(
                             shrinkWrap: true,
                             physics: const NeverScrollableScrollPhysics(),
                             itemCount: times.length,
                             itemBuilder: (context, timeIndex) {
                               String time = times[timeIndex];
+                              bool isBooked =
+                                  widget.teacher.histories.any((history) {
+                                DateTime bookedTime = DateTime.parse(
+                                    history.meetingTime.toString());
+                                return bookedTime.isAtSameMomentAs(
+                                  _selectedDay!.add(Duration(
+                                    hours: int.parse(time.split(':')[0]),
+                                    minutes: int.parse(time.split(':')[1]),
+                                  )),
+                                );
+                              });
+                              bool isSelected = _selectedTime == time;
                               return Card(
-                                color: pr13,
+                                color: isSelected
+                                    ? pr13
+                                    : (isBooked
+                                        ? Colors.grey.shade400
+                                        : Colors.grey.shade100),
                                 margin:
                                     const EdgeInsets.symmetric(vertical: 4.0),
                                 child: ListTile(
-                                  onTap: () {},
+                                  onTap: () {
+                                    if (!isBooked) {
+                                      setState(() {
+                                        _selectedTime = time;
+                                      });
+                                    }
+                                  },
                                   title: Text(
                                     "Jam $time",
-                                    style: AppTextStyle.body3
-                                        .setMedium()
-                                        .copyWith(color: pr11),
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .bodyMedium!
+                                        .copyWith(
+                                            fontSize: 14,
+                                            color: isBooked
+                                                ? Colors.grey
+                                                : Colors.black),
                                   ),
                                 ),
                               );
@@ -267,6 +373,7 @@ class _PickSchedulePageState extends State<PickSchedulePage> {
           ),
         ],
       ),
+      // Tombol navigasi untuk memilih jadwal
       bottomNavigationBar: Stack(
         children: [
           Container(
@@ -291,7 +398,25 @@ class _PickSchedulePageState extends State<PickSchedulePage> {
             flex: 3,
             child: InkWell(
               onTap: () {
-                Navigator.pushNamed(context, DetailOrderPage.ROUTE_NAME);
+                if (_selectedDay != null && _selectedTime != null) {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => OrderContent(
+                        teacher: widget.teacher,
+                        date: _selectedDay!,
+                        time: _selectedTime!,
+                      ),
+                    ),
+                  );
+                } else {
+                  // Optionally show a message if no date or time is selected
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(
+                      content: Text('Please select a date and time.'),
+                    ),
+                  );
+                }
               },
               child: Container(
                 margin:
@@ -317,27 +442,4 @@ class _PickSchedulePageState extends State<PickSchedulePage> {
       ),
     );
   }
-}
-
-class Event {
-  final String title;
-  final String detailedTitle;
-  final List<String> time;
-
-  const Event(this.title, this.detailedTitle, this.time);
-
-  @override
-  String toString() => title;
-}
-
-final kToday = DateTime.now();
-final kFirstDay = DateTime(kToday.year, kToday.month - 3, kToday.day);
-final kLastDay = DateTime(kToday.year, kToday.month + 3, kToday.day);
-
-List<DateTime> daysInRange(DateTime first, DateTime last) {
-  final dayCount = last.difference(first).inDays + 1;
-  return List.generate(
-    dayCount,
-    (index) => DateTime.utc(first.year, first.month, first.day + index),
-  );
 }

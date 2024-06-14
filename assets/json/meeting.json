@@ -1,15 +1,8 @@
 [
     {
       "eventName": "Les Private Matematika",
-      "from": "2024-05-25T11:12:00",
-      "to": "2024-05-25T11:00:00",
-      "background": "#0F8644",
-      "isAllDay": false
-    },
-    {
-      "eventName": "Les Private Bahasa Indonesia",
-      "from": "2024-05-26T14:00:00",
-      "to": "2024-05-26T15:00:00",
+      "from": "2024-06-22T11:00:00",
+      "to": "2024-06-22T11:15:00",
       "background": "#0F8644",
       "isAllDay": false
     }

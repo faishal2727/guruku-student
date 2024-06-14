@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:guruku_student/common/constants.dart';
 import 'package:guruku_student/common/shared_widgets/empty_section.dart';
 import 'package:guruku_student/common/shared_widgets/error_section.dart';
 import 'package:guruku_student/presentation/blocs/teacher_math/teacher_math_bloc.dart';
@@ -42,9 +43,10 @@ class _TeacherMathPageState extends State<TeacherMathPage> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Guru Matematika'),
+        backgroundColor: pr11,
       ),
       body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+        padding: const EdgeInsets.all(8),
         child: BlocBuilder<TeacherMathBloc, TeacherMathState>(
           builder: (context, state) {
             if (state is TeacherMathLoading) {

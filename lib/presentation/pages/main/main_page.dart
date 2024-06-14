@@ -10,7 +10,7 @@ import 'package:guruku_student/presentation/pages/auth/screens/login_page.dart';
 import 'package:guruku_student/presentation/pages/home/screens/home_page.dart';
 import 'package:guruku_student/presentation/pages/maps/maps_page.dart';
 import 'package:guruku_student/presentation/pages/profile/main/screens/profile_page.dart';
-import 'package:guruku_student/presentation/pages/schedule/schedule_page.dart';
+import 'package:guruku_student/presentation/pages/schedule/screens/schedule_page.dart';
 import 'package:guruku_student/presentation/pages/search/search_page.dart';
 
 class MainPage extends StatefulWidget {
@@ -64,7 +64,7 @@ class _MainPageState extends State<MainPage> {
   ];
 
   void _onBottomNavTapped(int index) async {
-    if (index == 2 || _isLogin) {
+    if (index == 0 || _isLogin) {
       context.read<MainBloc>().add(DoTabChangeEvent(tabIndex: index));
     } else {
       final String? result = await Navigator.push(

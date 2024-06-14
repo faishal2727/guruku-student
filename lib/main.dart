@@ -6,9 +6,14 @@ import 'package:guruku_student/common/utils.dart';
 import 'package:guruku_student/domain/entity/teacher/detail_profile_response.dart';
 import 'package:guruku_student/injection.dart' as di;
 import 'package:guruku_student/presentation/blocs/bookmark/bookmark_teacher_bloc.dart';
+import 'package:guruku_student/presentation/blocs/detail_order/detail_order_bloc.dart';
 import 'package:guruku_student/presentation/blocs/detail_teacher/detail_teacher_bloc.dart';
+import 'package:guruku_student/presentation/blocs/history_order_cancel/order_cancel_bloc.dart';
+import 'package:guruku_student/presentation/blocs/history_order_pending/order_pending_bloc.dart';
+import 'package:guruku_student/presentation/blocs/history_order_success/order_success_bloc.dart';
 import 'package:guruku_student/presentation/blocs/login/login_bloc.dart';
 import 'package:guruku_student/presentation/blocs/main/main_bloc.dart';
+import 'package:guruku_student/presentation/blocs/order/order_bloc.dart';
 import 'package:guruku_student/presentation/blocs/payment/payment_bloc.dart';
 import 'package:guruku_student/presentation/blocs/profile/profile_bloc.dart';
 import 'package:guruku_student/presentation/blocs/refresh_otp/refresh_otp_bloc.dart';
@@ -30,13 +35,16 @@ import 'package:guruku_student/presentation/pages/auth/screens/verify_otp_forgot
 import 'package:guruku_student/presentation/pages/auth/screens/verify_otp_page.dart';
 import 'package:guruku_student/presentation/pages/detail/screens/detail_teacher_page.dart';
 import 'package:guruku_student/presentation/pages/detail_order/screens/detail_order_page.dart';
+import 'package:guruku_student/presentation/pages/detail_order_done/screens/detail_order_done_page.dart';
+import 'package:guruku_student/presentation/pages/detail_order_pending/screens/detail_order_pending_page.dart';
+import 'package:guruku_student/presentation/pages/history_order/screens/history_order_page.dart';
 import 'package:guruku_student/presentation/pages/home/screens/home_page.dart';
 import 'package:guruku_student/presentation/pages/home/screens/teacher_biology_page.dart';
 import 'package:guruku_student/presentation/pages/home/screens/teacher_english_page.dart';
 import 'package:guruku_student/presentation/pages/home/screens/teacher_indonesian_page.dart';
 import 'package:guruku_student/presentation/pages/home/screens/teacher_math_page.dart';
 import 'package:guruku_student/presentation/pages/main/main_page.dart';
-import 'package:guruku_student/presentation/pages/pick_schedule/screen/percobaan.dart';
+import 'package:guruku_student/presentation/pages/pick_schedule/screen/pick.dart';
 import 'package:guruku_student/presentation/pages/profile/bookmark/screens/bookmark_page.dart';
 import 'package:guruku_student/presentation/pages/profile/detail_profile/screens/detail_profile_page.dart';
 import 'package:guruku_student/presentation/pages/profile/faq/screens/faq_page.dart';
@@ -45,7 +53,6 @@ import 'package:guruku_student/presentation/pages/profile/setting/screens/settin
 import 'package:guruku_student/presentation/pages/profile/update_avatar/update_avatar_page.dart';
 import 'package:guruku_student/presentation/pages/profile/update_profile/screens/update_profile_page.dart';
 import 'package:location/location.dart';
-import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:timezone/data/latest.dart' as tz;
 import 'package:timezone/timezone.dart' as tz;
 
@@ -94,10 +101,14 @@ class MyApp extends StatelessWidget {
         BlocProvider(create: (_) => di.locator<TeacherSearchBloc>()),
         BlocProvider(create: (_) => di.locator<BookmarkTeacherBloc>()),
         BlocProvider(create: (_) => di.locator<PaymentBloc>()),
+        BlocProvider(create: (_) => di.locator<OrderBloc>()),
+        BlocProvider(create: (_) => di.locator<OrderPendingBloc>()),
+        BlocProvider(create: (_) => di.locator<OrderSuccessBloc>()),
+        BlocProvider(create: (_) => di.locator<OrderCancelBloc>()),
+        BlocProvider(create: (_) => di.locator<DetailOrderBloc>()),
       ],
       child: MaterialApp(
         title: 'Guruku',
-        
         theme: ThemeData(
           colorScheme: kColorScheme,
           textTheme: kTextTheme,
@@ -163,8 +174,17 @@ class MyApp extends StatelessWidget {
               return MaterialPageRoute(
                 builder: (_) => Pick(id: id),
               );
+
             case DetailOrderPage.ROUTE_NAME:
               return MaterialPageRoute(builder: (_) => const DetailOrderPage());
+            case DetailOrderPendingPage.ROUTE_NAME:
+              final id = settings.arguments as int;
+              return MaterialPageRoute(
+                  builder: (_) => DetailOrderPendingPage(id: id));
+            case DetailOrderDonePage.ROUTE_NAME:
+              final id = settings.arguments as int;
+              return MaterialPageRoute(
+                  builder: (_) => DetailOrderDonePage(id: id));
 
             // <==================================================>
             // ====== END ROUTE TO HANDLE DETAIL TEACHER ==========
@@ -189,8 +209,11 @@ class MyApp extends StatelessWidget {
               return MaterialPageRoute(builder: (_) => const FaqPage());
             case BookmarkPage.ROUTE_NAME:
               return MaterialPageRoute(builder: (_) => const BookmarkPage());
-            // ===== END ROUTE TO HANDLE PROFILE ========
+            case HistoryOrderPage.ROUTE_NAME:
+              return MaterialPageRoute(
+                  builder: (_) => const HistoryOrderPage());
 
+            // ===== END ROUTE TO HANDLE PROFILE ========
             default:
               return MaterialPageRoute(
                 builder: (_) {

@@ -36,7 +36,7 @@ class TeacherTable extends Equatable {
         avatar: map['avatar'],
         price: map['price'],
         address: map['address'],
-        typeTeaching: map['typeTeaching'],
+        typeTeaching: map['type_teaching'],
       );
 
   Map<String, dynamic> toJson() => {
@@ -45,7 +45,7 @@ class TeacherTable extends Equatable {
         'avatar': avatar,
         'price': price,
         'address': address,
-        'typeTeaching': typeTeaching,
+        'type_teaching': typeTeaching,
       };
 
   Teacher toEntity() => Teacher.bookmark(

@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:guruku_student/common/constants.dart';
 import 'package:guruku_student/common/shared_widgets/empty_section.dart';
 import 'package:guruku_student/common/shared_widgets/error_section.dart';
 import 'package:guruku_student/presentation/blocs/teacher_biology/teacher_biology_bloc.dart';
@@ -43,9 +44,10 @@ class _TeacherBiologyPageState extends State<TeacherBiologyPage> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Guru Bahasa Biology'),
+        backgroundColor: pr11,
       ),
       body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
+        padding: const EdgeInsets.all(8),
         child: BlocBuilder<TeacherBiologyBloc, TeacherBiologyState>(
           builder: (context, state) {
             if (state is TeacherBiologyLoading) {

@@ -11,7 +11,7 @@ import 'package:guruku_student/presentation/blocs/detail_teacher/detail_teacher_
 import 'package:guruku_student/presentation/blocs/main/main_bloc.dart';
 import 'package:guruku_student/presentation/pages/auth/screens/login_page.dart';
 import 'package:guruku_student/presentation/pages/detail/widgets/detail_content.dart';
-import 'package:guruku_student/presentation/pages/pick_schedule/screen/percobaan.dart';
+import 'package:guruku_student/presentation/pages/pick_schedule/screen/pick.dart';
 import 'package:lottie/lottie.dart';
 
 class DetailTeacherPage extends StatefulWidget {

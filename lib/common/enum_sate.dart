@@ -12,5 +12,6 @@ enum RequestStateVerifyOtp { initial, empty, loading, loaded, error }
 
 enum RequestStatePayment { initial, empty, loading, loaded, error }
 
+enum RequestStateOrder { initial, empty, loading, loaded, error }
 
 enum RequestState { initial, empty, loading, loaded, error }

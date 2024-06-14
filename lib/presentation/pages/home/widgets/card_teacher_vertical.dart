@@ -29,7 +29,7 @@ class CardTeacherVertical extends StatelessWidget {
         decoration: ShapeDecoration(
           color: Colors.white,
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(16),
+            borderRadius: BorderRadius.circular(8),
           ),
           shadows: const [
             BoxShadow(
@@ -53,11 +53,11 @@ class CardTeacherVertical extends StatelessWidget {
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(12),
                       ),
-                      child: teacher.avatar != null
+                      child: teacher.picture != null
                           ? ClipRRect(
                               borderRadius: BorderRadius.circular(12),
                               child: CachedNetworkImage(
-                                imageUrl: teacher.avatar!,
+                                imageUrl: teacher.picture!,
                                 fit: BoxFit.fill,
                                 width: double.infinity,
                                 height: double.infinity,

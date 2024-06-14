@@ -45,6 +45,8 @@ dependencies:
   flutter_local_notifications: ^17.1.2
   rxdart: ^0.27.7
   android_alarm_manager_plus: ^4.0.3
+  http_parser: ^4.0.2
+  qr_flutter: ^4.1.0
 
 dev_dependencies:
   flutter_test:
@@ -59,4 +61,5 @@ flutter:
     - assets/lotties/
     - assets/calender_bg/
     - assets/json/
+    - assets/payment/
 

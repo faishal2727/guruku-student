@@ -3,9 +3,9 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:guruku_student/common/exception.dart';
 import 'package:guruku_student/data/model/forgot_pw_response_model.dart';
-import 'package:guruku_student/data/model/login_response_model.dart';
+import 'package:guruku_student/data/model/login_model/login_response_model.dart';
 import 'package:guruku_student/data/model/refresh_otp_response_model.dart';
-import 'package:guruku_student/data/model/register_response_model.dart';
+import 'package:guruku_student/data/model/register_model/register_response_model.dart';
 import 'package:guruku_student/data/model/req_forgot_pw_response_model.dart';
 import 'package:guruku_student/data/model/verify_otp_response_model.dart';
 import 'package:http/http.dart' as http;
@@ -46,7 +46,7 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
     required String password,
   }) async {
     final response = await client.post(
-      Uri.parse('http://10.0.2.2:3010/v1/user/login'),
+      Uri.parse('https://faizal.simagang.my.id/faisol/v1/user/login'),
       headers: {
         'Content-Type': 'application/json',
       },
@@ -76,7 +76,7 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
       required String email,
       required String password}) async {
     final response = await client.post(
-      Uri.parse('http://10.0.2.2:3010/v1/user/register'),
+      Uri.parse('https://faizal.simagang.my.id/faisol/v1/user/register'),
       headers: {
         'Content-Type': 'application/json',
       },
@@ -106,7 +106,7 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
     required String otp,
   }) async {
     final response = await client.post(
-      Uri.parse('http://10.0.2.2:3010/v1/user/verify-otp'),
+      Uri.parse('https://faizal.simagang.my.id/faisol/v1/user/verify-otp'),
       headers: {
         'Content-Type': 'application/json',
       },
@@ -133,7 +133,7 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
   @override
   Future<RefreshOtpResponseModel> refreshOtp({required String email}) async {
     final response = await client.post(
-      Uri.parse('http://10.0.2.2:3010/v1/user/refresh-otp'),
+      Uri.parse('https://faizal.simagang.my.id/faisol//v1/user/refresh-otp'),
       headers: {
         'Content-Type': 'application/json',
       },
@@ -160,7 +160,7 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
   @override
   Future<ReqForgotPwResponseModel> reqForgotPw({required String email}) async {
     final response = await client.post(
-      Uri.parse('http://10.0.2.2:3010/v1/user/req-forgot-password'),
+      Uri.parse('https://faizal.simagang.my.id/faisol//v1/user/req-forgot-password'),
       headers: {
         'Content-Type': 'application/json',
       },
@@ -190,7 +190,7 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
     required String password,
   }) async {
     final response = await client.post(
-      Uri.parse('http://10.0.2.2:3010v1/user/forgot-password'),
+      Uri.parse('https://faizal.simagang.my.id/faisol/v1/user/forgot-password'),
       headers: {
         'Content-Type': 'application/json',
       },
