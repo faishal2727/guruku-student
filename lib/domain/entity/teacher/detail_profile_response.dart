@@ -1,6 +1,7 @@
 // ignore_for_file: must_be_immutable
 
 import 'package:equatable/equatable.dart';
+import 'package:guruku_student/domain/entity/teacher/teacher.dart';
 
 class DetailProfileResponse extends Equatable {
   int? id;
@@ -16,6 +17,10 @@ class DetailProfileResponse extends Equatable {
   String? lat;
   String? lon;
   String? gender;
+  String? role;
+  int? teacherId;
+  String? status;
+  Teacher? teacher;
 
   DetailProfileResponse({
     required this.id,
@@ -31,6 +36,10 @@ class DetailProfileResponse extends Equatable {
     required this.lat,
     required this.lon,
     required this.gender,
+    required this.role,
+    required this.teacherId,
+    required this.status,
+    required this.teacher,
   });
 
   @override
@@ -48,5 +57,9 @@ class DetailProfileResponse extends Equatable {
         lat,
         lon,
         gender,
+        role,
+        teacherId,
+        status,
+        teacher,
       ];
 }

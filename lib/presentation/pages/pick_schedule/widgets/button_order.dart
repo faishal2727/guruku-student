@@ -5,7 +5,7 @@ import 'package:guruku_student/common/constants.dart';
 import 'package:guruku_student/common/enum_sate.dart';
 import 'package:guruku_student/common/themes/themes.dart';
 import 'package:guruku_student/presentation/blocs/order/order_bloc.dart';
-import 'package:guruku_student/presentation/pages/pick_schedule/screen/order_succes_page.dart';
+import 'package:guruku_student/presentation/pages/detail_order/screens/order_succes_page.dart';
 
 class ButtonOrder extends StatelessWidget {
   const ButtonOrder({
@@ -22,21 +22,35 @@ class ButtonOrder extends StatelessWidget {
     return BlocListener<OrderBloc, OrderState>(
       listener: (context, state) {
         if (state.stateOrder == RequestStateOrder.loaded) {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => OrderSuccessPage(
-                price: state.orderData!.data.grossAmount,
-                expired: state.orderData!.data.expiryTime,
-                vaNumbers: state.orderData!.data.vaNumber
-                    .map((va) => {
-                          'bank': va.bank,
-                          'va_number': va.vaNumber,
-                        })
-                    .toList(),
+          final orderData = state.orderData?.data;
+
+          if (orderData != null) {
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(
+                builder: (context) => OrderSuccessPage(
+                  price: orderData.grossAmount,
+                  expired: orderData.expiryTime,
+                  vaNumbers: orderData.vaNumber
+                          ?.map((va) => {
+                                'bank': va.bank,
+                                'va_number': va.vaNumber,
+                              })
+                          .toList() ??
+                      [],
+                  paymentCode: orderData.paymentCode,
+                  store: orderData.store ?? 'Unknown',
+                ),
               ),
-            ),
-          );
+            );
+          } else {
+            ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(
+                content: Text('Order data is missing'),
+                backgroundColor: Colors.red,
+              ),
+            );
+          }
         } else if (state.stateOrder == RequestStateOrder.error) {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
@@ -92,5 +106,3 @@ class ButtonOrder extends StatelessWidget {
     );
   }
 }
-
-

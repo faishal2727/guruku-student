@@ -12,6 +12,11 @@ class OrderException implements Exception {
   OrderException({required this.message});
 }
 
+class ReviewException implements Exception {
+  final String message;
+  ReviewException({required this.message});
+}
+
 class DatabaseException implements Exception {
   final String message;
 

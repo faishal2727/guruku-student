@@ -6,11 +6,16 @@ class LoginResponse extends Equatable {
   final String message;
   final String username;
   final String token;
+  final String role;
+  final int idStudent;
+
 
   LoginResponse({
     required this.message,
     required this.username,
     required this.token,
+    required this.role,
+    required this.idStudent,
   });
 
   @override
@@ -18,5 +23,7 @@ class LoginResponse extends Equatable {
         message,
         username,
         token,
+        role,
+        idStudent,
       ];
 }

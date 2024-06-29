@@ -87,8 +87,14 @@ class _VerifyOtpPageState extends State<VerifyOtpPage> {
     ThemeData theme = Theme.of(context);
 
     return Scaffold(
+      backgroundColor: pr11,
       appBar: AppBar(
-        title: const Text('Verifikasi OTP'),
+        automaticallyImplyLeading: false,
+        title: Text(
+          'Verifikasi OTP',
+          style: AppTextStyle.heading5.setRegular(),
+        ),
+        backgroundColor: pr11,
       ),
       body: MultiBlocListener(
         listeners: [

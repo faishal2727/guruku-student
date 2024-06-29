@@ -6,6 +6,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:guruku_student/common/constants.dart';
+import 'package:guruku_student/common/enum_sate.dart';
 import 'package:guruku_student/common/themes/themes.dart';
 import 'package:guruku_student/presentation/blocs/profile/profile_bloc.dart';
 import 'package:guruku_student/presentation/cubits/image_picker/image_picker_cubit.dart';
@@ -79,22 +80,22 @@ class _UpdateAvatarPageState extends State<UpdateAvatarPage> {
             ),
             BlocConsumer<ProfileBloc, ProfileState>(
               listener: (context, state) {
-                if (state is UpdateAvatarSuccess) {
+                if (state.stateAvatar == ReqStateAvatar.loaded) {
                   ScaffoldMessenger.of(context).showSnackBar(
                     const SnackBar(
                       content: Text('Berhasil Meperbarui Avatar'),
                       backgroundColor: Colors.green,
                     ),
                   );
-                  Navigator.pop(context, true);
-                } else if (state is ProfileError) {
+                  Navigator.pop(context);
+                } else if (state.stateAvatar == ReqStateAvatar.error) {
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(content: Text(state.message)),
                   );
                 }
               },
               builder: (context, state) {
-                if (state is ProfileLoading) {
+                if (state.stateAvatar == ReqStateAvatar.loading) {
                   return const Center(child: CircularProgressIndicator());
                 }
                 return const SizedBox.shrink();

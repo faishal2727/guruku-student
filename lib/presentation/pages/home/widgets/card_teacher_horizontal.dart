@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:guruku_student/common/constants.dart';
 import 'package:guruku_student/common/themes/themes.dart';
 import 'package:guruku_student/domain/entity/teacher/teacher.dart';
-import 'package:guruku_student/presentation/pages/detail/screens/detail_teacher_page.dart';
+import 'package:guruku_student/presentation/pages/detail_teacher/screens/detail_teacher_page.dart';
 import 'package:lottie/lottie.dart';
 
 class CardTeacherHorizontal extends StatelessWidget {
@@ -12,12 +12,17 @@ class CardTeacherHorizontal extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: 260,
-      child: ListView.builder(
+    return Expanded(
+      child: GridView.builder(
         shrinkWrap: true,
         itemCount: teachers.length,
-        scrollDirection: Axis.horizontal,
+        physics: const NeverScrollableScrollPhysics(),
+        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: 2,
+          childAspectRatio: 0.75,
+          crossAxisSpacing: 4,
+          mainAxisSpacing: 4,
+        ),
         itemBuilder: (context, index) {
           final teacher = teachers[index];
           return InkWell(
@@ -29,8 +34,7 @@ class CardTeacherHorizontal extends StatelessWidget {
               );
             },
             child: Container(
-              margin: const EdgeInsets.only(right: 12, bottom: 8),
-              width: 220,
+              margin: const EdgeInsets.only(left: 4, right: 4, top: 8),
               decoration: ShapeDecoration(
                 color: Colors.white,
                 shape: RoundedRectangleBorder(
@@ -38,9 +42,9 @@ class CardTeacherHorizontal extends StatelessWidget {
                 ),
                 shadows: const [
                   BoxShadow(
-                    color: Color(0x0C000000),
+                    color: Color.fromARGB(43, 0, 0, 0),
                     blurRadius: 4,
-                    offset: Offset(0, 4),
+                    offset: Offset(2, 4),
                     spreadRadius: 0,
                   )
                 ],
@@ -51,7 +55,7 @@ class CardTeacherHorizontal extends StatelessWidget {
                   Stack(
                     children: [
                       Container(
-                        height: 160,
+                        height: 150,
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(12),
                         ),
@@ -100,7 +104,7 @@ class CardTeacherHorizontal extends StatelessWidget {
                                 color: Colors.amber,
                               ),
                               Text(
-                                '4.5',
+                                teacher.rate ?? '',
                                 style: AppTextStyle.body4.setBold(),
                               )
                             ],

@@ -1,6 +1,7 @@
 // ignore_for_file: must_be_immutable
 
 import 'package:equatable/equatable.dart';
+import 'package:guruku_student/data/model/profile_model/student_model.dart';
 import 'package:guruku_student/data/model/schedule_model.dart';
 import 'package:guruku_student/data/model/teacher_model/histories_model.dart';
 import 'package:guruku_student/domain/entity/teacher/teacher_detail.dart';
@@ -13,7 +14,7 @@ class TeacherDetailModel extends Equatable {
   String? avatar;
   String? picture;
   String? phone;
-  List<ScheduleModel> schedule;
+  List<ScheduleModel>? schedule;
   String? typeTeaching;
   String? price;
   String? description;
@@ -22,7 +23,13 @@ class TeacherDetailModel extends Equatable {
   String? lat;
   String? lon;
   String? address;
+  String? rate;
   List<HistoriesModel> histories;
+  int? userId;
+  StudentModel? student;
+  String? gelar;
+  String? jurusan;
+  String? tahunLulus;
 
   TeacherDetailModel({
     required this.id,
@@ -40,7 +47,13 @@ class TeacherDetailModel extends Equatable {
     required this.lat,
     required this.lon,
     required this.address,
+    required this.rate,
     required this.histories,
+    required this.userId,
+    required this.student,
+    required this.gelar,
+    required this.jurusan,
+    required this.tahunLulus,
   });
 
   factory TeacherDetailModel.fromJson(Map<String, dynamic> json) {
@@ -52,8 +65,10 @@ class TeacherDetailModel extends Equatable {
       avatar: json["data"]["avatar"],
       picture: json["data"]["picture"],
       phone: json["data"]["phone"],
-      schedule: List<ScheduleModel>.from(
-          json["data"]["schedule"].map((x) => ScheduleModel.fromJson(x))),
+      schedule: json["data"]["schedule"] != null
+          ? List<ScheduleModel>.from(
+              json["data"]["schedule"].map((x) => ScheduleModel.fromJson(x)))
+          : null,
       typeTeaching: json["data"]["type_teaching"],
       price: json["data"]["price"],
       description: json["data"]["description"],
@@ -61,8 +76,16 @@ class TeacherDetailModel extends Equatable {
       lat: json["data"]["lat"],
       lon: json["data"]["lon"],
       address: json["data"]["address"],
+      rate: json["data"]["rate"],
       histories: List<HistoriesModel>.from(
           json["data"]["histories"].map((x) => HistoriesModel.fromJson(x))),
+      userId: json["data"]["user_id"],
+      student: json["data"]["student"] != null
+          ? StudentModel.fromJson(json["data"]["student"])
+          : StudentModel.defaultInstance(),
+      gelar: json["data"]["gelar"],
+      jurusan: json["data"]["jurusan"],
+      tahunLulus: json["data"]["tahun_lulus"],
     );
   }
 
@@ -74,7 +97,9 @@ class TeacherDetailModel extends Equatable {
         "avatar": avatar,
         "picture": picture,
         "phone": phone,
-        "schedule": List<dynamic>.from(schedule.map((x) => x.toJson())),
+        "schedule": schedule != null
+            ? List<dynamic>.from(schedule!.map((x) => x.toJson()))
+            : null,
         "type_teaching": typeTeaching,
         "price": price,
         "description": description,
@@ -83,7 +108,13 @@ class TeacherDetailModel extends Equatable {
         "lat": lat,
         "lon": lon,
         "addess": address,
+        "rate": rate,
         "histories": List<dynamic>.from(histories.map((x) => x.toJson())),
+        "user_id": userId,
+        "student": student?.toJson(),
+        "gelar": gelar,
+        "jurusan": jurusan,
+        "tahun_lulus": tahunLulus,
       };
 
   TeacherDetail toEntity() {
@@ -95,7 +126,9 @@ class TeacherDetailModel extends Equatable {
       avatar: avatar,
       picture: picture,
       phone: phone,
-      schedule: schedule.map((sche) => sche.toEntity()).toList(),
+      schedule: schedule != null
+          ? schedule!.map((sche) => sche.toEntity()).toList()
+          : [],
       typeTeaching: typeTeaching,
       price: price,
       description: description,
@@ -104,7 +137,13 @@ class TeacherDetailModel extends Equatable {
       lat: lat,
       lon: lon,
       address: address,
+      rate: rate,
       histories: histories.map((hist) => hist.toEntity()).toList(),
+      userId: userId,
+      student: student?.toEntity(),
+      gelar: gelar,
+      jurusan: jurusan,
+      tahunLulus: tahunLulus,
     );
   }
 
@@ -126,5 +165,11 @@ class TeacherDetailModel extends Equatable {
         lat,
         lon,
         address,
+        rate,
+        userId,
+        student,
+        gelar,
+        jurusan,
+        tahunLulus,
       ];
 }

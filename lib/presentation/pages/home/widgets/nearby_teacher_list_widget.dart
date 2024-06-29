@@ -12,10 +12,19 @@ class NearbyTeachersListWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: teachers.map((teacher) {
-        return CardTeacherVertical(teacher: teacher);
-      }).toList(),
+    return SizedBox(
+      height: 150,
+      child: ListView.builder(
+        padding: const EdgeInsets.only(left: 8, right: 16),
+        scrollDirection: Axis.horizontal,
+        itemCount: teachers.length,
+        itemBuilder: (context, index) {
+          return Padding(
+            padding: const EdgeInsets.only(left: 8),
+            child: CardTeacherVertical(teacher: teachers[index]),
+          );
+        },
+      ),
     );
   }
 }

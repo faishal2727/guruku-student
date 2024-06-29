@@ -15,6 +15,7 @@ class TeacherBloc extends Bloc<TeacherEvent, TeacherState> {
   Future<void> _onGetTeacher(
       OnTeacherEvent event, Emitter<TeacherState> emit) async {
     emit(TeacherLoading());
+    await Future.delayed(const Duration(seconds: 2));
 
     final result = await getAllTeacher.execute();
 

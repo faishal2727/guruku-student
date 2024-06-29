@@ -1,12 +1,17 @@
+// ignore_for_file: use_super_parameters
+
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:guruku_student/common/constants.dart';
 import 'package:guruku_student/common/themes/themes.dart';
 import 'package:guruku_student/common/utils/date_utils.dart';
 import 'package:guruku_student/domain/entity/history_order/detail_history_order.dart';
+import 'package:lottie/lottie.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 
 class OrderDoneContent extends StatefulWidget {
   final DetailHistoryOrder dataHistoryOrder;
+
   const OrderDoneContent({
     Key? key,
     required this.dataHistoryOrder,
@@ -18,6 +23,11 @@ class OrderDoneContent extends StatefulWidget {
 
 class _OrderDoneContentState extends State<OrderDoneContent> {
   final TextEditingController controller = TextEditingController();
+  bool get isScanButtonVisible {
+    final DateTime meetingTime = widget.dataHistoryOrder.meetingTime!;
+    final DateTime now = DateTime.now();
+    return now.isBefore(meetingTime.add(const Duration(minutes: 15)));
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -34,8 +44,28 @@ class _OrderDoneContentState extends State<OrderDoneContent> {
               children: [
                 Expanded(
                   flex: 1,
-                  child:
-                      Image.network(widget.dataHistoryOrder.teacher.picture!),
+                  child: widget.dataHistoryOrder.teacher.picture != null
+                      ? ClipRRect(
+                          borderRadius: BorderRadius.circular(8),
+                          child: CachedNetworkImage(
+                            imageUrl: widget.dataHistoryOrder.teacher.picture!,
+                            fit: BoxFit.fill,
+                            width: 120,
+                            height: 100,
+                            placeholder: (context, url) => Center(
+                              child: Lottie.asset(
+                                  'assets/lotties/loading_state.json',
+                                  height: 60,
+                                  width: 60),
+                            ),
+                            errorWidget: (context, url, error) => const Center(
+                              child: Icon(Icons.error, color: Colors.red),
+                            ),
+                          ),
+                        )
+                      : const Center(
+                          child: Icon(Icons.warning, color: Colors.red),
+                        ),
                 ),
                 const SizedBox(width: 16),
                 Expanded(
@@ -43,9 +73,11 @@ class _OrderDoneContentState extends State<OrderDoneContent> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(widget.dataHistoryOrder.teacher.name!,
-                          style: AppTextStyle.body2.setMedium()),
-                      Text(widget.dataHistoryOrder.teacher.typeTeaching!,
+                      Text(
+                          "Nama Guru : ${widget.dataHistoryOrder.teacher.name!}",
+                          style: AppTextStyle.body2.setSemiBold()),
+                      Text(
+                          "Mapel : ${widget.dataHistoryOrder.teacher.typeTeaching!}",
                           style: AppTextStyle.body4.setRegular()),
                     ],
                   ),
@@ -53,7 +85,9 @@ class _OrderDoneContentState extends State<OrderDoneContent> {
               ],
             ),
           ),
-          Divider(thickness: 3, color: Colors.grey.shade100),
+          Text(widget.dataHistoryOrder.id.toString()),
+          Text(widget.dataHistoryOrder.present.toString()),
+          Divider(thickness: 3, color: pr16),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
             child: Row(
@@ -70,7 +104,39 @@ class _OrderDoneContentState extends State<OrderDoneContent> {
               ],
             ),
           ),
-          Divider(thickness: 8, color: Colors.grey.shade100),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  'Waktu Pertemuan',
+                  style: AppTextStyle.body3.setRegular(),
+                ),
+                Text(
+                  " ${formatDate(widget.dataHistoryOrder.meetingTime.toString())}",
+                  style: AppTextStyle.body3.setRegular(),
+                )
+              ],
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  'Kehadiran',
+                  style: AppTextStyle.body3.setRegular(),
+                ),
+                Text(
+                  "${widget.dataHistoryOrder.kehadiran} hadir",
+                  style: AppTextStyle.body3.setRegular(),
+                )
+              ],
+            ),
+          ),
+          Divider(thickness: 8, color: pr16),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
             child: Column(
@@ -78,12 +144,12 @@ class _OrderDoneContentState extends State<OrderDoneContent> {
               children: [
                 Text('Metode Pembayaran',
                     style: AppTextStyle.body2.setRegular()),
-                Text(widget.dataHistoryOrder.bank!,
+                Text(widget.dataHistoryOrder.bank!.toUpperCase(),
                     style: AppTextStyle.body3.setRegular()),
               ],
             ),
           ),
-          Divider(thickness: 8, color: Colors.grey.shade100),
+          Divider(thickness: 8, color: pr16),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
             child: Column(
@@ -110,7 +176,7 @@ class _OrderDoneContentState extends State<OrderDoneContent> {
               ],
             ),
           ),
-          Divider(thickness: 8, color: Colors.grey.shade100),
+          Divider(thickness: 8, color: pr16),
           Visibility(
             visible: false,
             child: Container(
@@ -118,7 +184,7 @@ class _OrderDoneContentState extends State<OrderDoneContent> {
               child: TextField(
                 controller: controller
                   ..text =
-                      'https://faizal.simagang.my.id/faisol/v1//v1/user/present/${widget.dataHistoryOrder.id}',
+                      widget.dataHistoryOrder.id.toString(),
                 decoration: const InputDecoration(
                   border: OutlineInputBorder(),
                   labelText: 'Enter your URL',
@@ -126,39 +192,72 @@ class _OrderDoneContentState extends State<OrderDoneContent> {
               ),
             ),
           ),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-            child: Row(
-              children: [
-                Flexible(
-                  child: Text(
-                    'Untuk memastikan Guru datang, pastikan guru scan QR code ini',
-                    style: AppTextStyle.body4.setRegular(),
-                  ),
-                ),
-                const SizedBox(width: 10),
-                ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: pr13,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(8),
+          if (isScanButtonVisible)
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+              child: Row(
+                children: [
+                  Flexible(
+                    child: Text(
+                      'Untuk memastikan Guru datang, pastikan guru scan QR code ini',
+                      style: AppTextStyle.body4.setRegular(),
                     ),
-                    padding: const EdgeInsets.symmetric(horizontal: 20),
                   ),
-                  onPressed: () {
-                    _showQRCodeDialog(context);
-                  },
-                  child: Text(
-                    'Lihat QR Code',
-                    style: Theme.of(context)
-                        .textTheme
-                        .bodyMedium!
-                        .copyWith(color: pr11),
+                  const SizedBox(width: 10),
+                  ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: pr13,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      padding: const EdgeInsets.symmetric(horizontal: 20),
+                    ),
+                    onPressed: () {
+                      _showQRCodeDialog(context);
+                    },
+                    child: Text(
+                      'Lihat QR Code',
+                      style: Theme.of(context)
+                          .textTheme
+                          .bodyMedium!
+                          .copyWith(color: pr11),
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
-          ),
+          if (!isScanButtonVisible)
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+              child: Row(
+                children: [
+                  Flexible(
+                    child: Text(
+                      'Karena guru yang anda pesan tidak hadir, anda bisa mengajukan uang transaksi anda',
+                      style: AppTextStyle.body4.setRegular(),
+                    ),
+                  ),
+                  const SizedBox(width: 10),
+                  ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: pr13,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      padding: const EdgeInsets.symmetric(horizontal: 20),
+                    ),
+                    onPressed: () {},
+                    child: Text(
+                      'Ajukan Kembalian',
+                      style: Theme.of(context)
+                          .textTheme
+                          .bodyMedium!
+                          .copyWith(color: pr11),
+                    ),
+                  ),
+                ],
+              ),
+            ),
         ],
       ),
     );
@@ -197,7 +296,7 @@ class _OrderDoneContentState extends State<OrderDoneContent> {
                   onPressed: () {
                     Navigator.of(context).pop();
                   },
-                  child: Text(
+                  child: const Text(
                     'Close',
                     style: TextStyle(color: Colors.blue),
                   ),

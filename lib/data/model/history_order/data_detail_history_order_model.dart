@@ -19,9 +19,12 @@ class DataDetailHistoryOrderModel extends Equatable {
   final DateTime? expired;
   final String? va;
   final String? bank;
+  final int? reviewId;
   final DateTime createdAt;
+  final DateTime updatedAt;
   final StudentModel student;
   final TeacherModel teacher;
+  final String kehadiran;
 
   const DataDetailHistoryOrderModel({
     required this.id,
@@ -39,9 +42,12 @@ class DataDetailHistoryOrderModel extends Equatable {
     required this.expired,
     required this.va,
     required this.bank,
+    required this.reviewId,
     required this.createdAt,
+    required this.updatedAt,
     required this.student,
     required this.teacher,
+    required this.kehadiran,
   });
 
   factory DataDetailHistoryOrderModel.fromJson(Map<String, dynamic> json) =>
@@ -61,9 +67,12 @@ class DataDetailHistoryOrderModel extends Equatable {
         expired: DateTime.parse(json["data"]["expired"]),
         va: json["data"]["va"],
         bank: json["data"]["bank"],
+        reviewId: json["data"]["review_id"],
         createdAt: DateTime.parse(json["data"]["createdAt"]),
+        updatedAt: DateTime.parse(json["data"]["updatedAt"]),
         student: StudentModel.fromJson(json["data"]["student"]),
         teacher: TeacherModel.fromJson(json["data"]["teacher"]),
+        kehadiran: json["data"]["kehadiran"]
       );
 
   Map<String, dynamic> toJson() => {
@@ -82,9 +91,12 @@ class DataDetailHistoryOrderModel extends Equatable {
         "expired": expired,
         "va": va,
         "bank": bank,
+        "review_id": reviewId,
         "createdAt": createdAt,
+        "updatedAt": updatedAt,
         "student": student.toJson(),
         "teachet": teacher.toJson(),
+        "kehadiran": kehadiran,
       };
 
   DetailHistoryOrder toEntity() => DetailHistoryOrder(
@@ -103,9 +115,12 @@ class DataDetailHistoryOrderModel extends Equatable {
         expired: expired,
         va: va,
         bank: bank, 
+        reviewId: reviewId,
         createdAt: createdAt,
+        updatedAt: updatedAt,
         student: student.toEntity(),
         teacher: teacher.toEntity(),
+        kehadiran: kehadiran,
       );
 
   @override
@@ -125,8 +140,11 @@ class DataDetailHistoryOrderModel extends Equatable {
         expired,
         va,
         bank,
+        reviewId,
         createdAt,
+        updatedAt,
         student,
         teacher,
+        kehadiran,
       ];
 }

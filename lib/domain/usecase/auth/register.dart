@@ -11,11 +11,13 @@ class Register {
     required String username,
     required String email,
     required String password,
+    required String role,
   }) async {
     return await repository.register(
       username: username,
       email: email,
       password: password,
+      role: role,
     );
   }
 }

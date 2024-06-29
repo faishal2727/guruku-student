@@ -1,6 +1,5 @@
 // ignore_for_file: use_super_parameters
 import 'package:flutter/material.dart';
-import 'package:guruku_student/common/constants.dart';
 import 'package:guruku_student/common/themes/themes.dart';
 
 class ErrorSection extends StatelessWidget {
@@ -57,7 +56,10 @@ class ErrorSection extends StatelessWidget {
                   )
                 : Text(
                     title,
-                    style: AppTextStyle.body2.setSemiBold().copyWith(color: pr11),
+                    style: Theme.of(context)
+                        .textTheme
+                        .titleMedium!
+                        .copyWith(fontSize: 16, color: Colors.white),
                   ),
           ),
         ],

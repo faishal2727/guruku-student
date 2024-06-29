@@ -3,12 +3,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:guruku_student/common/constants.dart';
+import 'package:guruku_student/common/enum_sate.dart';
 import 'package:guruku_student/common/shared_widgets/empty_section.dart';
 import 'package:guruku_student/common/shared_widgets/error_section.dart';
 import 'package:guruku_student/common/themes/themes.dart';
 import 'package:guruku_student/presentation/blocs/profile/profile_bloc.dart';
 import 'package:lottie/lottie.dart';
-
 import '../widgets/detail_profile_content.dart';
 
 class DetailProfilePage extends StatefulWidget {
@@ -54,7 +54,7 @@ class _DetailProfilePageState extends State<DetailProfilePage> {
       ),
       body: BlocBuilder<ProfileBloc, ProfileState>(
         builder: (context, state) {
-          if (state is ProfileLoading) {
+          if (state.stateProfile == ReqStateProfile.loading) {
             return Center(
               child: Lottie.asset(
                 'assets/lotties/loading.json',
@@ -62,15 +62,12 @@ class _DetailProfilePageState extends State<DetailProfilePage> {
                 width: 200,
               ),
             );
-          } else if (state is ProfileHasData) {
-            final profile = state.result;
-            return DetailProfileContent(profile);
-          } else if (state is UpdateProfileSuccess) {
-            Navigator.pop(context);
-            return const SizedBox();
-          } else if (state is ProfileEmpty) {
+          } else if (state.stateProfile == ReqStateProfile.loaded) {
+            final profile = state.dataProfile;
+            return DetailProfileContent(profile!);
+          } else if (state.stateProfile == ReqStateProfile.empty) {
             return const EmptySection();
-          } else if (state is ProfileError) {
+          } else if (state.stateProfile == ReqStateProfile.error) {
             return ErrorSection(
               isLoading: _isLoading,
               onPressed: _retry,

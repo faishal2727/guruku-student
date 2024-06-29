@@ -7,18 +7,14 @@ import 'package:guruku_student/domain/entity/order/order_response.dart';
 
 abstract class OrderRepository {
   Future<Either<Failure, OrderResponse>> doOrder(
-    OrderRequest orderRequest,
-    String token,
-  );
+      OrderRequest orderRequest, String token);
   Future<Either<Failure, List<DataHistoryOrder>>> historyOrderPending(
-    String token,
-  );
+      String token);
   Future<Either<Failure, List<DataHistoryOrder>>> historyOrderSuccess(
-    String token,
-  );
+      String token);
   Future<Either<Failure, List<DataHistoryOrder>>> historyOrderCancel(
-    String token,
-  );
+      String token);
+  Future<Either<Failure, List<DataHistoryOrder>>> getAllPresent(String token);
   Future<Either<Failure, DetailHistoryOrder>> getDetailOrder(
     String token,
     int id,

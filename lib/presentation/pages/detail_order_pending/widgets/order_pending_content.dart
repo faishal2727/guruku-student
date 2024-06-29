@@ -6,6 +6,7 @@ import 'package:guruku_student/common/utils/date_utils.dart';
 import 'package:guruku_student/domain/entity/history_order/detail_history_order.dart';
 import 'package:guruku_student/presentation/pages/detail_order_pending/utils/payment_utils.dart';
 
+
 class OrderPendingContent extends StatefulWidget {
   final DetailHistoryOrder dataHistoryOrder;
   const OrderPendingContent({
@@ -40,6 +41,7 @@ class _OrderPendingContentState extends State<OrderPendingContent> {
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisSize: MainAxisSize.min,
           children: [
+            Divider(thickness: 2, color: pr16),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
               child: Row(
@@ -57,7 +59,7 @@ class _OrderPendingContentState extends State<OrderPendingContent> {
                 ],
               ),
             ),
-            Divider(thickness: 3, color: Colors.grey.shade200),
+            Divider(thickness: 3, color: pr16),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
               child: Row(
@@ -77,7 +79,7 @@ class _OrderPendingContentState extends State<OrderPendingContent> {
                 ],
               ),
             ),
-            Divider(thickness: 12, color: Colors.grey.shade200),
+            Divider(thickness: 12, color: pr16),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
               child: Column(
@@ -92,7 +94,7 @@ class _OrderPendingContentState extends State<OrderPendingContent> {
                           widget.dataHistoryOrder.bank!.toUpperCase(),
                           style: AppTextStyle.body1.setMedium(),
                         ),
-                        Divider(thickness: 2, color: Colors.grey.shade200),
+                        Divider(thickness: 2, color: pr16),
                         Text(
                           'Nomor Pembayaran',
                           style: AppTextStyle.body3.setMedium(),
@@ -121,7 +123,7 @@ class _OrderPendingContentState extends State<OrderPendingContent> {
                             ),
                           ],
                         ),
-                        Divider(thickness: 3, color: Colors.grey.shade200),
+                        Divider(thickness: 3, color: pr16),
                         const Text(
                           'Instruksi Pembayaran :',
                           style: AppTextStyle.body2,
@@ -132,7 +134,7 @@ class _OrderPendingContentState extends State<OrderPendingContent> {
                 ],
               ),
             ),
-            Divider(thickness: 12, color: Colors.grey.shade200),
+            Divider(thickness: 12, color: pr16),
             const SizedBox(height: 16),
             if (widget.dataHistoryOrder.bank != null)
               ...buildPaymentMethods(
@@ -142,4 +144,5 @@ class _OrderPendingContentState extends State<OrderPendingContent> {
       );
     }
   }
+  
 }

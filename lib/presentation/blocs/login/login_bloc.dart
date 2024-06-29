@@ -11,7 +11,6 @@ import 'package:guruku_student/domain/usecase/auth/save_auth.dart';
 part 'login_event.dart';
 part 'login_state.dart';
 
-
 class LoginBloc extends Bloc<LoginEvent, LoginState> {
   final Login login;
   final SaveAuth saveAuth;
@@ -36,7 +35,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
           (failure) => emit(
             state.copyWith(
               stateLogin: RequestStateLogin.error,
-              message: failure.message,  
+              message: failure.message,
             ),
           ),
           (data) {
@@ -45,7 +44,8 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
               state.copyWith(
                 stateLogin: RequestStateLogin.loaded,
                 loginResponse: data,
-                message: data.message, 
+                message: data.message,
+                role: data.role,
               ),
             );
           },
@@ -62,10 +62,15 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
 
         if (auth != null) {
           emit(state.copyWith(
-              stateLogin: RequestStateLogin.loaded, loginResponse: auth, message: ''));
+              stateLogin: RequestStateLogin.loaded,
+              loginResponse: auth,
+              message: '',
+              role: auth.role));
         } else {
           emit(state.copyWith(
-              stateLogin: RequestStateLogin.error, loginResponse: null, message: ''));
+              stateLogin: RequestStateLogin.error,
+              loginResponse: null,
+              message: ''));
         }
       },
     );

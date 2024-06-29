@@ -7,7 +7,6 @@ import 'package:guruku_student/domain/usecase/order/history_order_cancel.dart';
 part 'order_cancel_event.dart';
 part 'order_cancel_state.dart';
 
-
 class OrderCancelBloc extends Bloc<OrderCancelEvent, OrderCancelState> {
   final HistoryOrderCancel historyOrderCancel;
   final GetAuth getAuth;
@@ -30,11 +29,11 @@ class OrderCancelBloc extends Bloc<OrderCancelEvent, OrderCancelState> {
           emit(OrderCancelError(failure.message));
         },
         (data) {
-         if (data.isEmpty) {
-          emit(OrderCancelEmpty());
-        } else {
-          emit(OrderCancelHasData(data));
-        }
+          if (data.isEmpty) {
+            emit(OrderCancelEmpty());
+          } else {
+            emit(OrderCancelHasData(data));
+          }
         },
       );
     }

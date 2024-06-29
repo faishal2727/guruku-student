@@ -3,6 +3,7 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:guruku_student/common/enum_sate.dart';
 import 'package:guruku_student/domain/entity/teacher/detail_profile_response.dart';
 import 'package:guruku_student/domain/entity/profile/update_profile_request.dart';
 import 'package:guruku_student/domain/entity/profile/update_profile_response.dart';
@@ -23,24 +24,49 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
 
   ProfileBloc(
       this._profile, this.getAuth, this.updateProfile, this.updateAvatar)
-      : super(ProfileEmpty()) {
+      : super(ProfileState.initial()) {
     on<OnProfileEvent>(_onDetailProfile);
     on<OnUpdateProfileEvent>(_onUpdateProfile);
     on<OnUpdateAvatarEvent>(_onUpdateAvatar);
+    on<OnReloadProfileEvent>(_onReloadProfile); 
   }
-
-  _onDetailProfile(OnProfileEvent event, Emitter<ProfileState> state) async {
-    emit(ProfileLoading());
+  void _onReloadProfile(OnReloadProfileEvent event, Emitter<ProfileState> emit) async {
+    emit(state.copyWith(stateProfile: ReqStateProfile.loading));
     final token = await getAuth.execute();
 
     if (token!.token.isNotEmpty) {
       final result = await _profile.execute(token.token);
       result.fold(
         (failure) {
-          emit(ProfileError(failure.message));
+          emit(state.copyWith(
+              stateProfile: ReqStateProfile.error, message: failure.message));
         },
         (data) {
-          emit(ProfileHasData(data));
+          emit(state.copyWith(
+              stateProfile: ReqStateProfile.loaded,
+              message: 'Sukses Get Data',
+              dataProfile: data));
+        },
+      );
+    }
+  }
+
+  _onDetailProfile(OnProfileEvent event, Emitter<ProfileState> emit) async {
+    emit(state.copyWith(stateProfile: ReqStateProfile.loading));
+    final token = await getAuth.execute();
+
+    if (token!.token.isNotEmpty) {
+      final result = await _profile.execute(token.token);
+      result.fold(
+        (failure) {
+          emit(state.copyWith(
+              stateProfile: ReqStateProfile.error, message: failure.message));
+        },
+        (data) {
+          emit(state.copyWith(
+              stateProfile: ReqStateProfile.loaded,
+              message: 'Sukses Get Data',
+              dataProfile: data));
         },
       );
     }
@@ -48,8 +74,8 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
 
   // update profile
   _onUpdateProfile(
-      OnUpdateProfileEvent event, Emitter<ProfileState> state) async {
-    emit(ProfileLoading());
+      OnUpdateProfileEvent event, Emitter<ProfileState> emit) async {
+    emit(state.copyWith(stateAvatar: ReqStateAvatar.loading));
     final user = await getAuth.execute();
 
     if (user != null) {
@@ -74,18 +100,22 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
       result.fold(
         (failure) {
           debugPrint('Update Profile Error: ${failure.message}');
-          emit(ProfileError(failure.message));
+          emit(state.copyWith(
+              stateAvatar: ReqStateAvatar.error, message: failure.message));
         },
         (data) {
           debugPrint('Update Profile Success: $data');
-          emit(UpdateProfileSuccess(result: data));
+          emit(state.copyWith(
+              stateAvatar: ReqStateAvatar.loaded,
+              dataAvatar: data,
+              message: 'Sukses Update Profile'));
         },
       );
     }
   }
 
   _onUpdateAvatar(OnUpdateAvatarEvent event, Emitter<ProfileState> emit) async {
-    emit(ProfileLoading());
+    emit(state.copyWith(stateAvatar: ReqStateAvatar.loading));
     final user = await getAuth.execute();
 
     if (user != null) {
@@ -96,10 +126,14 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
       );
       result.fold(
         (failure) {
-          emit(UpdateAvatarError(failure.message));
+          emit(state.copyWith(
+              stateAvatar: ReqStateAvatar.error, message: failure.message));
         },
         (data) {
-          emit(UpdateAvatarSuccess(result: data));
+          emit(state.copyWith(
+              stateAvatar: ReqStateAvatar.loaded,
+              dataAvatar: data,
+              message: 'Sukses Update Avatar'));
         },
       );
     }

@@ -3,22 +3,27 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:guruku_student/common/constants.dart';
 import 'package:guruku_student/common/utils.dart';
+import 'package:guruku_student/domain/entity/history_order/detail_history_order.dart';
+import 'package:guruku_student/domain/entity/register_teacher/my_data_teacher_response.dart';
 import 'package:guruku_student/domain/entity/teacher/detail_profile_response.dart';
 import 'package:guruku_student/injection.dart' as di;
 import 'package:guruku_student/presentation/blocs/bookmark/bookmark_teacher_bloc.dart';
 import 'package:guruku_student/presentation/blocs/detail_order/detail_order_bloc.dart';
 import 'package:guruku_student/presentation/blocs/detail_teacher/detail_teacher_bloc.dart';
+import 'package:guruku_student/presentation/blocs/get_present/get_present_bloc.dart';
 import 'package:guruku_student/presentation/blocs/history_order_cancel/order_cancel_bloc.dart';
 import 'package:guruku_student/presentation/blocs/history_order_pending/order_pending_bloc.dart';
 import 'package:guruku_student/presentation/blocs/history_order_success/order_success_bloc.dart';
 import 'package:guruku_student/presentation/blocs/login/login_bloc.dart';
 import 'package:guruku_student/presentation/blocs/main/main_bloc.dart';
+import 'package:guruku_student/presentation/blocs/notif/notif_bloc.dart';
 import 'package:guruku_student/presentation/blocs/order/order_bloc.dart';
 import 'package:guruku_student/presentation/blocs/payment/payment_bloc.dart';
 import 'package:guruku_student/presentation/blocs/profile/profile_bloc.dart';
 import 'package:guruku_student/presentation/blocs/refresh_otp/refresh_otp_bloc.dart';
 import 'package:guruku_student/presentation/blocs/register/register_bloc.dart';
 import 'package:guruku_student/presentation/blocs/req_forgot_pw/req_forgot_pw_bloc.dart';
+import 'package:guruku_student/presentation/blocs/review/review_bloc.dart';
 import 'package:guruku_student/presentation/blocs/teacher/teacher_bloc.dart';
 import 'package:guruku_student/presentation/blocs/teacher_biology/teacher_biology_bloc.dart';
 import 'package:guruku_student/presentation/blocs/teacher_english/teacher_english_bloc.dart';
@@ -26,15 +31,19 @@ import 'package:guruku_student/presentation/blocs/teacher_indonesian/teacher_ind
 import 'package:guruku_student/presentation/blocs/teacher_math/teacher_math_bloc.dart';
 import 'package:guruku_student/presentation/blocs/teacher_search/teacher_search_bloc.dart';
 import 'package:guruku_student/presentation/blocs/verify_otp/verify_otp_bloc.dart';
+import 'package:guruku_student/presentation/blocs/wishlist/wishlist_bloc.dart';
 import 'package:guruku_student/presentation/cubits/carousel/carousel_cubit.dart';
 import 'package:guruku_student/presentation/cubits/image_picker/image_picker_cubit.dart';
 import 'package:guruku_student/presentation/pages/auth/screens/login_page.dart';
-import 'package:guruku_student/presentation/pages/auth/screens/register_page.dart';
+import 'package:guruku_student/presentation/pages/auth/screens/sign_up_page.dart';
+import 'package:guruku_student/presentation/pages/auth/screens/sign_up_student_page.dart';
 import 'package:guruku_student/presentation/pages/auth/screens/req_forgot_password.dart';
+import 'package:guruku_student/presentation/pages/auth/screens/sign_up_teacher_page.dart';
 import 'package:guruku_student/presentation/pages/auth/screens/verify_otp_forgot_pw.dart';
 import 'package:guruku_student/presentation/pages/auth/screens/verify_otp_page.dart';
-import 'package:guruku_student/presentation/pages/detail/screens/detail_teacher_page.dart';
-import 'package:guruku_student/presentation/pages/detail_order/screens/detail_order_page.dart';
+import 'package:guruku_student/presentation/pages/detai_present/screens/detail_present_page.dart';
+import 'package:guruku_student/presentation/pages/detail_order_cancel/screens/detail_order_cancel_page.dart';
+import 'package:guruku_student/presentation/pages/detail_teacher/screens/detail_teacher_page.dart';
 import 'package:guruku_student/presentation/pages/detail_order_done/screens/detail_order_done_page.dart';
 import 'package:guruku_student/presentation/pages/detail_order_pending/screens/detail_order_pending_page.dart';
 import 'package:guruku_student/presentation/pages/history_order/screens/history_order_page.dart';
@@ -43,15 +52,32 @@ import 'package:guruku_student/presentation/pages/home/screens/teacher_biology_p
 import 'package:guruku_student/presentation/pages/home/screens/teacher_english_page.dart';
 import 'package:guruku_student/presentation/pages/home/screens/teacher_indonesian_page.dart';
 import 'package:guruku_student/presentation/pages/home/screens/teacher_math_page.dart';
-import 'package:guruku_student/presentation/pages/main/main_page.dart';
+import 'package:guruku_student/presentation/pages/main/student_landing_page.dart';
+import 'package:guruku_student/presentation/pages/main/splash_screen.dart';
+import 'package:guruku_student/presentation/pages/notification/screens/notification_page.dart';
 import 'package:guruku_student/presentation/pages/pick_schedule/screen/pick.dart';
 import 'package:guruku_student/presentation/pages/profile/bookmark/screens/bookmark_page.dart';
 import 'package:guruku_student/presentation/pages/profile/detail_profile/screens/detail_profile_page.dart';
 import 'package:guruku_student/presentation/pages/profile/faq/screens/faq_page.dart';
 import 'package:guruku_student/presentation/pages/profile/main/screens/profile_page.dart';
-import 'package:guruku_student/presentation/pages/profile/setting/screens/setting_page.dart';
+import 'package:guruku_student/presentation/pages/profile/balance/screens/setting_page.dart';
 import 'package:guruku_student/presentation/pages/profile/update_avatar/update_avatar_page.dart';
+import 'package:guruku_student/presentation/pages/profile/update_profile/screens/update_page.dart';
 import 'package:guruku_student/presentation/pages/profile/update_profile/screens/update_profile_page.dart';
+import 'package:guruku_student/presentation/pages/profile/wishlist/screens/wishlist_page.dart';
+import 'package:guruku_student/presentation/pages/review_list/screens/list_review_page.dart';
+import 'package:guruku_student/presentation/pages/review_post/screens/add_review_page.dart';
+import 'package:guruku_student/presentation/pages/teacher/blocs/add_data_teacher/add_data_teacher_bloc.dart';
+import 'package:guruku_student/presentation/pages/teacher/blocs/my_data_teacher/my_data_teacher_bloc.dart';
+import 'package:guruku_student/presentation/pages/teacher/blocs/order_teacher/order_teacher_bloc.dart';
+import 'package:guruku_student/presentation/pages/teacher/blocs/register_teacher/register_teacher_bloc.dart';
+import 'package:guruku_student/presentation/pages/teacher/pages/add_schedule/screen/my_schedule_page.dart';
+import 'package:guruku_student/presentation/pages/teacher/pages/add_schedule/screen/schedule_page.dart';
+import 'package:guruku_student/presentation/pages/teacher/pages/add_teacher/screens/teacher_page.dart';
+import 'package:guruku_student/presentation/pages/teacher/pages/dashboard/screens/dashboard_teacher_page.dart';
+import 'package:guruku_student/presentation/pages/teacher/pages/history_order/screens/history_order_teacher_page.dart';
+import 'package:guruku_student/presentation/pages/teacher/pages/history_order/screens/order_detail_teacher_page.dart';
+import 'package:guruku_student/presentation/pages/teacher/pages/register_teacher/screens/teacher_landing_page.dart';
 import 'package:location/location.dart';
 import 'package:timezone/data/latest.dart' as tz;
 import 'package:timezone/timezone.dart' as tz;
@@ -82,14 +108,15 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
-        BlocProvider(
-            create: (_) => di.locator<LoginBloc>()..add(DoAuthCheckEventk())),
+        BlocProvider(create: (_) => di.locator<LoginBloc>()),
         BlocProvider(create: (_) => di.locator<RegisterBloc>()),
         BlocProvider(create: (_) => di.locator<VerifyOtpBloc>()),
         BlocProvider(create: (_) => di.locator<RefreshOtpBloc>()),
         BlocProvider(create: (_) => di.locator<ReqForgotPwBloc>()),
-        BlocProvider(create: (_) => di.locator<MainBloc>()),
-        BlocProvider(create: (_) => di.locator<ProfileBloc>()),
+        BlocProvider(
+            create: (_) => di.locator<MainBloc>()..add(DoIsLoginEvent())),
+        BlocProvider(
+            create: (_) => di.locator<ProfileBloc>()..add(OnProfileEvent())),
         BlocProvider(create: (_) => di.locator<TeacherBloc>()),
         BlocProvider(create: (_) => di.locator<DetailTeacherBloc>()),
         BlocProvider(create: (_) => CarouselCubit()),
@@ -106,6 +133,14 @@ class MyApp extends StatelessWidget {
         BlocProvider(create: (_) => di.locator<OrderSuccessBloc>()),
         BlocProvider(create: (_) => di.locator<OrderCancelBloc>()),
         BlocProvider(create: (_) => di.locator<DetailOrderBloc>()),
+        BlocProvider(create: (_) => di.locator<ReviewBloc>()),
+        BlocProvider(create: (_) => di.locator<WishlistBloc>()),
+        BlocProvider(create: (_) => di.locator<GetPresentBloc>()),
+        BlocProvider(create: (_) => di.locator<RegisterTeacherBloc>()),
+        BlocProvider(create: (_) => di.locator<AddDataTeacherBloc>()),
+        BlocProvider(create: (_) => di.locator<MyDataTeacherBloc>()),
+        BlocProvider(create: (_) => di.locator<OrderTeacherBloc>()),
+        BlocProvider(create: (_) => di.locator<NotifBloc>()),
       ],
       child: MaterialApp(
         title: 'Guruku',
@@ -113,19 +148,28 @@ class MyApp extends StatelessWidget {
           colorScheme: kColorScheme,
           textTheme: kTextTheme,
         ),
-        home: const MainPage(),
+        home: SplashScreen(),
         navigatorObservers: [routeObserver],
         onGenerateRoute: (RouteSettings settings) {
           switch (settings.name) {
-            case MainPage.ROUTE_NAME:
-              return MaterialPageRoute(builder: (_) => const MainPage());
+            case SplashScreen.ROUTE_NAME:
+              return MaterialPageRoute(builder: (_) => SplashScreen());
+            case StudentLandingPage.ROUTE_NAME:
+              return MaterialPageRoute(
+                  builder: (_) => const StudentLandingPage());
 
             // <========================================>
             // ====== START ROUTE TO HANDLE AUTH ========
             case LoginPage.ROUTE_NAME:
               return MaterialPageRoute(builder: (_) => const LoginPage());
-            case RegisterPage.ROUTE_NAME:
-              return MaterialPageRoute(builder: (_) => const RegisterPage());
+            case SignUpPage.ROUTE_NAME:
+              return MaterialPageRoute(builder: (_) => const SignUpPage());
+            case SignUpTeacherPage.ROUTE_NAME:
+              return MaterialPageRoute(
+                  builder: (_) => const SignUpTeacherPage());
+            case SignUpStudentPage.ROUTE_NAME:
+              return MaterialPageRoute(
+                  builder: (_) => const SignUpStudentPage());
             case VerifyOtpPage.ROUTE_NAME:
               final otp = settings.arguments as String;
               return MaterialPageRoute(
@@ -159,6 +203,9 @@ class MyApp extends StatelessWidget {
             case TeacherBiologyPage.ROUTE_NAME:
               return MaterialPageRoute(
                   builder: (_) => const TeacherBiologyPage());
+            case NotificationPage.ROUTE_NAME:
+              return MaterialPageRoute(
+                  builder: (_) => const NotificationPage());
             // <========================================>
             // ====== END ROUTE TO HANDLE HOME ==========
 
@@ -174,9 +221,12 @@ class MyApp extends StatelessWidget {
               return MaterialPageRoute(
                 builder: (_) => Pick(id: id),
               );
+            case ListReviewPage.ROUTE_NAME:
+              final id = settings.arguments as int;
+              return MaterialPageRoute(builder: (_) => ListReviewPage(id: id));
 
-            case DetailOrderPage.ROUTE_NAME:
-              return MaterialPageRoute(builder: (_) => const DetailOrderPage());
+            // case DetailOrderPage.ROUTE_NAME:
+            //   return MaterialPageRoute(builder: (_) => const DetailOrderPage());
             case DetailOrderPendingPage.ROUTE_NAME:
               final id = settings.arguments as int;
               return MaterialPageRoute(
@@ -185,6 +235,19 @@ class MyApp extends StatelessWidget {
               final id = settings.arguments as int;
               return MaterialPageRoute(
                   builder: (_) => DetailOrderDonePage(id: id));
+            case DetailPresentPage.ROUTE_NAME:
+              final id = settings.arguments as int;
+              return MaterialPageRoute(
+                  builder: (_) => DetailPresentPage(id: id));
+            case DetailOrderCancelPage.ROUTE_NAME:
+              final id = settings.arguments as int;
+              return MaterialPageRoute(
+                  builder: (_) => DetailOrderCancelPage(id: id));
+
+            case AddReviewPage.ROUTE_NAME:
+              final data = settings.arguments as DetailHistoryOrder;
+              return MaterialPageRoute(
+                  builder: (_) => AddReviewPage(dataHistoryOrder: data));
 
             // <==================================================>
             // ====== END ROUTE TO HANDLE DETAIL TEACHER ==========
@@ -198,8 +261,11 @@ class MyApp extends StatelessWidget {
             case UpdateProfilePage.ROUTE_NAME:
               final profile = settings.arguments as DetailProfileResponse;
               return MaterialPageRoute(
-                builder: (_) => UpdateProfilePage(profile: profile),
-              );
+                  builder: (_) => UpdateProfilePage(profile: profile));
+            case UpdatePage.ROUTE_NAME:
+              final profile = settings.arguments as DetailProfileResponse;
+              return MaterialPageRoute(
+                  builder: (_) => UpdatePage(profile: profile));
             case SettingPage.ROUTE_NAME:
               return MaterialPageRoute(builder: (_) => const SettingPage());
             case UpdateAvatarPage.ROUTE_NAME:
@@ -210,8 +276,47 @@ class MyApp extends StatelessWidget {
             case BookmarkPage.ROUTE_NAME:
               return MaterialPageRoute(builder: (_) => const BookmarkPage());
             case HistoryOrderPage.ROUTE_NAME:
+              final id = settings.arguments as int;
               return MaterialPageRoute(
-                  builder: (_) => const HistoryOrderPage());
+                  builder: (_) => HistoryOrderPage(
+                        initialIndex: id,
+                      ));
+            case WishlistPage.ROUTE_NAME:
+              return MaterialPageRoute(builder: (_) => const WishlistPage());
+
+            case TeacherLandingPage.ROUTE_NAME:
+              return MaterialPageRoute(
+                  builder: (_) => const TeacherLandingPage());
+            case DashboardTeacherPage.ROUTE_NAME:
+              final id = settings.arguments as int;
+              return MaterialPageRoute(
+                  builder: (_) => DashboardTeacherPage(id: id));
+            case HistoryOrderTeacherPage.ROUTE_NAME:
+              final id = settings.arguments as int;
+              return MaterialPageRoute(
+                  builder: (_) => HistoryOrderTeacherPage(id: id));
+            case TeacherPage.ROUTE_NAME:
+              final data = settings.arguments as MyDataTeacherResponse;
+              return MaterialPageRoute(builder: (_) => TeacherPage(data: data));
+            case SchedulePage.ROUTE_NAME:
+              final data = settings.arguments as MyDataTeacherResponse;
+              return MaterialPageRoute(
+                  builder: (_) => SchedulePage(data: data));
+            case MySchedulePage.ROUTE_NAME:
+              final data = settings.arguments as MyDataTeacherResponse;
+              return MaterialPageRoute(
+                  builder: (_) => MySchedulePage(data: data));
+
+            case OrderDetailTeacherPage.ROUTE_NAME:
+              final args = settings.arguments as Map<String, int?>;
+              final idTeacher = args['idTeacher']!;
+              final idOrder = args['idOrder']!;
+              return MaterialPageRoute(
+                builder: (_) => OrderDetailTeacherPage(
+                  idTeacher: idTeacher,
+                  idOrder: idOrder,
+                ),
+              );
 
             // ===== END ROUTE TO HANDLE PROFILE ========
             default:

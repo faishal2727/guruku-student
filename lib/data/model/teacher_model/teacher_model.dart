@@ -19,6 +19,8 @@ class TeacherModel extends Equatable {
   String? lat;
   String? lon;
   String? addess;
+  String? rate;
+  bool? isTeacher;
 
   TeacherModel({
     required this.id,
@@ -36,6 +38,8 @@ class TeacherModel extends Equatable {
     required this.lat,
     required this.lon,
     required this.addess,
+    required this.rate,
+    required this.isTeacher,
   });
 
   factory TeacherModel.fromJson(Map<String, dynamic> json) => TeacherModel(
@@ -51,10 +55,11 @@ class TeacherModel extends Equatable {
         description: json["description"],
         timeExperience: json["time_experience"],
         education: json["education"],
-        // skill: List<String>.from(json["skill"].map((x) => x)),
         lat: json["lat"],
         lon: json["lon"],
         addess: json["address"],
+        rate: json["rate"],
+        isTeacher: json["is_teacher"]
       );
 
   Map<String, dynamic> toJson() => {
@@ -73,6 +78,8 @@ class TeacherModel extends Equatable {
         "lat": lat,
         "lon": lon,
         "address": addess,
+        "rate":rate,
+        "is_teacher": isTeacher,
       };
 
   Teacher toEntity() {
@@ -92,6 +99,8 @@ class TeacherModel extends Equatable {
       lat: lat,
       lon: lon,
       addess: addess,
+      rate: rate,
+      isTeacher: isTeacher,
     );
   }
 
@@ -111,6 +120,7 @@ class TeacherModel extends Equatable {
         education,
         lat,
         lon,
+        rate,
         addess,
       ];
 }

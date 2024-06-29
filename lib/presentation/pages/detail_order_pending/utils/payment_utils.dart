@@ -52,6 +52,5 @@ List<Widget> buildPaymentMethods(BuildContext context, Map<String, dynamic>? pay
       });
     });
   }
-
   return paymentWidgets;
 }

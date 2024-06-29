@@ -3,16 +3,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:guruku_student/common/constants.dart';
-import 'package:guruku_student/common/shared_widgets/empty_section.dart';
 import 'package:guruku_student/common/shared_widgets/error_section.dart';
 import 'package:guruku_student/common/themes/themes.dart';
 import 'package:guruku_student/presentation/blocs/history_order_success/order_success_bloc.dart';
+import 'package:guruku_student/presentation/pages/detail_order_done/screens/detail_order_done_page.dart';
 import 'package:guruku_student/presentation/pages/schedule/utils/meeting.dart';
 import 'package:guruku_student/presentation/pages/schedule/utils/meeting_data_source.dart';
 import 'package:intl/intl.dart';
 import 'package:lottie/lottie.dart';
 import 'package:syncfusion_flutter_calendar/calendar.dart';
-
 
 class SchedulePage extends StatefulWidget {
   static const ROUTE_NAME = '/schedule_page';
@@ -34,7 +33,7 @@ class _SchedulePageState extends State<SchedulePage> with RouteAware {
     });
   }
 
-   void _retry() async {
+  void _retry() async {
     setState(() {
       _isLoading = true;
     });
@@ -44,7 +43,6 @@ class _SchedulePageState extends State<SchedulePage> with RouteAware {
       _isLoading = false;
     });
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -61,22 +59,30 @@ class _SchedulePageState extends State<SchedulePage> with RouteAware {
       body: BlocBuilder<OrderSuccessBloc, OrderSuccessState>(
         builder: (context, state) {
           if (state is OrderSuccessLoading) {
-           return Center(
+            return Center(
               child: Lottie.asset(
                 'assets/lotties/loading_state.json',
                 height: 180,
                 width: 180,
               ),
             );
-          } else if (state is OrderSuccessHasData) {
-            _meetings = state.result
-                .map((dataHistoryOrder) => Meeting(
-                      "Les ${dataHistoryOrder.teacher.typeTeaching}",
-                      dataHistoryOrder.meetingTime ?? DateTime.now(),
-                    ))
-                .toList();
+          } else if (state is OrderSuccessHasData ||
+              state is OrderSuccessEmpty) {
+            if (state is OrderSuccessHasData) {
+              _meetings = state.result
+                  .map((dataHistoryOrder) => Meeting(
+                        dataHistoryOrder.id, // Update this line
+                        "Les ${dataHistoryOrder.teacher.typeTeaching}",
+                        dataHistoryOrder.meetingTime ?? DateTime.now(),
+                      ))
+                  .toList();
+            } else {
+              _meetings =
+                  []; // Handle OrderSuccessEmpty by setting meetings to an empty list
+            }
 
             return SfCalendar(
+              onTap: calendarTapped,
               dataSource: MeetingDataSource(_meetings),
               view: CalendarView.schedule,
               scheduleViewMonthHeaderBuilder: (BuildContext context,
@@ -117,8 +123,6 @@ class _SchedulePageState extends State<SchedulePage> with RouteAware {
               onPressed: _retry,
               message: state.message,
             );
-          } else if (state is OrderSuccessEmpty) {
-            return const EmptySection();
           } else {
             return const Center(
               child: Text('Error Get History'),
@@ -129,17 +133,17 @@ class _SchedulePageState extends State<SchedulePage> with RouteAware {
     );
   }
 
-  // void calendarTapped(CalendarTapDetails details) {
-  //   if (details.targetElement == CalendarElement.appointment) {
-  //     final Meeting meeting = details.appointments!.first;
-  //     Navigator.push(
-  //       context,
-  //       MaterialPageRoute(
-  //         builder: (context) => ScheduleDetailPage(meeting: meeting),
-  //       ),
-  //     );
-  //   }
-  // }
+  void calendarTapped(CalendarTapDetails details) {
+    if (details.targetElement == CalendarElement.appointment) {
+      final Meeting meeting = details.appointments!.first;
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => DetailOrderDonePage(id: meeting.id),
+        ),
+      );
+    }
+  }
 
   String _getBackgroundImageForMonth(int month) {
     switch (month) {

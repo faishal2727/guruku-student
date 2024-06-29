@@ -7,7 +7,7 @@ import 'package:guruku_student/common/shared_widgets/empty_section.dart';
 import 'package:guruku_student/common/shared_widgets/error_section.dart';
 import 'package:guruku_student/presentation/blocs/teacher_biology/teacher_biology_bloc.dart';
 import 'package:guruku_student/presentation/pages/home/widgets/card_teacher_vertical.dart';
-import 'package:guruku_student/presentation/pages/home/widgets/shimmer_card_vertical.dart';
+import 'package:guruku_student/presentation/pages/home/widgets/shimmer_card_hirozontal.dart';
 
 class TeacherBiologyPage extends StatefulWidget {
   static const ROUTE_NAME = '/teacher_biology';
@@ -43,7 +43,7 @@ class _TeacherBiologyPageState extends State<TeacherBiologyPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Guru Bahasa Biology'),
+        title: const Text('Guru Biology'),
         backgroundColor: pr11,
       ),
       body: Padding(
@@ -52,7 +52,7 @@ class _TeacherBiologyPageState extends State<TeacherBiologyPage> {
           builder: (context, state) {
             if (state is TeacherBiologyLoading) {
               return const Center(
-                child: CardShimmerVertical(),
+                child: ShimmerCardHorizontal(),
               );
             } else if (state is TeacherBiologyHasData) {
               return ListView.builder(

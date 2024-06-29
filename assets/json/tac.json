@@ -1,0 +1,58 @@
+{
+    "syarat_dan_ketentuan": {
+      "definisi": [
+        {
+          "title": "Guruku",
+          "content": [
+            "Guruku adalah suatu aplikasi terbatas yang menjalankan kegiatan usaha mobile app, yakni situs pencarian dan pemesan guru les yang disediakan oleh guru yang terdaftar."
+          ]
+        },
+        {
+          "title": "Syarat & Kententuan",
+          "content": [
+            "Syarat & kententuan adalah perjanjian pengguna dan Guruku yang berisikan sperangkat peraturan yang mengatur hak, kewajiban, tanggung jawab pengguna dan Guruku, serta tata cara penggunaan sistem layanan Guruku."
+          ]
+        },
+        {
+          "title": "Pengguna",
+          "content": [
+            "Pengguna adalah pihak yang menggunakan layanan Guruku, termasuk namun tidak terbatas pada siswa dan guru."
+          ]
+        },
+        {
+          "title": "Siswa atau Pemesan",
+          "content": [
+            "Siswa atau pemesan adalah pengguna terdaftar yang melakukan permintaan atas jasa yang disediakan oleh guru di Aplikasi Guruku."
+          ]
+        },
+        {
+          "title": "Guru",
+          "content": [
+            "Gur adalah pengguna terdaftar yang melakukan tindakan buka atau melakukan penawaran atas suatu jasa mengajar kepada para siswa / pemesan Situs Guruku.",
+            "Jasa adalah benda yang yang tak berwujud memenuhi kriteria dalam hal mengajar siswa."
+          ]
+        }
+      ],
+      "guru": [
+        {
+          "title": "Guru",
+          "rules": [
+            "Guru dilarang memanipulasi berkas-berkas penunjang dengan tujuan apapun.",
+            "Guru dilarang melakukan penawaran / berdagang Barang terlarang.",
+            "Guru wajib memberikan foto, berkas dan informasi mengenai jasa yang disediakan dengan lengkap dan jelas sesuai dengan kondisi yang ada. Apabila terdapat ketikasesuaian anatar foto, berkas dan informasi lainnya yang diunggah oleh guru dengan apa yang diterima oleh siswa atau pemesan, maka Guruku berhak membatalkan/menahan dana transaksi.",
+            "Guruku berwenang untuk melakukan tindakan-tindakan yang diperlukan apabila diketahui terdapat transaksi menggunakan metode split payment, termasuk namun tidak terbatas pada pembatalan transaksi, penyesuaian reputasi guru, penghapusan jasa.",
+            "Guru wajib datang maksimal 15 menit setelah jam pembelajaran dimulai, apabila tidak hadir atau melebihi 15 menit awal, maka guru dianggap tidak hadir, dana bisa dikembalikan ke siswa."
+          ]
+        }
+      ],
+      "siswa": [
+        {
+          "title": "Siswa atau Pemesan",
+          "rules": [
+            "Siswa atau pemesan wajib bertransaksi melalui prosedur transaksi yang telah ditetapkan oleh Guruku. Siswa atau pemesan melakukan pembayaran dengan menggunakan metode pembayaran yang sebelumnya telah dipilih oleh Siswa atau pemesan, dan kemudian Guruku akan meneruskan dana ke pihak guru apabila tahapan transaksi jual beli pada sistem Guruku telah selesai."
+          ]
+        }
+      ]
+    }
+  }
+  

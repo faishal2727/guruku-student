@@ -6,6 +6,11 @@ abstract class ProfileEvent extends Equatable {
   List<Object> get props => [];
 }
 
+class OnReloadProfileEvent extends ProfileEvent {
+  const OnReloadProfileEvent();
+}
+
+
 class OnProfileEvent extends ProfileEvent {}
 
 class OnUpdateProfileEvent extends ProfileEvent {

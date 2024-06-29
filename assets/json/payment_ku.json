@@ -1,0 +1,135 @@
+{
+    "data": [
+        {
+            "type": "bank_transfer",
+            "variant": [
+                {
+                    "name": "bri",
+                    "payment_method": [
+                        {
+                            "mBanking": [
+                                "1. Buka aplikasi BRImo Anda, lalu login dengan akun Anda.",
+                                "2. Pilih Pembayaran > BRIVA.",
+                                "3. Masukkan nomor Virtual Account Anda [va_numbers] kemudian tap OK.",
+                                "4. Pada ringkasan detail pembayaran, pastikan detail pembayaran sudah benar: Nama Merchant (Yab Company) diikuti dengan total tagihan Anda.",
+                                "5. Masukkan PIN Anda.",
+                                "6. Setelah pembayaran Anda selesai, pemesanan Anda akan diproses. Harap simpan bukti pembayaran sebagai referensi Anda."
+                            ]
+                        },
+                        {
+                            "atm": [
+                                "1. Masukkan kartu ATM BRI Anda, kemudian masukkan PIN Anda.",
+                                "2. Pilih Menu Lainnya > Pembayaran.",
+                                "3. Pilih Pembayaran Lainnya > BRIVA.",
+                                "4. Masukkan nomor Virtual Account Anda [va_numbers] kemudian tap OK.",
+                                "5. Pada ringkasan detail pembayaran, pastikan detail pembayaran sudah benar: Nama Merchant (Yab Company) diikuti dengan total tagihan Anda.",
+                                "6. Selesaikan pembayaran sesuai dengan instruksi yang diberikan.",
+                                "7. Setelah pembayaran Anda selesai, pemesanan Anda akan diproses. Harap simpan bukti pembayaran sebagai referensi Anda."
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "name": "bni",
+                    "payment_method": [
+                        {
+                            "mBanking": [
+                                "1. Buka aplikasi BNI Mobile Anda, lalu login dengan akun Anda.",
+                                "2. Pilih Transfer > Virtual Account Billing. Kemudian pilih akun debit Anda.",
+                                "3. Masukkan nomor Virtual Account Anda [va_numbers] kemudian tap OK.",
+                                "4. Pada ringkasan detail pembayaran, pastikan informasi sudah benar: Nama Merchant (Guruku Company) diikuti dengan total tagihan Anda.",
+                                "5. Masukkan PIN Anda.",
+                                "6. Setelah pembayaran Anda selesai, dan pemesanan Anda sedang diproses. Harap simpan bukti pembayaran sebagai referensi Anda."
+                            ]
+                        },
+                        {
+                            "iBanking": [
+                                "1. Buka halaman BNI Internet Banking (https://ibank.bni.co.id) dari browser Anda, kemudian login dengan akun Anda.",
+                                "2. Pilih Transfer > Virtual Account Billing.",
+                                "3. Masukkan nomor virtual account Anda [va_numbers], dan pilih OK.",
+                                "4. Pada ringkasan detail pembayaran, pastikan detail pembayaran sudah benar: Nama Merchant (Yab Company) diikuti dengan total tagihan Anda.",
+                                "5. Masukkan kode token autentikasi.",
+                                "6. Setelah pembayaran Anda selesai, dan pemesanan Anda sedang diproses. Harap simpan bukti pembayaran sebagai referensi Anda."
+                            ]
+                        },
+                        {
+                            "atm": [
+                                "1. Masukkan kartu BNI Anda, kemudian masukkan PIN Anda.",
+                                "2. Pilih Transaksi Lain > Transfer.",
+                                "3. Pilih jenis rekening yang Anda gunakan untuk mentransfer (misalnya dari rekening Tabungan).",
+                                "4. Pilih Virtual Account Billing, kemudian masukkan nomor virtual account Anda [va_numbers] dan tekan OK.",
+                                "5. Pada ringkasan detail pembayaran, pastikan detail pembayaran sudah benar: Nama Merchant (Yab Company) diikuti dengan total tagihan Anda.",
+                                "6. Selesaikan pembayaran sesuai dengan instruksi yang diberikan.",
+                                "7. Setelah pembayaran Anda selesai, dan pemesanan Anda sedang diproses. Harap simpan bukti pembayaran sebagai referensi Anda."
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "name": "bca",
+                    "payment_method": [
+                        {
+                            "mBanking": [
+                                "1. Buka aplikasi BCA Mobile Anda, pilih m-BCA, lalu masukkan kode akses Anda.",
+                                "2. Tap m-Transfer > BCA Virtual Account.",
+                                "3. Masukkan nomor Virtual Account Anda [va_numbers] kemudian tap OK.",
+                                "4. Pada halaman detail pembayaran, pastikan informasi sudah benar: Nama Merchant (Yab Company) diikuti dengan total tagihan Anda.",
+                                "5. Masukkan PIN m-BCA Anda.",
+                                "6. Pembayaran selesai, dan pemesanan Anda sedang diproses. Harap simpan bukti pembayaran sebagai referensi Anda."
+                            ]
+                        },
+                        {
+                            "iBanking": [
+                                "1. Buka halaman BCA Internet Banking (https://ibank.klikbca.com) dari browser Anda, lalu login dengan akun Anda.",
+                                "2. Pilih menu Transfer Dana > Transfer ke BCA Virtual Account.",
+                                "3. Di kolom 'No. Virtual Account', masukkan nomor [va_numbers], dan pilih OK.",
+                                "4. Pada halaman konfirmasi, pastikan detail pembayaran sudah benar: Nama Merchant (Yab Company) diikuti dengan total tagihan Anda.",
+                                "5. Masukkan kode dari token Anda.",
+                                "6. Pembayaran selesai, dan pemesanan Anda sedang diproses. Harap simpan bukti pembayaran sebagai referensi Anda."
+                            ]
+                        },
+                        {
+                            "atm": [
+                                "1. Masukkan kartu ATM BCA Anda, lalu masukkan PIN Anda.",
+                                "2. Pilih menu Transaksi Lainnya > Transfer > Ke BCA Virtual Account.",
+                                "3. Masukkan nomor Virtual Account Anda [va_numbers] dan pilih OK.",
+                                "4. Pada halaman konfirmasi, pastikan detail pembayaran sudah benar: Nama Merchant (Yab Company) diikuti dengan total tagihan Anda.",
+                                "5. Selesaikan pembayaran sesuai dengan instruksi yang diberikan.",
+                                "6. Pembayaran selesai, dan pemesanan Anda sedang diproses. Harap simpan bukti pembayaran sebagai referensi Anda."
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "type": "cstore",
+            "variant": [
+                {
+                    "name": "indomaret",
+                    "payment_method": [
+                        {
+                            "indomaret": [
+                                "Inform the Indomaret cashier that you want to make a payment for a Risol transaction.",
+                                "Show your Payment Code (not Traveloka Booking ID) to the cashier.",
+                                "An extra fee of Rp2.500/transaction, which is excluded from the total price, will be charged by Indomaret."
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "name": "alafamart",
+                    "payment_method": [
+                        {
+                            "indomaret": [
+                                "Inform the Indomaret cashier that you want to make a payment for a Risol transaction.",
+                                "Show your Payment Code (not Traveloka Booking ID) to the cashier.",
+                                "An extra fee of Rp2.500/transaction, which is excluded from the total price, will be charged by Indomaret."
+                            ]
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

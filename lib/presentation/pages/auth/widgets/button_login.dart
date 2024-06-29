@@ -1,9 +1,7 @@
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:guruku_student/common/constants.dart';
 import 'package:guruku_student/common/enum_sate.dart';
-import 'package:guruku_student/common/themes/themes.dart';
 import 'package:guruku_student/presentation/blocs/login/login_bloc.dart';
 
 class ButtonLogin extends StatelessWidget {
@@ -40,7 +38,10 @@ class ButtonLogin extends StatelessWidget {
                     children: [
                       Text(
                         "Loading Login",
-                        style: AppTextStyle.body3.setMedium().copyWith(color: pr11),
+                        style: Theme.of(context)
+                            .textTheme
+                            .titleMedium!
+                            .copyWith(fontSize: 16),
                       ),
                       AnimatedTextKit(
                         animatedTexts: [
@@ -51,10 +52,10 @@ class ButtonLogin extends StatelessWidget {
                   )
                 : Text(
                     title,
-                    style: Theme.of(context).textTheme.titleMedium!.copyWith(
-                          fontSize: 16,
-                          color: Colors.white,
-                        ),
+                    style: Theme.of(context)
+                        .textTheme
+                        .titleMedium!
+                        .copyWith(fontSize: 16, color: Colors.white),
                   ),
           );
         },

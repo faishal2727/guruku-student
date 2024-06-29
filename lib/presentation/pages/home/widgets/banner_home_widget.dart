@@ -32,58 +32,61 @@ class BannerHomeWidget extends StatelessWidget {
       },
     );
 
-    return Column(
-      children: [
-        CarouselSlider.builder(
-          itemCount: items.length,
-          itemBuilder: (context, index, realIndex) {
-            return Card(
-              color: AppColors.primary.pr13,
-              surfaceTintColor: AppColors.primary.pr13,
-              clipBehavior: Clip.hardEdge,
-              elevation: 8,
-              child: Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Expanded(
-                      flex: 2,
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            'Selamat Datang \ndi Guruku',
-                            style: AppTextStyle.heading5
-                                .setSemiBold()
-                                .copyWith(color: AppColors.neutral.ne01),
-                          ),
-                          const SizedBox(height: 8),
-                          Text(
-                            'Cari guru terbaikmu dan \nraih prestasi tertiggi ',
-                            style: AppTextStyle.body4
-                                .setRegular()
-                                .copyWith(color: AppColors.neutral.ne01),
-                          )
-                        ],
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 16),
+      child: Column(
+        children: [
+          CarouselSlider.builder(
+            itemCount: items.length,
+            itemBuilder: (context, index, realIndex) {
+              return Card(
+                color: AppColors.primary.pr13,
+                surfaceTintColor: AppColors.primary.pr13,
+                clipBehavior: Clip.hardEdge,
+                elevation: 8,
+                child: Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Expanded(
+                        flex: 2,
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              'Selamat Datang \ndi Guruku',
+                              style: AppTextStyle.heading5
+                                  .setSemiBold()
+                                  .copyWith(color: AppColors.neutral.ne01),
+                            ),
+                            const SizedBox(height: 8),
+                            Text(
+                              'Cari guru terbaikmu dan \nraih prestasi tertiggi ',
+                              style: AppTextStyle.body4
+                                  .setRegular()
+                                  .copyWith(color: AppColors.neutral.ne01),
+                            )
+                          ],
+                        ),
                       ),
-                    ),
-                    Expanded(
-                        flex: 1,
-                        child: SvgPicture.asset('assets/images/pana.svg'))
-                  ],
+                      Expanded(
+                          flex: 1,
+                          child: SvgPicture.asset('assets/images/pana.svg'))
+                    ],
+                  ),
                 ),
-              ),
-            );
-          },
-          options: carouselOptions,
-        ),
-        const SizedBox(
-          height: 8.0,
-        ),
-        _Indicator(itemCount: items.length),
-      ],
+              );
+            },
+            options: carouselOptions,
+          ),
+          const SizedBox(
+            height: 8.0,
+          ),
+          _Indicator(itemCount: items.length),
+        ],
+      ),
     );
   }
 }

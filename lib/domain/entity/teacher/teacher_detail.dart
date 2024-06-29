@@ -1,6 +1,7 @@
 // ignore_for_file: must_be_immutable
 
 import 'package:equatable/equatable.dart';
+import 'package:guruku_student/domain/entity/auth/student.dart';
 import 'package:guruku_student/domain/entity/teacher/histories.dart';
 import 'package:guruku_student/domain/entity/teacher/schedule.dart';
 
@@ -12,7 +13,7 @@ class TeacherDetail extends Equatable {
   String? avatar;
   String? picture;
   String? phone;
-  List<Schedule>? schedule; 
+  List<Schedule>? schedule;
   String? typeTeaching;
   String? price;
   String? description;
@@ -21,7 +22,13 @@ class TeacherDetail extends Equatable {
   String? lat;
   String? lon;
   String? address;
+  String? rate;
   List<Histories> histories;
+  int? userId;
+  Student? student;
+  String? gelar;
+  String? jurusan;
+  String? tahunLulus;
 
   TeacherDetail({
     required this.id,
@@ -40,7 +47,13 @@ class TeacherDetail extends Equatable {
     required this.lat,
     required this.lon,
     required this.address,
+    required this.rate,
     required this.histories,
+    required this.userId,
+    required this.student,
+    required this.gelar,
+    required this.jurusan,
+    required this.tahunLulus,
   });
 
   @override
@@ -61,6 +74,12 @@ class TeacherDetail extends Equatable {
         lat,
         lon,
         address,
+        rate,
         histories,
+        userId,
+        student,
+        gelar,
+        jurusan,
+        tahunLulus
       ];
 }

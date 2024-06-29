@@ -66,6 +66,8 @@ class MyTextFormField extends StatelessWidget {
               suffixIcon: suffixIcon,
             ),
             validator: validator,
+            style:
+                Theme.of(context).textTheme.titleMedium!.copyWith(fontSize: 16),
           ),
         ],
       ),

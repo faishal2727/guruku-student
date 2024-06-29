@@ -14,6 +14,7 @@ const Color pr15 = Color(0xFFDEEFFD);
 const Color pr11 = Color(0xFFFFFFFF);
 const Color pr01 = Color(0xFFEDEBF5);
 final Color pr14 =  Color(0xFF90CAF9);
+final Color pr16 = Color(0xFFEDEBF5);
 
 // text style
 final TextStyle kHeading5 =

@@ -7,7 +7,7 @@ import 'package:guruku_student/common/shared_widgets/empty_section.dart';
 import 'package:guruku_student/common/shared_widgets/error_section.dart';
 import 'package:guruku_student/presentation/blocs/teacher_indonesian/teacher_indo_bloc.dart';
 import 'package:guruku_student/presentation/pages/home/widgets/card_teacher_vertical.dart';
-import 'package:guruku_student/presentation/pages/home/widgets/shimmer_card_vertical.dart';
+import 'package:guruku_student/presentation/pages/home/widgets/shimmer_card_hirozontal.dart';
 
 class TeacherIndonesianPage extends StatefulWidget {
   static const ROUTE_NAME = '/teacher_indonesian';
@@ -52,7 +52,7 @@ class _TeacherIndonesianPageState extends State<TeacherIndonesianPage> {
           builder: (context, state) {
             if (state is TeacherIndoLoading) {
               return const Center(
-                child: CardShimmerVertical(),
+                child: ShimmerCardHorizontal(),
               );
             } else if (state is TeacherIndoHasData) {
               return ListView.builder(

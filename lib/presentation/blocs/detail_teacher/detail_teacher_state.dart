@@ -2,36 +2,87 @@
 
 part of 'detail_teacher_bloc.dart';
 
-abstract class DetailTeacherState extends Equatable {
-  const DetailTeacherState();
-  @override
-  List<Object> get props => [];
-}
-
-class DetailTeacherLoading extends DetailTeacherState {
-  @override
-  List<Object> get props => [];
-}
-
-class DetailTeacherError extends DetailTeacherState {
+class DetailTeacherState extends Equatable {
+  final TeacherDetail? teacher;
+  final RequestStateDetail state;
   final String message;
+  final String wishlistMessage;
+  final bool isAddedToWishlist;
 
-  DetailTeacherError(this.message);
+  const DetailTeacherState({
+    this.teacher,
+    required this.state,
+    required this.message,
+    required this.wishlistMessage,
+    required this.isAddedToWishlist,
+  });
 
   @override
-  List<Object> get props => [message];
+  List<Object?> get props => [
+        teacher,
+        state,
+        message,
+        wishlistMessage,
+        isAddedToWishlist,
+      ];
+
+  DetailTeacherState copyWith({
+    TeacherDetail? teacher,
+    RequestStateDetail? state,
+    String? message,
+    String? wishlistMessage,
+    bool? isAddedToWishlist,
+  }) {
+    return DetailTeacherState(
+      teacher: teacher ?? this.teacher,
+      state: state ?? this.state,
+      message: message ?? this.message,
+      wishlistMessage: wishlistMessage ?? this.wishlistMessage,
+      isAddedToWishlist: isAddedToWishlist ?? this.isAddedToWishlist,
+    );
+  }
+
+  factory DetailTeacherState.initial() {
+    return const DetailTeacherState(
+      teacher: null,
+      state: RequestStateDetail.empty,
+      message: '',
+      wishlistMessage: '',
+      isAddedToWishlist: false,
+    );
+  }
 }
 
-class DetailTeacherHasData extends DetailTeacherState {
-  final TeacherDetail result;
+// abstract class DetailTeacherState extends Equatable {
+//   const DetailTeacherState();
+//   @override
+//   List<Object> get props => [];
+// }
 
-  DetailTeacherHasData(this.result);
+// class DetailTeacherLoading extends DetailTeacherState {
+//   @override
+//   List<Object> get props => [];
+// }
 
-  @override
-  List<Object> get props => [result];
-}
+// class DetailTeacherError extends DetailTeacherState {
+//   final String message;
 
-class DetailTeacherEmpty extends DetailTeacherState {
-  @override
-  List<Object> get props => [];
-}
+//   DetailTeacherError(this.message);
+
+//   @override
+//   List<Object> get props => [message];
+// }
+
+// class DetailTeacherHasData extends DetailTeacherState {
+//   final TeacherDetail result;
+
+//   DetailTeacherHasData(this.result);
+
+//   @override
+//   List<Object> get props => [result];
+// }
+
+// class DetailTeacherEmpty extends DetailTeacherState {
+//   @override
+//   List<Object> get props => [];
+// }

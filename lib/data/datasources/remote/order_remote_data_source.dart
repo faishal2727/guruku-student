@@ -17,6 +17,7 @@ abstract class OrderRemoteDataSource {
   Future<List<DataHistoryOrderModel>> historyOrderPending(String token);
   Future<List<DataHistoryOrderModel>> historyOrderSuccess(String token);
   Future<List<DataHistoryOrderModel>> historyOrderCancel(String token);
+  Future<List<DataHistoryOrderModel>> getAllPresent(String token);
   Future<DataDetailHistoryOrderModel> getDetailOrder(String token, int id);
 }
 
@@ -77,7 +78,7 @@ class OrderRemoteDataSourceImpl implements OrderRemoteDataSource {
   @override
   Future<List<DataHistoryOrderModel>> historyOrderSuccess(String token) async {
     final response = await client.get(
-      Uri.parse("https://faizal.simagang.my.id/faisol/v1/user/history/success"),
+      Uri.parse("https://faizal.simagang.my.id/faisol/v1/user/uyeku?payment_status=success&present=belum"),
       headers: {
         'Authorization': 'Bearer $token',
       },
@@ -97,13 +98,33 @@ class OrderRemoteDataSourceImpl implements OrderRemoteDataSource {
   @override
   Future<List<DataHistoryOrderModel>> historyOrderCancel(String token) async {
     final response = await client.get(
-      Uri.parse("https://faizal.simagang.my.id/faisol/v1/user/history/cancel"),
+      Uri.parse("https://faizal.simagang.my.id/faisol/v1/user/history/expired"),
       headers: {
         'Authorization': 'Bearer $token',
       },
     );
 
     debugPrint('Response status: ${response.statusCode}');
+    debugPrint('Response body: ${response.body}');
+
+    if (response.statusCode == 200) {
+      return HistoryOrderResponseModel.fromJson(json.decode(response.body))
+          .data;
+    } else {
+      throw ServerException();
+    }
+  }
+
+  @override
+  Future<List<DataHistoryOrderModel>> getAllPresent(String token) async {
+    final response = await client.get(
+      Uri.parse("https://faizal.simagang.my.id/faisol/v1/user/uyeku?payment_status=success&present=hadir"),
+      headers: {
+        'Authorization': 'Bearer $token',
+      },
+    );
+
+    debugPrint('Response COBA: ${response.statusCode}');
     debugPrint('Response body: ${response.body}');
 
     if (response.statusCode == 200) {

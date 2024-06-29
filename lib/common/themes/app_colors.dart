@@ -127,6 +127,7 @@ class SuccessColor {
   final Color scs09 = const Color(0xFF4B7728);
   final Color scs10 = const Color(0xFF0CA678);
   final Color scs11 = const Color(0xFFE7F6F2);
+  final Color scs12 = const Color.fromARGB(255, 61, 213, 10);
 }
 
 class DangerColor {

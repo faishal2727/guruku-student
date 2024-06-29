@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:guruku_student/common/constants.dart';
+import 'package:guruku_student/common/enum_sate.dart';
 import 'package:guruku_student/common/themes/themes.dart';
 import 'package:guruku_student/domain/entity/teacher/detail_profile_response.dart';
 import 'package:guruku_student/presentation/blocs/profile/profile_bloc.dart';
@@ -81,6 +82,7 @@ class _UpdateProfilePageState extends State<UpdateProfilePage> {
         ),
       );
     }
+    _handleUpdateSuccess();
   }
 
   DateTime? _parseDate(String date) {
@@ -112,6 +114,11 @@ class _UpdateProfilePageState extends State<UpdateProfilePage> {
     }
   }
 
+  void _handleUpdateSuccess() {
+    Navigator.pop(context);
+    context.read<ProfileBloc>().add(OnProfileEvent());
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -125,7 +132,7 @@ class _UpdateProfilePageState extends State<UpdateProfilePage> {
       ),
       body: BlocListener<ProfileBloc, ProfileState>(
         listener: (context, state) {
-          if (state is ProfileError) {
+          if (state.stateAvatar == ReqStateAvatar.error) {
             ScaffoldMessenger.of(context)
               ..removeCurrentSnackBar()
               ..showSnackBar(
@@ -137,7 +144,7 @@ class _UpdateProfilePageState extends State<UpdateProfilePage> {
                   backgroundColor: Colors.red[400],
                 ),
               );
-          } else if (state is UpdateProfileSuccess) {
+          } else if (state.stateAvatar == ReqStateAvatar.loaded) {
             ScaffoldMessenger.of(context).showSnackBar(
               const SnackBar(
                 content: Text(
@@ -147,7 +154,6 @@ class _UpdateProfilePageState extends State<UpdateProfilePage> {
                 backgroundColor: Colors.green,
               ),
             );
-            Navigator.pop(context);
           }
         },
         child: SingleChildScrollView(
@@ -330,7 +336,7 @@ class _UpdateProfilePageState extends State<UpdateProfilePage> {
                                   placemark = place;
                                 });
                                 defineMarker(addOnTech, street, address);
-              
+
                                 final marker = Marker(
                                   markerId: const MarkerId("source"),
                                   position: addOnTech,

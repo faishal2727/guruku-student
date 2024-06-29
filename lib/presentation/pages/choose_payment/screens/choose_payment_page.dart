@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:guruku_student/common/constants.dart';
 import 'package:guruku_student/common/themes/themes.dart';
 
 class ChoosePaymentPage extends StatefulWidget {
@@ -76,7 +75,7 @@ class _ChoosePaymentPageState extends State<ChoosePaymentPage> {
                       color: AppColors.neutral.ne01,
                       elevation: 1,
                       child: ListTile(
-                        leading: const Icon(Icons.account_balance, color: pr13),
+                          leading: Image.asset("assets/payment/bri.webp", width: 38,),
                         title: Text(
                           'Bank BRI',
                           style: Theme.of(context)
@@ -98,7 +97,7 @@ class _ChoosePaymentPageState extends State<ChoosePaymentPage> {
                       color: AppColors.neutral.ne01,
                       elevation: 1,
                       child: ListTile(
-                        leading: const Icon(Icons.account_balance, color: pr13),
+                        leading: Image.asset("assets/payment/bca.webp"),
                         title: Text(
                           'Bank BCA',
                           style: Theme.of(context)
@@ -131,7 +130,7 @@ class _ChoosePaymentPageState extends State<ChoosePaymentPage> {
                 ),
                 child: ExpansionTile(
                   title: Text(
-                    'Agen',
+                    'CSTORE',
                     style: Theme.of(context)
                         .textTheme
                         .headlineSmall!
@@ -153,8 +152,8 @@ class _ChoosePaymentPageState extends State<ChoosePaymentPage> {
                         ),
                         onTap: () {
                           Navigator.pop(context, {
-                            'name': 'Agen - Indomaret',
-                            'paymentType': 'agent',
+                            'name': 'cstore - Indomaret',
+                            'paymentType': 'cstore',
                             'bankVa': 'indomaret'
                           });
                         },
@@ -174,8 +173,8 @@ class _ChoosePaymentPageState extends State<ChoosePaymentPage> {
                         ),
                         onTap: () {
                           Navigator.pop(context, {
-                            'name': 'Agen - Alfamart',
-                            'paymentType': 'agent',
+                            'name': 'cstore - Alfamart',
+                            'paymentType': 'cstore',
                             'bankVa': 'alfamart'
                           });
                         },

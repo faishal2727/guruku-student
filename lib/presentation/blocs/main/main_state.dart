@@ -2,29 +2,30 @@
 part of 'main_bloc.dart';
 
 class MainState extends Equatable {
-  final int tabIndex;
+  final String role;
   final bool isLogin;
 
   const MainState({
-    required this.tabIndex,
+    required this.role,
     required this.isLogin,
   });
 
   MainState copyWith({
     int? tabIndex,
+    String? role,
     bool? isLogin,
   }) {
     return MainState(
-      tabIndex: tabIndex ?? this.tabIndex,
+      role: role ?? this.role,
       isLogin: isLogin ?? this.isLogin,
     );
   }
 
   factory MainState.initial() => const MainState(
-        tabIndex: 0,
+        role: '',
         isLogin: false,
       );
 
   @override
-  List<Object> get props => [tabIndex, isLogin];
+  List<Object> get props => [role, isLogin];
 }

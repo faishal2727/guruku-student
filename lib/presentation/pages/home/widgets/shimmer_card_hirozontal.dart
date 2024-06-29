@@ -7,13 +7,20 @@ class ShimmerCardHorizontal extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 200,
-      child: ListView.builder(
-        itemCount: 8,
-        scrollDirection: Axis.horizontal,
+ 
+      child: GridView.builder(
+        shrinkWrap: true,
+        itemCount: 6,
+        physics: const NeverScrollableScrollPhysics(),
+        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: 2,
+          childAspectRatio: 0.75,
+          crossAxisSpacing: 4,
+          mainAxisSpacing: 4,
+        ),
         itemBuilder: (context, index) {
           return const Padding(
-            padding: EdgeInsets.symmetric(horizontal: 8),
+            padding: EdgeInsets.symmetric(horizontal: 8, vertical: 8),
             child: ShimerCard(),
           );
         },
@@ -34,6 +41,7 @@ class ShimerCard extends StatelessWidget {
         baseColor: const Color.fromARGB(255, 226, 225, 225),
         highlightColor: const Color.fromARGB(255, 201, 201, 201),
         child: Container(
+          padding: const EdgeInsets.only(top: 8),
           width: 100.0,
           height: 100.0,
           decoration: BoxDecoration(

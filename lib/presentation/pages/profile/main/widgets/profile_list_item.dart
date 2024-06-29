@@ -25,15 +25,15 @@ class ProfileListItem extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Container(
-                height: 50,
-                width: 50,
+                height: 40,
+                width: 40,
                 decoration: ShapeDecoration(
                   shape: const CircleBorder(),
                   color: AppColors.primary.pr14,
                 ),
                 child: Icon(
                   icon,
-                  size: 25,
+                  size: 20,
                   color: AppColors.primary.pr13,
                 ),
               ),

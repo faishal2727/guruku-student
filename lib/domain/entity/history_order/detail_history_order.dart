@@ -18,9 +18,12 @@ class DetailHistoryOrder extends Equatable {
   final DateTime? expired;
   final String? va;
   final String? bank;
+  final int? reviewId;
   final DateTime createdAt;
+  final DateTime updatedAt;
   final Student student;
   final Teacher teacher;
+  final String kehadiran;
 
   const DetailHistoryOrder({
     required this.id,
@@ -38,9 +41,12 @@ class DetailHistoryOrder extends Equatable {
     required this.expired,
     required this.va,
     required this.bank,
+    required this.reviewId,
     required this.createdAt,
+    required this.updatedAt,
     required this.student,
     required this.teacher,
+    required this.kehadiran,
 
   });
 
@@ -61,8 +67,11 @@ class DetailHistoryOrder extends Equatable {
         expired,
         va,
         bank,
+        reviewId,
         createdAt,
+        updatedAt,
         student,
         teacher,
+        kehadiran,
       ];
 }

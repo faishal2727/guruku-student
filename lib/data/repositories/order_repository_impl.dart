@@ -76,6 +76,19 @@ class OrderRepositoryImpl implements OrderRepository {
   }
 
   @override
+  Future<Either<Failure, List<DataHistoryOrder>>> getAllPresent(
+      String token) async {
+    try {
+      final result = await remoteDataSource.getAllPresent(token);
+      return Right(result.map((model) => model.toEntity()).toList());
+    } on ServerException {
+      return const Left(ServerFailure(''));
+    } on SocketException {
+      return const Left(ConnectionFailure('Failed to connect to the network'));
+    }
+  }
+
+  @override
   Future<Either<Failure, DetailHistoryOrder>> getDetailOrder(
       String token, int id) async {
     try {

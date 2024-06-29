@@ -6,7 +6,8 @@ import 'package:guruku_student/common/constants.dart';
 import 'package:guruku_student/common/shared_widgets/empty_section.dart';
 import 'package:guruku_student/common/shared_widgets/error_section.dart';
 import 'package:guruku_student/presentation/blocs/teacher_math/teacher_math_bloc.dart';
-import 'package:guruku_student/presentation/pages/home/widgets/card_teacher_vertical.dart';
+import 'package:guruku_student/presentation/pages/home/widgets/card_teacher_horizontal.dart';
+import 'package:guruku_student/presentation/pages/home/widgets/shimmer_card_hirozontal.dart';
 
 class TeacherMathPage extends StatefulWidget {
   static const ROUTE_NAME = '/teacher_math';
@@ -41,6 +42,7 @@ class _TeacherMathPageState extends State<TeacherMathPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      
       appBar: AppBar(
         title: const Text('Guru Matematika'),
         backgroundColor: pr11,
@@ -51,18 +53,11 @@ class _TeacherMathPageState extends State<TeacherMathPage> {
           builder: (context, state) {
             if (state is TeacherMathLoading) {
               return const Center(
-                child: CircularProgressIndicator(),
+                child: ShimmerCardHorizontal(),
               );
             } else if (state is TeacherMathHasData) {
-              return ListView.builder(
-                shrinkWrap: true,
-                itemCount: state.result.length,
-                physics: const NeverScrollableScrollPhysics(),
-                itemBuilder: (context, index) {
-                  final teacher = state.result[index];
-                  return CardTeacherVertical(teacher: teacher);
-                },
-              );
+              final result = state.result;
+                    return CardTeacherHorizontal(teachers: result);
             } else if (state is TeacherMathError) {
               return ErrorSection(
                 isLoading: _isLoading,

@@ -4,10 +4,12 @@ import 'package:guruku_student/common/themes/themes.dart';
 import 'package:guruku_student/presentation/pages/history_order/screens/cancel_order_page.dart';
 import 'package:guruku_student/presentation/pages/history_order/screens/done_order_page.dart';
 import 'package:guruku_student/presentation/pages/history_order/screens/pending_order_page.dart';
+import 'package:guruku_student/presentation/pages/history_order/screens/present_page.dart';
 
 class HistoryOrderPage extends StatefulWidget {
   static const ROUTE_NAME = '/history-order';
-  const HistoryOrderPage({super.key});
+  final int initialIndex;
+  const HistoryOrderPage({super.key, required this.initialIndex});
 
   @override
   State<HistoryOrderPage> createState() => _HistoryOrderPageState();
@@ -17,8 +19,8 @@ class _HistoryOrderPageState extends State<HistoryOrderPage> {
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
-      initialIndex: 0,
-      length: 3,
+      initialIndex: widget.initialIndex,
+      length: 4,
       child: Scaffold(
         appBar: AppBar(
           title: Text(
@@ -28,6 +30,7 @@ class _HistoryOrderPageState extends State<HistoryOrderPage> {
           backgroundColor: pr11,
           bottom: TabBar(
             indicatorColor: pr13,
+            physics: const NeverScrollableScrollPhysics(),
             dividerColor: Colors.transparent,
             indicatorSize: TabBarIndicatorSize.tab,
             tabs: <Widget>[
@@ -37,7 +40,16 @@ class _HistoryOrderPageState extends State<HistoryOrderPage> {
                   style: Theme.of(context)
                       .textTheme
                       .headlineSmall!
-                      .copyWith(fontSize: 14),
+                      .copyWith(fontSize: 12),
+                ),
+              ),
+              Tab(
+                child: Text(
+                  'Sudah Dibayar',
+                  style: Theme.of(context)
+                      .textTheme
+                      .headlineSmall!
+                      .copyWith(fontSize: 12),
                 ),
               ),
               Tab(
@@ -46,7 +58,7 @@ class _HistoryOrderPageState extends State<HistoryOrderPage> {
                   style: Theme.of(context)
                       .textTheme
                       .headlineSmall!
-                      .copyWith(fontSize: 14),
+                      .copyWith(fontSize: 12),
                 ),
               ),
               Tab(
@@ -55,7 +67,7 @@ class _HistoryOrderPageState extends State<HistoryOrderPage> {
                   style: Theme.of(context)
                       .textTheme
                       .headlineSmall!
-                      .copyWith(fontSize: 14),
+                      .copyWith(fontSize: 12),
                 ),
               ),
             ],
@@ -68,8 +80,9 @@ class _HistoryOrderPageState extends State<HistoryOrderPage> {
               child: DoneOrderPage(),
             ),
             Center(
-              child: ListMeetingPage()
+              child: PresentPage(),
             ),
+            Center(child: ListMeetingPage()),
           ],
         ),
       ),

@@ -3,11 +3,13 @@
 import 'package:equatable/equatable.dart';
 
 class Student extends Equatable {
+  int idStudent;
   String username;
   String email;
   String otp;
 
   Student({
+    required this.idStudent,
     required this.username,
     required this.email,
     required this.otp,
@@ -15,6 +17,7 @@ class Student extends Equatable {
 
   @override
   List<Object?> get props => [
+        idStudent,
         username,
         email,
         otp,

@@ -4,7 +4,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:guruku_student/common/themes/themes.dart';
 import 'package:guruku_student/domain/entity/teacher/teacher.dart';
-import 'package:guruku_student/presentation/pages/detail/screens/detail_teacher_page.dart';
+import 'package:guruku_student/presentation/pages/detail_teacher/screens/detail_teacher_page.dart';
 import 'package:lottie/lottie.dart';
 
 class CardTeacherVertical extends StatelessWidget {
@@ -23,9 +23,8 @@ class CardTeacherVertical extends StatelessWidget {
       },
       child: Container(
         padding: const EdgeInsets.all(8),
-        margin: const EdgeInsets.symmetric(vertical: 6),
-        width: MediaQuery.of(context).size.width,
-        height: 140,
+        width: MediaQuery.of(context).size.width * 0.8,
+        height: 150,
         decoration: ShapeDecoration(
           color: Colors.white,
           shape: RoundedRectangleBorder(
@@ -33,9 +32,9 @@ class CardTeacherVertical extends StatelessWidget {
           ),
           shadows: const [
             BoxShadow(
-              color: Color(0x0C000000),
+              color: Color.fromARGB(43, 0, 0, 0),
               blurRadius: 10,
-              offset: Offset(4, 4),
+              offset: Offset(2, 4),
               spreadRadius: 0,
             ),
           ],
@@ -43,13 +42,13 @@ class CardTeacherVertical extends StatelessWidget {
         child: Expanded(
           child: Row(
             children: [
-              Expanded(
-                flex: 1,
+              Flexible(
+                flex: 2,
                 child: Stack(
                   children: [
                     Container(
                       height: 140,
-                      width: 140,
+                      width: 180,
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(12),
                       ),
@@ -113,7 +112,7 @@ class CardTeacherVertical extends StatelessWidget {
                 width: 16,
               ),
               Expanded(
-                flex: 2,
+                flex: 3,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [

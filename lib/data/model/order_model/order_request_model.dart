@@ -35,23 +35,32 @@ class OrderRequestModel extends Equatable {
         paymentType: json["payment_type"],
         bankVa: json["bank_va"],
         idTeacher: json["id_teacher"],
-        meetingDate: json["meeting_date"],
+        meetingDate: DateTime.parse(json["meeting_date"]),
         meetingTime: json["meeting_time"],
         note: json["note"],
       );
 
-  Map<String, dynamic> toJson() => {
-        "onBehalf": onBehalf,
-        "email": email,
-        "phone": phone,
-        "total": total,
-        "payment_type": paymentType,
-        "bank_va": bankVa,
-        "id_teacher": idTeacher,
-        'meeting_date': meetingDate.toIso8601String(),
-        "meeting_time": meetingTime,
-        "note": note,
-      };
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = {
+      "onBehalf": onBehalf,
+      "email": email,
+      "phone": phone,
+      "total": total,
+      "payment_type": paymentType,
+      "id_teacher": idTeacher,
+      'meeting_date': meetingDate.toIso8601String(),
+      "meeting_time": meetingTime,
+      "note": note,
+    };
+
+    if (paymentType == "cstore") {
+      data["cstore"] = bankVa;
+    } else {
+      data["bank_va"] = bankVa;
+    }
+
+    return data;
+  }
 
   factory OrderRequestModel.fromEntity(OrderRequest data) => OrderRequestModel(
         onBehalf: data.onBehalf,

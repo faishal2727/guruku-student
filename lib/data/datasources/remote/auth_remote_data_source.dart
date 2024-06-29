@@ -15,6 +15,7 @@ abstract class AuthRemoteDataSource {
     required String username,
     required String email,
     required String password,
+    required String role,
   });
   Future<LoginResonseModel> login({
     required String email,
@@ -71,10 +72,12 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
   // register student
   AuthRemoteDataSourceImpl({required this.client});
   @override
-  Future<RegisterResponseModel> register(
-      {required String username,
-      required String email,
-      required String password}) async {
+  Future<RegisterResponseModel> register({
+    required String username,
+    required String email,
+    required String password,
+    required String role,
+  }) async {
     final response = await client.post(
       Uri.parse('https://faizal.simagang.my.id/faisol/v1/user/register'),
       headers: {
@@ -84,6 +87,7 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
         'username': username,
         'email': email,
         'password': password,
+        'role': role,
       }),
     );
     if (response.statusCode == 201) {
@@ -160,7 +164,8 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
   @override
   Future<ReqForgotPwResponseModel> reqForgotPw({required String email}) async {
     final response = await client.post(
-      Uri.parse('https://faizal.simagang.my.id/faisol//v1/user/req-forgot-password'),
+      Uri.parse(
+          'https://faizal.simagang.my.id/faisol//v1/user/req-forgot-password'),
       headers: {
         'Content-Type': 'application/json',
       },

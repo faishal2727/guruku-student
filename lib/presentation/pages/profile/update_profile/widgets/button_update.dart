@@ -1,6 +1,7 @@
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:guruku_student/common/enum_sate.dart';
 import 'package:guruku_student/presentation/blocs/profile/profile_bloc.dart';
 
 class ButtonUpdate extends StatelessWidget {
@@ -22,14 +23,14 @@ class ButtonUpdate extends StatelessWidget {
       child: BlocBuilder<ProfileBloc, ProfileState>(
         builder: (context, state) {
           return ElevatedButton(
-            onPressed: state is ProfileLoading ? null : onPressed,
+            onPressed: state.stateAvatar == ReqStateAvatar.loading ? null : onPressed,
             style: ElevatedButton.styleFrom(
               backgroundColor: const Color(0xFF006FD4),
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(10),
               ),
             ),
-            child:  state is ProfileLoading
+            child: state.stateAvatar == ReqStateAvatar.loading
                 ? Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [

@@ -18,6 +18,8 @@ class Teacher extends Equatable {
   String? lat;
   String? lon;
   String? addess;
+  String? rate;
+  bool? isTeacher;
 
   Teacher({
     required this.id,
@@ -35,6 +37,8 @@ class Teacher extends Equatable {
     required this.lat,
     required this.lon,
     required this.addess,
+    required this.rate,
+    required this.isTeacher,
   });
 
   Teacher.bookmark({
@@ -63,5 +67,7 @@ class Teacher extends Equatable {
         lat,
         lon,
         addess,
+        rate,
+        isTeacher,
       ];
 }

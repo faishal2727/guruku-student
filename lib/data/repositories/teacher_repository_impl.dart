@@ -5,8 +5,11 @@ import 'package:dartz/dartz.dart';
 import 'package:guruku_student/common/exception.dart';
 import 'package:guruku_student/common/failure.dart';
 import 'package:guruku_student/data/datasources/local/teacher_local_data_source.dart';
+import 'package:guruku_student/data/datasources/remote/register_teacher_remote_data_source.dart';
 import 'package:guruku_student/data/datasources/remote/teacher_remote_data_source.dart';
 import 'package:guruku_student/data/model/teacher_model/teacher_table.dart';
+import 'package:guruku_student/domain/entity/register_teacher/add_data_teacher_response.dart';
+import 'package:guruku_student/domain/entity/register_teacher/register_teacher_response.dart';
 import 'package:guruku_student/domain/entity/teacher/bookmark_teacher_respone.dart';
 import 'package:guruku_student/domain/entity/teacher/teacher.dart';
 import 'package:guruku_student/domain/entity/teacher/teacher_detail.dart';
@@ -14,11 +17,13 @@ import 'package:guruku_student/domain/repositories/teacher_repository.dart';
 
 class TeacherRepositoryImpl implements TeacherRepository {
   final TeacherRemoteDataSource remoteDataSource;
+  final RegisterTeacherRemoteDataSource teacherRemoteDataSource;
   final TeacherLocalDataSource localDataSource;
 
   TeacherRepositoryImpl({
     required this.remoteDataSource,
     required this.localDataSource,
+    required this.teacherRemoteDataSource,
   });
 
   @override
@@ -163,5 +168,89 @@ class TeacherRepositoryImpl implements TeacherRepository {
   Future<Either<Failure, List<Teacher>>> getBookmarkList() async {
     final result = await localDataSource.getBookmarkList();
     return Right(result.map((data) => data.toEntity()).toList());
+  }
+
+  @override
+  Future<Either<Failure, RegisterTeacherResponse>> register(
+    String token,
+    String username,
+    String email,
+    String phone,
+    String education,
+    String jurusan,
+    String tahunLulus,
+    String idCard,
+    String file,
+  ) async {
+    try {
+      final result = await remoteDataSource.registerTeacher(
+        token,
+        username,
+        email,
+        phone,
+        education,
+        jurusan,
+        tahunLulus,
+        idCard,
+        file,
+      );
+      return Right(result.toEntity());
+    } on AuthException {
+      return const Left(AuthFailure('Input dengan benar'));
+    } on ServerException {
+      return const Left(ServerFailure(''));
+    } on SocketException {
+      return const Left(ConnectionFailure('Gagal koneksi internet'));
+    }
+  }
+
+  @override
+  Future<Either<Failure, AddDataTeacherResponse>> addDataTeacher(
+    String picture,
+    String token,
+    String name,
+    String desc,
+    String typeTeaching,
+    String price,
+    String timeExperience,
+    String lat,
+    String lon,
+    String address,
+  ) async {
+    try {
+      final result = await teacherRemoteDataSource.addDataTeacher(
+        picture,
+        token,
+        name,
+        desc,
+        typeTeaching,
+        price,
+        timeExperience,
+        lat,
+        lon,
+        address,
+      );
+      return Right(result.toEntity());
+    } on ServerException {
+      return const Left(ServerFailure('Failed to uodate due to server error'));
+    } on SocketException {
+      return const Left(ConnectionFailure('Trouble with connection'));
+    }
+  }
+
+  @override
+  Future<Either<Failure, AddDataTeacherResponse>> pickSchedule(
+    String token,
+    List<Map<String, dynamic>> schedule,
+  ) async {
+    try {
+      final result =
+          await teacherRemoteDataSource.pickSchedule(token, schedule);
+      return Right(result.toEntity());
+    } on ServerException {
+      return const Left(ServerFailure('Failed to update due to server error'));
+    } on SocketException {
+      return const Left(ConnectionFailure('Trouble with connection'));
+    }
   }
 }

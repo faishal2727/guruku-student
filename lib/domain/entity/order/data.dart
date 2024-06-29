@@ -4,6 +4,7 @@ import 'package:guruku_student/domain/entity/order/va_number.dart';
 class Data extends Equatable {
   final String statusCode;
   final String statusMessage;
+  final String transactionId;
   final String orderId;
   final String merchantId;
   final String grossAmount;
@@ -12,12 +13,15 @@ class Data extends Equatable {
   final DateTime transactionTime;
   final String transactionStatus;
   final String fraudStatus;
-  final List<VaNumber> vaNumber;
+  final List<VaNumber>? vaNumber; // Optional field
   final DateTime expiryTime;
+  final String? paymentCode; // Optional field for cstore
+  final String? store; // Optional field for cstore
 
   const Data({
     required this.statusCode,
     required this.statusMessage,
+    required this.transactionId,
     required this.orderId,
     required this.merchantId,
     required this.grossAmount,
@@ -26,14 +30,17 @@ class Data extends Equatable {
     required this.transactionTime,
     required this.transactionStatus,
     required this.fraudStatus,
-    required this.vaNumber,
+    this.vaNumber, // Optional field
     required this.expiryTime,
+    this.paymentCode, // Optional field for cstore
+    this.store, // Optional field for cstore
   });
 
   @override
   List<Object?> get props => [
         statusCode,
         statusMessage,
+        transactionId,
         orderId,
         merchantId,
         grossAmount,
@@ -44,6 +51,8 @@ class Data extends Equatable {
         fraudStatus,
         vaNumber,
         expiryTime,
+        paymentCode,
+        store,
       ];
 }
 

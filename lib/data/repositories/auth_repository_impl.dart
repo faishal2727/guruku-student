@@ -22,11 +22,12 @@ class AuthRepositoryImpl implements AuthRepository {
     required this.localDataSource,
     required this.remoteDataSource,
   });
-@override
+  @override
   Future<Either<Failure, LoginResponse>> login(
       {required String email, required String password}) async {
     try {
-      final result = await remoteDataSource.login(email: email, password: password);
+      final result =
+          await remoteDataSource.login(email: email, password: password);
       return Right(result.toEntity());
     } on AuthException catch (e) {
       return Left(AuthFailure(e.message));
@@ -45,13 +46,19 @@ class AuthRepositoryImpl implements AuthRepository {
   }
 
   @override
-  Future<Either<Failure, RegisterResponse>> register(
-      {required String username,
-      required String email,
-      required String password}) async {
+  Future<Either<Failure, RegisterResponse>> register({
+    required String username,
+    required String email,
+    required String password,
+    required String role,
+  }) async {
     try {
       final result = await remoteDataSource.register(
-          username: username, email: email, password: password);
+        username: username,
+        email: email,
+        password: password,
+        role: role,
+      );
       return Right(result.toEntity());
     } on AuthException {
       return const Left(AuthFailure('Input dengan benar'));

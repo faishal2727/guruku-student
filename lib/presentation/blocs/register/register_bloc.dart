@@ -21,11 +21,13 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
         final String username = event.username;
         final String email = event.email;
         final String password = event.password;
+        final String role = event.role;
 
         final result = await register.execute(
           username: username,
           email: email,
           password: password,
+          role: role,
         );
         result.fold(
             (failure) => emit(
