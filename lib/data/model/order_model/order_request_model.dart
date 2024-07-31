@@ -12,6 +12,9 @@ class OrderRequestModel extends Equatable {
   final DateTime meetingDate;
   final String meetingTime;
   final String note;
+  final String lat;
+  final String lon;
+  final String mapel;
 
   const OrderRequestModel({
     required this.onBehalf,
@@ -24,6 +27,9 @@ class OrderRequestModel extends Equatable {
     required this.meetingDate,
     required this.meetingTime,
     required this.note,
+    required this.lat,
+    required this.lon,
+    required this.mapel,
   });
 
   factory OrderRequestModel.fromJson(Map<String, dynamic> json) =>
@@ -38,6 +44,9 @@ class OrderRequestModel extends Equatable {
         meetingDate: DateTime.parse(json["meeting_date"]),
         meetingTime: json["meeting_time"],
         note: json["note"],
+        lat: json["lat"],
+        lon: json["lon"],
+        mapel: json["mapel"],
       );
 
   Map<String, dynamic> toJson() {
@@ -51,6 +60,9 @@ class OrderRequestModel extends Equatable {
       'meeting_date': meetingDate.toIso8601String(),
       "meeting_time": meetingTime,
       "note": note,
+      "lat": lat,
+      "lon": lon,
+      "mapel": mapel,
     };
 
     if (paymentType == "cstore") {
@@ -73,6 +85,9 @@ class OrderRequestModel extends Equatable {
         meetingDate: data.meetingDate,
         meetingTime: data.meetingTime,
         note: data.note,
+        lat: data.lat,
+        lon: data.lon,
+        mapel: data.mapel,
       );
 
   @override
@@ -87,5 +102,8 @@ class OrderRequestModel extends Equatable {
         meetingDate,
         meetingTime,
         note,
+        lat,
+        lon,
+        mapel,
       ];
 }

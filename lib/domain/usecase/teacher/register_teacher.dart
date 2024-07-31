@@ -16,6 +16,7 @@ class RegisterTeacher {
     String education,
     String jurusan,
     String tahunLulus,
+    String gelar,
     String idCard,
     String file,
   ) async {
@@ -27,6 +28,7 @@ class RegisterTeacher {
       education,
       jurusan,
       tahunLulus,
+      gelar,
       idCard,
       file,
     );

@@ -24,6 +24,9 @@ class DetailHistoryOrder extends Equatable {
   final Student student;
   final Teacher teacher;
   final String kehadiran;
+  final String lat;
+  final String lon;
+  final String mapel;
 
   const DetailHistoryOrder({
     required this.id,
@@ -47,6 +50,9 @@ class DetailHistoryOrder extends Equatable {
     required this.student,
     required this.teacher,
     required this.kehadiran,
+    required this.lat,
+    required this.lon,
+    required this.mapel,
 
   });
 
@@ -73,5 +79,8 @@ class DetailHistoryOrder extends Equatable {
         student,
         teacher,
         kehadiran,
+        lat,
+        lon,
+        mapel,
       ];
 }

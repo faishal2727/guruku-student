@@ -77,7 +77,7 @@ class _OrderDoneContentState extends State<OrderDoneContent> {
                           "Nama Guru : ${widget.dataHistoryOrder.teacher.name!}",
                           style: AppTextStyle.body2.setSemiBold()),
                       Text(
-                          "Mapel : ${widget.dataHistoryOrder.teacher.typeTeaching!}",
+                          "Mapel : ${widget.dataHistoryOrder.mapel}",
                           style: AppTextStyle.body4.setRegular()),
                     ],
                   ),
@@ -85,8 +85,6 @@ class _OrderDoneContentState extends State<OrderDoneContent> {
               ],
             ),
           ),
-          Text(widget.dataHistoryOrder.id.toString()),
-          Text(widget.dataHistoryOrder.present.toString()),
           Divider(thickness: 3, color: pr16),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
@@ -192,7 +190,7 @@ class _OrderDoneContentState extends State<OrderDoneContent> {
               ),
             ),
           ),
-          if (isScanButtonVisible)
+          // if (isScanButtonVisible)
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
               child: Row(

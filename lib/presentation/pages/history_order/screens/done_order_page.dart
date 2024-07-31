@@ -37,44 +37,50 @@ class _DoneOrderPageState extends State<DoneOrderPage> {
     });
   }
 
+  Future<void> _refresh() async {
+    context.read<OrderSuccessBloc>().add(OnOrderSuccessEvent());
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: BlocBuilder<OrderSuccessBloc, OrderSuccessState>(
-        builder: (context, state) {
-          if (state is OrderSuccessLoading) {
-            return Center(
-              child: Lottie.asset(
-                'assets/lotties/loading_state.json',
-                height: 180,
-                width: 180,
-              ),
-            );
-          } else if (state is OrderSuccessHasData) {
-            return ListView.builder(
-              shrinkWrap: true,
-              itemCount: state.result.length,
-              itemBuilder: (context, index) {
-                final order = state.result[index];
-                return CardOrderDone(
-                  dataHistoryOrder: order,
-                );
-              },
-            );
-          } else if (state is OrderSuccessError) {
-            return ErrorSection(
-              isLoading: _isLoading,
-              onPressed: _retry,
-              message: state.message,
-            );
-          } else if (state is OrderSuccessEmpty) {
-            return const EmptySection();
-          } else {
-            return const Center(
-              child: Text('Error Get History'),
-            );
-          }
-        },
+      body: RefreshIndicator(
+        onRefresh: _refresh,
+        child: BlocBuilder<OrderSuccessBloc, OrderSuccessState>(
+          builder: (context, state) {
+            if (state is OrderSuccessLoading) {
+              return Center(
+                child: Lottie.asset(
+                  'assets/lotties/loading_state.json',
+                  height: 180,
+                  width: 180,
+                ),
+              );
+            } else if (state is OrderSuccessHasData) {
+              return ListView.builder(
+                itemCount: state.result.length,
+                itemBuilder: (context, index) {
+                  final order = state.result[index];
+                  return CardOrderDone(
+                    dataHistoryOrder: order,
+                  );
+                },
+              );
+            } else if (state is OrderSuccessError) {
+              return ErrorSection(
+                isLoading: _isLoading,
+                onPressed: _retry,
+                message: state.message,
+              );
+            } else if (state is OrderSuccessEmpty) {
+              return const EmptySection();
+            } else {
+              return const Center(
+                child: Text('Error Get History'),
+              );
+            }
+          },
+        ),
       ),
     );
   }

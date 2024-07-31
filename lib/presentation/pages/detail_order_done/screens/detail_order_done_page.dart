@@ -11,7 +11,7 @@ import 'package:guruku_student/presentation/pages/detail_order_done/widgets/orde
 import 'package:lottie/lottie.dart';
 
 class DetailOrderDonePage extends StatefulWidget {
-  static const ROUTE_NAME = '/order-success-page';
+  static const ROUTE_NAME = '/order-success-page-kkkk';
   final int id;
 
   const DetailOrderDonePage({
@@ -43,40 +43,60 @@ class _DetailOrderDonePageState extends State<DetailOrderDonePage> {
     });
   }
 
+  Future<void> _refresh() async {
+    context.read<DetailOrderBloc>().add(OnDetailOrderEvent(widget.id));
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          'Rincian Pesanan',
+          'Rincian Pesanan Saya ${widget.id}',
           style: AppTextStyle.heading5.setRegular(),
         ),
         backgroundColor: pr11,
       ),
-      body: BlocBuilder<DetailOrderBloc, DetailOrderState>(
-        builder: (context, state) {
-          if (state is DetailOrderLoading) {
-            return Center(
-              child: Lottie.asset(
-                'assets/lotties/loading_state.json',
-                height: 180,
-                width: 180,
-              ),
-            );
-          } else if (state is DetailOrderHasData) {
-            final order = state.result;
-            return OrderDoneContent(dataHistoryOrder: order);
-          } else if (state is DetailOrderEmpty) {
-            return const EmptySection();
-          } else if (state is DetailOrderError) {
-            return ErrorSection(
-                isLoading: _isLoading,
-                onPressed: _retry,
-                message: state.message);
-          } else {
-            return const SizedBox();
-          }
-        },
+      body: RefreshIndicator(
+        onRefresh: _refresh,
+        child: BlocBuilder<DetailOrderBloc, DetailOrderState>(
+          builder: (context, state) {
+            if (state is DetailOrderLoading) {
+              return Center(
+                child: Lottie.asset(
+                  'assets/lotties/loading_state.json',
+                  height: 180,
+                  width: 180,
+                ),
+              );
+            } else if (state is DetailOrderHasData) {
+              final order = state.result;
+              return SingleChildScrollView(
+                physics: const AlwaysScrollableScrollPhysics(),
+                child: OrderDoneContent(dataHistoryOrder: order),
+              );
+            } else if (state is DetailOrderEmpty) {
+              return const SingleChildScrollView(
+                physics: AlwaysScrollableScrollPhysics(),
+                child: EmptySection(),
+              );
+            } else if (state is DetailOrderError) {
+              return SingleChildScrollView(
+                physics: const AlwaysScrollableScrollPhysics(),
+                child: ErrorSection(
+                  isLoading: _isLoading,
+                  onPressed: _retry,
+                  message: state.message,
+                ),
+              );
+            } else {
+              return const SingleChildScrollView(
+                physics: AlwaysScrollableScrollPhysics(),
+                child: SizedBox(),
+              );
+            }
+          },
+        ),
       ),
     );
   }

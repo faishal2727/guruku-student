@@ -132,7 +132,7 @@ class StepOneWidget extends StatelessWidget {
               DropdownButton<String>(
                 value: selectedEducation,
                 hint: const Text('Pilih pendidikan kamu ...'),
-                items: ['S1', 'S2', 'S3', 'D1', 'D2', 'D3'].map((String value) {
+                items: ['S1', 'S2', 'S3', 'D1', 'D2', 'D3', 'D4'].map((String value) {
                   return DropdownMenuItem<String>(
                     value: value,
                     child: Text(value),
@@ -161,7 +161,33 @@ class StepOneWidget extends StatelessWidget {
                 ),
                 validator: (value) {
                   if (value == null || value.isEmpty) {
-                    return 'Phone tidak boleh kosong!';
+                    return 'Jurusan tidak boleh kosong!';
+                  }
+                  return null;
+                },
+              ),
+            ],
+          ),
+        ),
+        Container(
+          padding: const EdgeInsets.symmetric(vertical: 8),
+          color: Colors.white,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                'Gelar 🔅',
+                style: AppTextStyle.body3.setMedium(),
+              ),
+              TextFormField(
+                controller: gelarController,
+                keyboardType: TextInputType.text,
+                decoration: const InputDecoration(
+                  hintText: 'Masukkan gelar kamu ...',
+                ),
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Gelar tidak boleh kosong!';
                   }
                   return null;
                 },

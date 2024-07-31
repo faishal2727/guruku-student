@@ -30,11 +30,11 @@ class _AddReviewPageState extends State<AddReviewPage> {
   String? selectedChip;
 
   final Map<double, List<String>> ratingChipChoices = {
-    1.0: ["Very Poor", "Unacceptable"],
-    2.0: ["Poor", "Needs Improvement"],
-    3.0: ["Average", "Fair"],
-    4.0: ["Good", "Very Good"],
-    5.0: ["Excellent", "Outstanding"],
+    1.0: ["Sangat Buruk", "Tidak Dapat Diterima"],
+    2.0: ["Buruk", "Perlu Peningkatan"],
+    3.0: ["Rata-rata", "Cukup"],
+    4.0: ["Baik", "Sangat Baik"],
+    5.0: ["Luar Biasa", "Cemerlang"]
   };
 
   void _postReview() {
@@ -56,7 +56,6 @@ class _AddReviewPageState extends State<AddReviewPage> {
   }
 
   List<String> getChipsForRating(double rating) {
-    // Get the closest integer rating key
     double closestRating = ratingChipChoices.keys
         .reduce((a, b) => (a - rating).abs() < (b - rating).abs() ? a : b);
     return ratingChipChoices[closestRating] ?? [];
@@ -106,14 +105,14 @@ class _AddReviewPageState extends State<AddReviewPage> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
-                  'order id ${widget.dataHistoryOrder.id}',
-                  style: AppTextStyle.body2.setMedium(),
-                ),
-                Text(
-                  'teacher id ${widget.dataHistoryOrder.idTeacher}',
-                  style: AppTextStyle.body2.setMedium(),
-                ),
+                // Text(
+                //   'order id ${widget.dataHistoryOrder.id}',
+                //   style: AppTextStyle.body2.setMedium(),
+                // ),
+                // Text(
+                //   'teacher id ${widget.dataHistoryOrder.idTeacher}',
+                //   style: AppTextStyle.body2.setMedium(),
+                // ),
                 Divider(thickness: 8, color: Colors.grey.shade100),
                 Padding(
                   padding:

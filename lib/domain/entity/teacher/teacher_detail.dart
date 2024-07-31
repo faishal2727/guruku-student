@@ -14,7 +14,7 @@ class TeacherDetail extends Equatable {
   String? picture;
   String? phone;
   List<Schedule>? schedule;
-  String? typeTeaching;
+  List<String>? typeTeaching;
   String? price;
   String? description;
   String? timeExperience;
@@ -29,6 +29,8 @@ class TeacherDetail extends Equatable {
   String? gelar;
   String? jurusan;
   String? tahunLulus;
+  String? balance;
+  List<String>? skill;
 
   TeacherDetail({
     required this.id,
@@ -54,6 +56,8 @@ class TeacherDetail extends Equatable {
     required this.gelar,
     required this.jurusan,
     required this.tahunLulus,
+    required this.balance,
+    required this.skill,
   });
 
   @override
@@ -80,6 +84,8 @@ class TeacherDetail extends Equatable {
         student,
         gelar,
         jurusan,
-        tahunLulus
+        tahunLulus,
+        balance,
+        skill,
       ];
 }

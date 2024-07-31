@@ -19,6 +19,7 @@ class DetailProfileResponse extends Equatable {
   String? gender;
   String? role;
   int? teacherId;
+  String? balanceUser;
   String? status;
   Teacher? teacher;
 
@@ -38,6 +39,7 @@ class DetailProfileResponse extends Equatable {
     required this.gender,
     required this.role,
     required this.teacherId,
+    required this.balanceUser,
     required this.status,
     required this.teacher,
   });
@@ -59,6 +61,7 @@ class DetailProfileResponse extends Equatable {
         gender,
         role,
         teacherId,
+        balanceUser,
         status,
         teacher,
       ];

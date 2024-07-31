@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:guruku_student/common/exception.dart';
 import 'package:guruku_student/data/model/teacher_model/my_data_teacher_response_model.dart';
@@ -13,16 +12,17 @@ abstract class RegisterTeacherRemoteDataSource {
     String token,
     String name,
     String desc,
-    String typeTeaching,
+    List<String> typeTeaching,
     String price,
     String timeExperience,
     String lat,
     String lon,
     String address,
+    List<String> skill,
   );
   Future<AddTeacherResponseModel> pickSchedule(
     String token,
-     List<Map<String, dynamic>> schedule,
+    List<Map<String, dynamic>> schedule,
   );
   Future<MyDataTeacherResponseModel> getMyDataTeacher(String token, int id);
 }
@@ -62,63 +62,65 @@ class RegisterTeacherRemoteDataSourceImpl
     }
   }
 
-  @override
-  Future<AddTeacherResponseModel> addDataTeacher(
-    String picture,
-    String token,
-    String name,
-    String desc,
-    String typeTeaching,
-    String price,
-    String timeExperience,
-    String lat,
-    String lon,
-    String address,
-  ) async {
-    final uri =
-        Uri.parse("https://faizal.simagang.my.id/faisol/v1/teacher/update");
-    var request = http.MultipartRequest('PUT', uri);
+ 
+@override
+Future<AddTeacherResponseModel> addDataTeacher(
+  String picture,
+  String token,
+  String name,
+  String desc,
+  List<String> typeTeaching,
+  String price,
+  String timeExperience,
+  String lat,
+  String lon,
+  String address,
+  List<String> skill,
+) async {
+  final uri = Uri.parse("https://faizal.simagang.my.id/faisol/v1/teacher/update");
 
-    final Map<String, String> fields = {
-      "picture": picture,
-      "name": name,
-      "description": desc,
-      "type_teaching": typeTeaching,
-      "price": price,
-      "time_experience": timeExperience,
-      "lat": lat,
-      "lon": lon,
-      "address": address,
-    };
-    request.fields.addAll(fields);
-    request.headers.addAll({"Authorization": "Bearer $token"});
+  // Buat map untuk body JSON
+  final Map<String, dynamic> body = {
+    "picture": picture,
+    "name": name,
+    "description": desc,
+    "type_teaching": typeTeaching,
+    "price": price,
+    "time_experience": timeExperience,
+    "lat": lat,
+    "lon": lon,
+    "address": address,
+    "skill": skill,
+  };
 
-    debugPrint('Request URL: $uri');
-    debugPrint('Request Headers: ${request.headers}');
-    debugPrint('Request Fields: ${request.fields}');
+  final response = await http.put(
+    uri,
+    headers: {
+      "Authorization": "Bearer $token",
+      "Content-Type": "application/json",
+    },
+    body: jsonEncode(body),
+  );
 
-    final http.StreamedResponse streamedResponse = await request.send();
-    final int statusCode = streamedResponse.statusCode;
+  final int statusCode = response.statusCode;
+  final String responseData = response.body;
 
-    final Uint8List responseList = await streamedResponse.stream.toBytes();
-    final String responseData = String.fromCharCodes(responseList);
+  debugPrint('Response Status Code: $statusCode');
+  debugPrint('Response Data: $responseData');
 
-    debugPrint('Response Status Code: $statusCode');
-    debugPrint('Response Data: $responseData');
-
-    if (statusCode == 200) {
-      final AddTeacherResponseModel upload =
-          AddTeacherResponseModel.fromJson(json.decode(responseData));
-      return upload;
-    } else {
-      throw Exception("Failed to upload image");
-    }
+  if (statusCode == 200) {
+    final AddTeacherResponseModel upload =
+        AddTeacherResponseModel.fromJson(json.decode(responseData));
+    return upload;
+  } else {
+    throw Exception("Gagal mengunggah data");
   }
+}
 
   @override
   Future<AddTeacherResponseModel> pickSchedule(
     String token,
-     List<Map<String, dynamic>> schedule,
+    List<Map<String, dynamic>> schedule,
   ) async {
     final response = await client.put(
       Uri.parse('https://faizal.simagang.my.id/faisol/v1/teacher/update'),

@@ -11,6 +11,9 @@ class OrderRequest extends Equatable {
   final DateTime meetingDate;
   final String meetingTime;
   final String note;
+  final String lat;
+  final String lon;
+  final String mapel;
 
   const OrderRequest({
     required this.onBehalf,
@@ -23,6 +26,9 @@ class OrderRequest extends Equatable {
     required this.meetingDate,
     required this.meetingTime,
     required this.note,
+    required this.lat,
+    required this.lon,
+    required this.mapel,
   });
   
   @override
@@ -37,5 +43,8 @@ class OrderRequest extends Equatable {
     meetingDate,
     meetingTime,
     note,
+    lat,
+    lon,
+    mapel,
   ];
 }

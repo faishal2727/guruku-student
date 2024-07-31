@@ -30,7 +30,7 @@ class _MyOrderWidgetState extends State<MyOrderWidget> {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text('Pesananan Saya', style: AppTextStyle.body3.setMedium()),
+              Text('Pesananan Les Harian', style: AppTextStyle.body3.setMedium()),
               InkWell(
                 onTap: () {
                   Navigator.pushNamed(context, HistoryOrderPage.ROUTE_NAME,

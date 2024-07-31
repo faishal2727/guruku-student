@@ -48,25 +48,44 @@ class _SchedulePageState extends State<SchedulePage> {
   }
 
   Future<void> _selectTime(BuildContext context, int index) async {
-    TimeOfDay? pickedTime = await showTimePicker(
+    TimeOfDay? startTime = await showTimePicker(
       context: context,
       initialTime: TimeOfDay.now(),
     );
 
-    if (pickedTime != null) {
-      setState(() {
-        if (schedule[index]['time'].length < 3) {
-          final now = DateTime.now();
-          final time = DateTime(
-            now.year,
-            now.month,
-            now.day,
-            pickedTime.hour,
-            pickedTime.minute,
-          );
-          schedule[index]['time'].add(DateFormat.Hm().format(time));
-        }
-      });
+    if (startTime != null) {
+      TimeOfDay? endTime = await showTimePicker(
+        context: context,
+        initialTime:
+            TimeOfDay(hour: startTime.hour + 1, minute: startTime.minute),
+      );
+
+      if (endTime != null) {
+        setState(() {
+          if (schedule[index]['time'].length < 3) {
+            final now = DateTime.now();
+            final startDateTime = DateTime(
+              now.year,
+              now.month,
+              now.day,
+              startTime.hour,
+              startTime.minute,
+            );
+            final endDateTime = DateTime(
+              now.year,
+              now.month,
+              now.day,
+              endTime.hour,
+              endTime.minute,
+            );
+
+            // Remove spaces around the hyphen
+            String timeRange =
+                '${DateFormat.Hm().format(startDateTime)}-${DateFormat.Hm().format(endDateTime)}';
+            schedule[index]['time'].add(timeRange);
+          }
+        });
+      }
     }
   }
 
@@ -212,7 +231,7 @@ class _SchedulePageState extends State<SchedulePage> {
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceBetween,
                                   children: [
-                                    Text('Jam 1 : $time'),
+                                    Text('Jam : $time'),
                                     IconButton(
                                       icon: const Icon(Icons.delete),
                                       onPressed: () =>

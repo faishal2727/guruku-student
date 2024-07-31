@@ -2,7 +2,6 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:guruku_student/common/enum_sate.dart';
 import 'package:guruku_student/domain/entity/teacher/teacher_detail.dart';
-import 'package:guruku_student/domain/entity/wishlist/add_wishlist_request.dart';
 import 'package:guruku_student/domain/usecase/auth/get_auth.dart';
 import 'package:guruku_student/domain/usecase/teacher/get_teacher_detail.dart';
 import 'package:guruku_student/domain/usecase/wishlist.dart/add_wishlist.dart';
@@ -56,26 +55,25 @@ class DetailTeacherBloc extends Bloc<DetailTeacherEvent, DetailTeacherState> {
 
         if (auth != null) {
           final String token = auth.token;
-          final int userId = auth.idStudent;
-
-          final request = AddWishlistRequest(
-            idTeacher: userId,
-          );
+          final teacherId = event.idTeacher;
 
           final result = await addWishlist.execute(
             token: token,
-            idTeacher: event.idTeacher,
-        
+            idTeacher: teacherId,
           );
 
-          result.fold((failure) {
-            emit(state.copyWith(wishlistMessage: failure.message));
-          }, (successMessage) {
-            emit(state.copyWith(wishlistMessage: wishlistAddSuccessMessage));
-                add(LoadWishlistStatusEvent(request.idTeacher));
-          });
-
-      
+          result.fold(
+            (failure) {
+              emit(state.copyWith(wishlistMessage: failure.message));
+            },
+            (messageSuccess) {
+              emit(state.copyWith(
+                wishlistMessage: wishlistAddSuccessMessage,
+                isAddedToWishlist: true, // Update state here
+              ));
+              add(LoadWishlistStatusEvent(teacherId));
+            },
+          );
         }
       },
     );
@@ -83,10 +81,13 @@ class DetailTeacherBloc extends Bloc<DetailTeacherEvent, DetailTeacherState> {
     on<RemoveWishlistEvent>(
       (event, emit) async {
         emit(state.copyWith(wishlistMessage: ''));
+
         final auth = await getAuth.execute();
+
         if (auth != null) {
           final String token = auth.token;
           final teacherId = event.id;
+
           final result = await removeWishlist.execute(
             token: token,
             idTeacher: teacherId,
@@ -98,14 +99,13 @@ class DetailTeacherBloc extends Bloc<DetailTeacherEvent, DetailTeacherState> {
             },
             (messageSuccess) {
               emit(state.copyWith(
-                  wishlistMessage: wishlistRemoveSuccessMessage));
-                   add(LoadWishlistStatusEvent(event.id));
+                wishlistMessage: wishlistRemoveSuccessMessage,
+                isAddedToWishlist: false, // Update state here
+              ));
+              add(LoadWishlistStatusEvent(event.id));
             },
           );
-        } else {
-          emit(state.copyWith(wishlistMessage: 'Anda Belum Login'));
-        } 
-       
+        }
       },
     );
 

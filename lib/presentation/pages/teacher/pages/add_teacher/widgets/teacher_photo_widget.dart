@@ -34,10 +34,10 @@ class TeacherPhotoWidget extends StatelessWidget {
         const SizedBox(height: 8),
         BlocBuilder<ImagePickerCubit, ImagePickerState>(
           builder: (context, state) {
-            if (data.picture != null && data.picture!.isNotEmpty) {
-              return _showNetworkImage(data.picture!);
-            } else if (state.imagePath != null) {
+            if (state.imagePath != null) {
               return _showImage(state.imagePath!);
+            } else if (data.picture != null && data.picture!.isNotEmpty) {
+              return _showNetworkImage(data.picture!);
             } else {
               return const Align(
                 alignment: Alignment.center,
@@ -90,9 +90,9 @@ class TeacherPhotoWidget extends StatelessWidget {
   Widget _showImage(String imagePath) {
     return Image.file(
       File(imagePath),
-      height: 150,
-      width: 150,
-      fit: BoxFit.cover,
+      height: 250,
+      width: 250,
+      fit: BoxFit.fill,
     );
   }
 

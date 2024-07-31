@@ -25,6 +25,9 @@ class DataDetailHistoryOrderModel extends Equatable {
   final StudentModel student;
   final TeacherModel teacher;
   final String kehadiran;
+  final String lat;
+  final String lon;
+  final String mapel;
 
   const DataDetailHistoryOrderModel({
     required this.id,
@@ -48,6 +51,9 @@ class DataDetailHistoryOrderModel extends Equatable {
     required this.student,
     required this.teacher,
     required this.kehadiran,
+    required this.lat,
+    required this.lon,
+    required this.mapel,
   });
 
   factory DataDetailHistoryOrderModel.fromJson(Map<String, dynamic> json) =>
@@ -60,7 +66,7 @@ class DataDetailHistoryOrderModel extends Equatable {
         onBehalf: json["data"]["on_behalf"],
         note: json["data"]["note"],
         phone: json["data"]["phone"],
-        email: json["email"],
+        email: json["data"]["email"],
         meetingTime: DateTime.parse(json["data"]["meeting_time"]),
         present: json["data"]["present"],
         paymentStatus: json["data"]["payment_status"],
@@ -72,7 +78,10 @@ class DataDetailHistoryOrderModel extends Equatable {
         updatedAt: DateTime.parse(json["data"]["updatedAt"]),
         student: StudentModel.fromJson(json["data"]["student"]),
         teacher: TeacherModel.fromJson(json["data"]["teacher"]),
-        kehadiran: json["data"]["kehadiran"]
+        kehadiran: json["data"]["kehadiran"],
+        lat: json["data"]["lat"],
+        lon: json["data"]["lon"],
+        mapel: json["data"]["mapel"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -97,6 +106,9 @@ class DataDetailHistoryOrderModel extends Equatable {
         "student": student.toJson(),
         "teachet": teacher.toJson(),
         "kehadiran": kehadiran,
+        "lat": lat,
+        "lon": lon,
+        "mapel": mapel,
       };
 
   DetailHistoryOrder toEntity() => DetailHistoryOrder(
@@ -114,13 +126,16 @@ class DataDetailHistoryOrderModel extends Equatable {
         paymentStatus: paymentStatus,
         expired: expired,
         va: va,
-        bank: bank, 
+        bank: bank,
         reviewId: reviewId,
         createdAt: createdAt,
         updatedAt: updatedAt,
         student: student.toEntity(),
         teacher: teacher.toEntity(),
         kehadiran: kehadiran,
+        lat: lat,
+        lon: lon,
+        mapel: mapel
       );
 
   @override
@@ -146,5 +161,8 @@ class DataDetailHistoryOrderModel extends Equatable {
         student,
         teacher,
         kehadiran,
+        lat,
+        lon,
+        mapel,
       ];
 }

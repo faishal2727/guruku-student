@@ -63,6 +63,21 @@
             ]
         },
         {
+            "bank": "cimb",
+            "payment_method": [
+                {
+                    "atm": [
+                        "1. Enter your CIMB ATM card, then enter your PIN",
+                        "2. Select the Payment menu > Advanced > Virtual Account",
+                        "3. Enter your Virtual Account number [va_numbers] then tap OK",
+                        "4. On the payment details summary, make sure the payment details are correct: Merchant name (Yab Company) followed by your total bill.",
+                        "5. Complete the payment according to the instructions given.",
+                        "6. Once your payment is completed, your booking will be processed. Please keep the payment proof as your reference."
+                    ]
+                }
+            ]
+        },
+        {
             "bank": "bca",
             "payment_method": [
                 {

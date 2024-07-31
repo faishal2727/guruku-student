@@ -12,9 +12,7 @@ part 'regsiter_state.dart';
 class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
   final Register register;
 
-  RegisterBloc({
-    required this.register,
-  }) : super(RegisterState.initial()) {
+  RegisterBloc({required this.register}) : super(RegisterState.initial()) {
     on<DoRegister>(
       (event, emit) async {
         emit(state.copyWith(stateRegister: RequestStateRegister.loading));
@@ -24,25 +22,16 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
         final String role = event.role;
 
         final result = await register.execute(
-          username: username,
-          email: email,
-          password: password,
-          role: role,
-        );
+            username: username, email: email, password: password, role: role);
         result.fold(
-            (failure) => emit(
-                  state.copyWith(
-                    stateRegister: RequestStateRegister.error,
-                  ),
-                ), (data) {
+            (failure) =>
+                emit(state.copyWith(stateRegister: RequestStateRegister.error)),
+            (data) {
           debugPrint("KODEKU $data");
-          emit(
-            state.copyWith(
+          emit(state.copyWith(
               stateRegister: RequestStateRegister.loaded,
               registerData: data,
-              message: "Berhasil Register",
-            ),
-          );
+              message: "Berhasil Register"));
         });
       },
     );

@@ -45,7 +45,7 @@ class CardOrderCancel extends StatelessWidget {
                   decoration: BoxDecoration(
                       color: AppColors.danger.dng05,
                       borderRadius: BorderRadius.circular(8)),
-                  child: Text('Dibatalkan',
+                  child: Text('Tidak Bayar',
                       style: AppTextStyle.body3.setMedium()),
                 )
               ],
@@ -87,7 +87,7 @@ class CardOrderCancel extends StatelessWidget {
                     children: [
                       Text(dataHistoryOrder.teacher.name!,
                           style: AppTextStyle.body2.setMedium()),
-                      Text(dataHistoryOrder.teacher.typeTeaching!,
+                      Text(dataHistoryOrder.mapel!,
                           style: AppTextStyle.body4.setRegular()),
                     ],
                   ),

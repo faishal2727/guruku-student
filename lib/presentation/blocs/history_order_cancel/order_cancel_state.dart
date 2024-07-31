@@ -29,3 +29,31 @@ class OrderCancelEmpty extends OrderCancelState {
   @override
   List<Object?> get props => [];
 }
+
+class OrderCanceledLoading extends OrderCancelState {
+  @override
+  List<Object?> get props => [];
+}
+
+class OrderCanceledError extends OrderCancelState {
+  final String message;
+
+  OrderCanceledError(this.message);
+
+  @override
+  List<Object?> get props => [message];
+}
+
+class OrderCanceledHasData extends OrderCancelState {
+  final List<DataHistoryOrder> result;
+
+  OrderCanceledHasData(this.result);
+
+  @override
+  List<Object?> get props => [result];
+}
+
+class OrderCanceledEmpty extends OrderCancelState {
+  @override
+  List<Object?> get props => [];
+}

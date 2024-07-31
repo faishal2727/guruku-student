@@ -6,3 +6,8 @@ class OnOrderCancelEvent extends OrderCancelEvent {
   @override
   List<Object?> get props => [];
 }
+
+class OnOrderCanceledEvent extends OrderCancelEvent {
+  @override
+  List<Object?> get props => [];
+}

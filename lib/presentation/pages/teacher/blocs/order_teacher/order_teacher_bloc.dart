@@ -25,6 +25,7 @@ class OrderTeacherBloc extends Bloc<OrderTeacherEvent, OrderTeacherState> {
   final UpdatePresent updatePresent;
   final GetAuth getAuth;
   final UpdateTidakHadir tidakHadir;
+  final UpdatePresentPackages updatePresentPackages;
 
   OrderTeacherBloc(
     this.pendingTeacher,
@@ -35,6 +36,7 @@ class OrderTeacherBloc extends Bloc<OrderTeacherEvent, OrderTeacherState> {
     this.updatePresent,
     this.getAuth,
     this.tidakHadir,
+    this.updatePresentPackages,
   ) : super(OrderTeacherState.initial()) {
     on<OnOrderTeacherPending>(_onGetOrderPending);
     on<OnOrderTeacherSuccess>(_onGetOrderSuccess);
@@ -43,6 +45,7 @@ class OrderTeacherBloc extends Bloc<OrderTeacherEvent, OrderTeacherState> {
     on<OnUpdatePresent>(_onUpdatePresent);
     on<OnUpdatePresentTidak>(_onUpdateTidak);
     on<OnOrderTeacherDetail>(_onDetailOrder);
+    on<OnUpdatePresentPackage>(_onUpdatePresentPackages);
   }
 
   Future<void> _onGetOrderPending(
@@ -83,6 +86,33 @@ class OrderTeacherBloc extends Bloc<OrderTeacherEvent, OrderTeacherState> {
           emit(state.copyWith(
             statePresent: ReqPresent.loaded,
             present: data,
+            message: data.message,
+          ));
+        },
+      );
+    }
+  }
+
+  Future<void> _onUpdatePresentPackages(
+      OnUpdatePresentPackage event, Emitter<OrderTeacherState> emit) async {
+    emit(state.copyWith(pac: ReqPresentPac.loading));
+    final token = await getAuth.execute();
+    if (token!.token.isNotEmpty) {
+      final result = await updatePresentPackages.execute(
+        token.token,
+        event.orderId,
+        event.packageId,
+        event.status,
+      );
+      result.fold(
+        (failure) {
+          emit(state.copyWith(
+              message: failure.message, pac: ReqPresentPac.error));
+        },
+        (data) {
+          emit(state.copyWith(
+            pac: ReqPresentPac.loaded,
+            presentPac: data,
             message: data.message,
           ));
         },

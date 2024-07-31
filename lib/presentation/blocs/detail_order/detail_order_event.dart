@@ -10,3 +10,12 @@ class OnDetailOrderEvent extends DetailOrderEvent {
   @override
   List<Object?> get props => [id];
 }
+
+class OnDetailOrderPackagesEvent extends DetailOrderEvent {
+  final int id;
+
+  OnDetailOrderPackagesEvent(this.id);
+
+  @override
+  List<Object?> get props => [id];
+}

@@ -3,6 +3,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:google_places_flutter/google_places_flutter.dart';
+import 'package:google_places_flutter/model/place_type.dart';
+import 'package:google_places_flutter/model/prediction.dart';
 import 'package:guruku_student/common/constants.dart';
 import 'package:guruku_student/common/enum_sate.dart';
 import 'package:guruku_student/common/themes/themes.dart';
@@ -14,7 +17,7 @@ import 'package:guruku_student/presentation/pages/profile/update_profile/widgets
 import 'package:location/location.dart';
 
 class UpdateProfilePage extends StatefulWidget {
-  static const ROUTE_NAME = '/update_profile_page';
+  static const ROUTE_NAME = '/update-page';
 
   final DetailProfileResponse profile;
 
@@ -168,6 +171,25 @@ class _UpdateProfilePageState extends State<UpdateProfilePage> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
+                    GooglePlaceAutoCompleteTextField(
+                      textEditingController: TextEditingController(),
+                      googleAPIKey:
+                          "AIzaSyCrwJlZ6WKybOec-vLvtHzb2AHL3sLwso0", // Ganti dengan kunci API Anda
+                      inputDecoration: InputDecoration(
+                        hintText: "Cari tempat...",
+                        border: OutlineInputBorder(),
+                      ),
+                      countries: ["id"], // Sesuaikan dengan kode negara Anda
+                      isLatLngRequired: true,
+                      getPlaceDetailWithLatLng: (prediction) {
+                        print("Place ID: ${prediction.placeId}");
+                        print("Description: ${prediction.description}");
+                      },
+                      itemClick: (prediction) {
+                        print("Place ID: ${prediction.placeId}");
+                        print("Description: ${prediction.description}");
+                      },
+                    ),
                     MyTextFormField(
                       lable: 'Username',
                       key: const Key('username_field'),

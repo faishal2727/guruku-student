@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:guruku_student/common/constants.dart';
 import 'package:guruku_student/common/themes/themes.dart';
 import 'package:guruku_student/domain/entity/history_order/data_history_order.dart';
+import 'package:guruku_student/presentation/pages/teacher/pages/history_order/screens/detail_tidak_page.dart';
 import 'package:lottie/lottie.dart';
 
 class CardCancelTeacher extends StatelessWidget {
@@ -17,14 +18,8 @@ class CardCancelTeacher extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        // Navigator.pushNamed(
-        //   context,
-        //   OrderDetailTeacherPage.ROUTE_NAME,
-        //   arguments: {
-        //     'idTeacher': dataHistoryOrder.idTeacher,
-        //     'idOrder': dataHistoryOrder.id,
-        //   },
-        // );
+        Navigator.pushNamed(context, DetailTidakPage.ROUTE_NAME,
+            arguments: dataHistoryOrder.id);
       },
       child: Container(
         padding: const EdgeInsets.all(8),
@@ -43,7 +38,7 @@ class CardCancelTeacher extends StatelessWidget {
                         style: AppTextStyle.body2.setMedium()),
                   ],
                 ),
-                 Container(
+                Container(
                   padding: const EdgeInsets.all(8),
                   decoration: BoxDecoration(
                       color: AppColors.danger.dng05,

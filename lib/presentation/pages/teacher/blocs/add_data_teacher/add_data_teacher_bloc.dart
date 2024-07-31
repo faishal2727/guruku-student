@@ -35,20 +35,14 @@ class AddDataTeacherBloc
       final result = await pickSchedule.execute(user.token, schedule);
       result.fold(
         (failure) {
-          emit(
-            state.copyWith(
-                stateSchedule: ReqStateSchedule.error,
-                message: failure.message),
-          );
+          emit(state.copyWith(
+              stateSchedule: ReqStateSchedule.error, message: failure.message));
         },
         (data) {
-          emit(
-            state.copyWith(
+          emit(state.copyWith(
               stateSchedule: ReqStateSchedule.loaded,
               data: data,
-              message: data.message,
-            ),
-          );
+              message: data.message));
         },
       );
     }
@@ -65,41 +59,27 @@ class AddDataTeacherBloc
     final String name = event.name;
     final String desc = event.desc;
     final String price = event.price;
-    final String typeTeaching = event.typeTeaching;
+    final List<String> typeTeaching = event.typeTeaching;
     final String timeExperience = event.timeExperience;
     final String lat = event.lat;
     final String lon = event.lon;
     final String address = event.address;
+    final List<String> skill = event.skill;
 
     if (user != null) {
-      final result = await addDataTeacher.execute(
-        picture,
-        user.token,
-        name,
-        desc,
-        typeTeaching,
-        price,
-        timeExperience,
-        lat,
-        lon,
-        address,
-      );
+      final result = await addDataTeacher.execute(picture, user.token, name,
+          desc, typeTeaching, price, timeExperience, lat, lon, address, skill);
 
       result.fold(
         (failure) {
-          emit(
-            state.copyWith(
-                state: ReqStateTeacher.error, message: failure.message),
-          );
+          emit(state.copyWith(
+              state: ReqStateTeacher.error, message: failure.message));
         },
         (data) {
-          emit(
-            state.copyWith(
+          emit(state.copyWith(
               state: ReqStateTeacher.loaded,
               data: data,
-              message: data.message,
-            ),
-          );
+              message: data.message));
         },
       );
     }

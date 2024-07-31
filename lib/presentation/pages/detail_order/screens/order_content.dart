@@ -1,7 +1,8 @@
+// ignore_for_file: use_super_parameters
+
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:geocoding/geocoding.dart' as geo;
+
 import 'package:guruku_student/common/constants.dart';
 import 'package:guruku_student/common/enum_sate.dart';
 import 'package:guruku_student/common/themes/themes.dart';
@@ -10,17 +11,21 @@ import 'package:guruku_student/presentation/blocs/order/order_bloc.dart';
 import 'package:guruku_student/presentation/pages/choose_payment/screens/choose_payment_page.dart';
 import 'package:guruku_student/presentation/pages/pick_schedule/widgets/button_order.dart';
 import 'package:location/location.dart';
+import 'package:google_places_flutter/google_places_flutter.dart';
+import 'package:geocoding/geocoding.dart' as geo;
 
 class OrderContent extends StatefulWidget {
   final TeacherDetail teacher;
   final DateTime date;
   final String time;
+  final String selectedSubject;
 
   const OrderContent({
     Key? key,
     required this.teacher,
     required this.date,
     required this.time,
+    required this.selectedSubject, // Tambahkan parameter ini
   }) : super(key: key);
 
   @override
@@ -42,8 +47,13 @@ class _OrderContentState extends State<OrderContent> {
   late PermissionStatus _permissionGranted;
   late LocationData _locationData;
 
+  double? _latitude;
+  double? _longitude;
+
   void _order() {
-    int price = int.parse(widget.teacher.price.toString());
+      String meetingTime = widget.time.split('-')[0];
+  
+    int price = int.parse(widget.teacher.price.toString()) + 6500;
 
     context.read<OrderBloc>().add(
           DoOrder(
@@ -55,8 +65,11 @@ class _OrderContentState extends State<OrderContent> {
             bankVa: _bankVa,
             idTeacher: widget.teacher.id,
             meetingDate: widget.date,
-            meetingTime: widget.time,
+            meetingTime: meetingTime,
             note: _addressController.text,
+            lat: _latitude?.toString() ?? '',
+            lon: _longitude?.toString() ?? '',
+            mapel: widget.selectedSubject,
           ),
         );
   }
@@ -116,6 +129,8 @@ class _OrderContentState extends State<OrderContent> {
     setState(() {
       _addressController.text =
           "${place.street}, ${place.subLocality}, ${place.locality}, ${place.postalCode}, ${place.country}";
+      _latitude = _locationData.latitude;
+      _longitude = _locationData.longitude;
     });
   }
 
@@ -196,12 +211,17 @@ class _OrderContentState extends State<OrderContent> {
                       ),
                       const SizedBox(height: 8.0),
                       Text(
-                        "Mata Pelajaran : ${widget.teacher.typeTeaching} ",
+                        "Mata Pelajaran : ${widget.selectedSubject}",
                         style: AppTextStyle.body2.setRegular(),
                       ),
                       const SizedBox(height: 8.0),
                       Text(
                         "Harga Pertemuan : Rp.${widget.teacher.price}/meet",
+                        style: AppTextStyle.body2.setRegular(),
+                      ),
+                      const SizedBox(height: 8.0),
+                      Text(
+                        "Harga Penanganan : Rp.6500",
                         style: AppTextStyle.body2.setRegular(),
                       ),
                       const SizedBox(height: 8.0),
@@ -282,46 +302,43 @@ class _OrderContentState extends State<OrderContent> {
                         },
                       ),
                       const SizedBox(height: 16),
-                      Row(
-                        children: [
-                          Expanded(
-                            flex: 4,
-                            child: TextFormField(
-                              enabled: false,
-                              maxLines: 2,
-                              controller: _addressController,
-                              decoration: const InputDecoration(
-                                hintText: 'Masukan alamat sekarang',
-                              ),
-                              validator: (value) {
-                                if (value == null || value.isEmpty) {
-                                  return 'Alamat tidak boleh kosong!';
-                                }
-                                return null;
-                              },
-                            ),
-                          ),
-                          const SizedBox(width: 16),
-                          Expanded(
-                            flex: 1,
-                            child: GestureDetector(
-                              onTap: _getLocation,
-                              child: Container(
-                                padding: const EdgeInsets.all(4),
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(8),
-                                  color: pr13,
-                                ),
-                                child: const Icon(
-                                  Icons.location_on_outlined,
-                                  size: 40,
-                                  color: pr15,
-                                ),
-                              ),
-                            ),
-                          ),
-                        ],
-                      )
+                      GooglePlaceAutoCompleteTextField(
+                        textEditingController: _addressController,
+                        googleAPIKey:
+                            "AIzaSyCrwJlZ6WKybOec-vLvtHzb2AHL3sLwso0", // Ganti dengan kunci API Anda
+                        inputDecoration: InputDecoration(
+                          hintText: "Cari tempat...",
+                          border: OutlineInputBorder(),
+                        ),
+                        countries: ["id"], // Sesuaikan dengan kode negara Anda
+                        isLatLngRequired: true,
+                        getPlaceDetailWithLatLng: (prediction) async {
+                          // Mengambil detail tempat menggunakan prediksi
+                          List<geo.Location> locations =
+                              await geo.locationFromAddress(
+                                  prediction.description ?? '');
+                          if (locations.isNotEmpty) {
+                            setState(() {
+                              _latitude = locations[0].latitude;
+                              _longitude = locations[0].longitude;
+                            });
+                          }
+                        },
+                        itemClick: (prediction) async {
+                          // Saat pengguna memilih item dari daftar, dapatkan detail lokasi
+                          List<geo.Location> locations =
+                              await geo.locationFromAddress(
+                                  prediction.description ?? '');
+                          if (locations.isNotEmpty) {
+                            setState(() {
+                              _latitude = locations[0].latitude;
+                              _longitude = locations[0].longitude;
+                              _addressController.text =
+                                  prediction.description ?? '';
+                            });
+                          }
+                        },
+                      ),
                     ],
                   ),
                 ),

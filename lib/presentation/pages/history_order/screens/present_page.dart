@@ -35,42 +35,51 @@ class _PresentPageState extends State<PresentPage> {
     });
   }
 
+  Future<void> _refresh() async {
+    context.read<GetPresentBloc>().add(OnGetPresentEvent());
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: BlocBuilder<GetPresentBloc, GetPresentState>(
-        builder: (context, state) {
-          if (state is GetPresentStateLoading) {
-            return Center(
-              child: Lottie.asset(
-                'assets/lotties/loading_state.json',
-                height: 180,
-                width: 180,
-              ),
-            );
-          } else if (state is GetPresentStateHasData) {
-            return ListView.builder(
-              shrinkWrap: true,
-              itemCount: state.result.length,
-              itemBuilder: (context, index) {
-                final order = state.result[index];
-                return CardOrderPresent(
-                  dataHistoryOrder: order,
-                );
-              },
-            );
-          } else if (state is GetPresentStateEmpty) {
-            return const EmptySection();
-          } else if (state is GetPresentStateError) {
-            return ErrorSection(
+      body: RefreshIndicator(
+        onRefresh: _refresh,
+        child: BlocBuilder<GetPresentBloc, GetPresentState>(
+          builder: (context, state) {
+            if (state is GetPresentStateLoading) {
+              return Center(
+                child: Lottie.asset(
+                  'assets/lotties/loading_state.json',
+                  height: 180,
+                  width: 180,
+                ),
+              );
+            } else if (state is GetPresentStateHasData) {
+              return ListView.builder(
+                shrinkWrap: true,
+                itemCount: state.result.length,
+                itemBuilder: (context, index) {
+                  final order = state.result[index];
+                  return CardOrderPresent(
+                    dataHistoryOrder: order,
+                  );
+                },
+              );
+            } else if (state is GetPresentStateEmpty) {
+              return const EmptySection();
+            } else if (state is GetPresentStateError) {
+              return ErrorSection(
                 isLoading: _isLoading,
                 onPressed: _retry,
-                message: state.message);
-          } else {
-            return const SizedBox();
-          }
-        },
+                message: state.message,
+              );
+            } else {
+              return const SizedBox();
+            }
+          },
+        ),
       ),
     );
   }
 }
+

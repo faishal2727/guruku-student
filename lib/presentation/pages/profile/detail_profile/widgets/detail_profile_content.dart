@@ -124,7 +124,11 @@ class _DetailProfileContentState extends State<DetailProfileContent> {
         Center(
           child: InkWell(
             onTap: () async {
-              Navigator.pushNamed(context, UpdateProfilePage.ROUTE_NAME);
+              Navigator.pushNamed(
+                context,
+                UpdateProfilePage.ROUTE_NAME,
+                arguments: widget.profile,
+              );
             },
             child: Text(
               "Edit Profile",

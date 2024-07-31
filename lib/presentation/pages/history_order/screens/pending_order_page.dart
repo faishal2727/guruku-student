@@ -37,42 +37,48 @@ class _PendingOrderPageState extends State<PendingOrderPage> {
     });
   }
 
+  Future<void> _refresh() async {
+    context.read<OrderPendingBloc>().add(OnOrderPendingEvent());
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: BlocBuilder<OrderPendingBloc, OrderPendingState>(
-        builder: (context, state) {
-          if (state is OrderPendingLoading) {
-            return Center(
-              child: Lottie.asset(
-                'assets/lotties/loading_state.json',
-                height: 180,
-                width: 180,
-              ),
-            );
-          } else if (state is OrderPendingHasData) {
-            return ListView.builder(
-              shrinkWrap: true,
-              itemCount: state.result.length,
-              itemBuilder: (context, index) {
-                final order = state.result[index];
-                return CardOrderPending(dataHistoryOrder: order);
-              },
-            );
-          } else if (state is OrderPendingError) {
-            return ErrorSection(
-              isLoading: _isLoading,
-              onPressed: _retry,
-              message: state.message,
-            );
-          } else if (state is OrderPendingEmpty) {
-            return const EmptySection();
-          } else {
-            return const Center(
-              child: Text('Error Get History'),
-            );
-          }
-        },
+      body: RefreshIndicator(
+        onRefresh: _refresh,
+        child: BlocBuilder<OrderPendingBloc, OrderPendingState>(
+          builder: (context, state) {
+            if (state is OrderPendingLoading) {
+              return Center(
+                child: Lottie.asset(
+                  'assets/lotties/loading_state.json',
+                  height: 180,
+                  width: 180,
+                ),
+              );
+            } else if (state is OrderPendingHasData) {
+              return ListView.builder(
+                itemCount: state.result.length,
+                itemBuilder: (context, index) {
+                  final order = state.result[index];
+                  return CardOrderPending(dataHistoryOrder: order);
+                },
+              );
+            } else if (state is OrderPendingError) {
+              return ErrorSection(
+                isLoading: _isLoading,
+                onPressed: _retry,
+                message: state.message,
+              );
+            } else if (state is OrderPendingEmpty) {
+              return const EmptySection();
+            } else {
+              return const Center(
+                child: Text('Error Get History'),
+              );
+            }
+          },
+        ),
       ),
     );
   }

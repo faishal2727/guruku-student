@@ -7,3 +7,9 @@ class OnGetPresentEvent extends GetPresentEvent {
   @override
   List<Object?> get props => [];
 }
+
+
+class OnGetPresentTidakEvent extends GetPresentEvent {
+  @override
+  List<Object?> get props => [];
+}

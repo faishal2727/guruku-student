@@ -9,13 +9,16 @@ part 'order_cancel_state.dart';
 
 class OrderCancelBloc extends Bloc<OrderCancelEvent, OrderCancelState> {
   final HistoryOrderCancel historyOrderCancel;
+  final HistoryOrderCanceled historyOrderCanceled;
   final GetAuth getAuth;
 
   OrderCancelBloc(
     this.historyOrderCancel,
+    this.historyOrderCanceled,
     this.getAuth,
   ) : super(OrderCancelEmpty()) {
     on<OnOrderCancelEvent>(_onGetOrderCancel);
+    on<OnOrderCanceledEvent>(_onGetOrderCanceled);
   }
 
   Future<void> _onGetOrderCancel(
@@ -33,6 +36,27 @@ class OrderCancelBloc extends Bloc<OrderCancelEvent, OrderCancelState> {
             emit(OrderCancelEmpty());
           } else {
             emit(OrderCancelHasData(data));
+          }
+        },
+      );
+    }
+  }
+
+  Future<void> _onGetOrderCanceled(
+      OnOrderCanceledEvent event, Emitter<OrderCancelState> emit) async {
+    emit(OrderCanceledLoading());
+    final token = await getAuth.execute();
+    if (token!.token.isNotEmpty) {
+      final result = await historyOrderCanceled.execute(token: token.token);
+      result.fold(
+        (failure) {
+          emit(OrderCanceledError(failure.message));
+        },
+        (data) {
+          if (data.isEmpty) {
+            emit(OrderCanceledEmpty());
+          } else {
+            emit(OrderCanceledHasData(data));
           }
         },
       );

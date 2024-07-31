@@ -41,6 +41,10 @@ class _DetailProfilePageState extends State<DetailProfilePage> {
     });
   }
 
+  Future<void> _refresh() async {
+    context.read<ProfileBloc>().add(OnProfileEvent());
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -52,35 +56,51 @@ class _DetailProfilePageState extends State<DetailProfilePage> {
         ),
         backgroundColor: pr11,
       ),
-      body: BlocBuilder<ProfileBloc, ProfileState>(
-        builder: (context, state) {
-          if (state.stateProfile == ReqStateProfile.loading) {
-            return Center(
-              child: Lottie.asset(
-                'assets/lotties/loading.json',
-                height: 200,
-                width: 200,
-              ),
-            );
-          } else if (state.stateProfile == ReqStateProfile.loaded) {
-            final profile = state.dataProfile;
-            return DetailProfileContent(profile!);
-          } else if (state.stateProfile == ReqStateProfile.empty) {
-            return const EmptySection();
-          } else if (state.stateProfile == ReqStateProfile.error) {
-            return ErrorSection(
-              isLoading: _isLoading,
-              onPressed: _retry,
-              message: state.message,
-            );
-          } else {
-            return const Text(
-              'unexpected state',
-              key: Key('unexpected_state_message'),
-            );
-          }
-        },
+      body: RefreshIndicator(
+        onRefresh: _refresh,
+        child: BlocBuilder<ProfileBloc, ProfileState>(
+          builder: (context, state) {
+            if (state.stateProfile == ReqStateProfile.loading) {
+              return Center(
+                child: Lottie.asset(
+                  'assets/lotties/loading.json',
+                  height: 200,
+                  width: 200,
+                ),
+              );
+            } else if (state.stateProfile == ReqStateProfile.loaded) {
+              final profile = state.dataProfile;
+              return SingleChildScrollView(
+                physics: const AlwaysScrollableScrollPhysics(),
+                child: DetailProfileContent(profile!),
+              );
+            } else if (state.stateProfile == ReqStateProfile.empty) {
+              return const SingleChildScrollView(
+                physics: AlwaysScrollableScrollPhysics(),
+                child: EmptySection(),
+              );
+            } else if (state.stateProfile == ReqStateProfile.error) {
+              return SingleChildScrollView(
+                physics: const AlwaysScrollableScrollPhysics(),
+                child: ErrorSection(
+                  isLoading: _isLoading,
+                  onPressed: _retry,
+                  message: state.message,
+                ),
+              );
+            } else {
+              return const SingleChildScrollView(
+                physics: AlwaysScrollableScrollPhysics(),
+                child: Text(
+                  'unexpected state',
+                  key: Key('unexpected_state_message'),
+                ),
+              );
+            }
+          },
+        ),
       ),
     );
   }
 }
+

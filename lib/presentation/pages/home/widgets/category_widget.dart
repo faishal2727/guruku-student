@@ -31,7 +31,7 @@ class CategoryWidget extends StatelessWidget {
                     Navigator.pushNamed(context, TeacherMathPage.ROUTE_NAME);
                   },
                   child: const CardCategory(
-                    category: 'Math',
+                    category: 'Matematika',
                     icons: Icons.numbers,
                   ),
                 ),
@@ -40,7 +40,7 @@ class CategoryWidget extends StatelessWidget {
                     Navigator.pushNamed(context, TeacherEnglishPage.ROUTE_NAME);
                   },
                   child: const CardCategory(
-                    category: 'English',
+                    category: 'B.Inggris',
                     icons: Icons.translate,
                   ),
                 ),
@@ -49,7 +49,17 @@ class CategoryWidget extends StatelessWidget {
                     Navigator.pushNamed(context, TeacherBiologyPage.ROUTE_NAME);
                   },
                   child: const CardCategory(
-                    category: 'Biology',
+                    category: 'B.Indonesia',
+                    icons: Icons.book,
+                  ),
+                ),
+                InkWell(
+                  onTap: () {
+                    Navigator.pushNamed(
+                        context, TeacherIndonesianPage.ROUTE_NAME);
+                  },
+                  child: const CardCategory(
+                    category: 'IPA',
                     icons: Icons.science,
                   ),
                 ),
@@ -59,18 +69,8 @@ class CategoryWidget extends StatelessWidget {
                         context, TeacherIndonesianPage.ROUTE_NAME);
                   },
                   child: const CardCategory(
-                    category: 'Bahasa',
-                    icons: Icons.book,
-                  ),
-                ),
-                InkWell(
-                  onTap: () {
-                    Navigator.pushNamed(
-                        context, TeacherIndonesianPage.ROUTE_NAME);
-                  },
-                  child: const CardCategory(
-                    category: 'Kimia',
-                    icons: Icons.book,
+                    category: 'Lainnya',
+                    icons: Icons.menu,
                   ),
                 ),
               ],

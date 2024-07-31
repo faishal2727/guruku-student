@@ -37,45 +37,50 @@ class _ListMeetingPageState extends State<ListMeetingPage> {
     });
   }
 
+  Future<void> _refresh() async {
+    context.read<OrderCancelBloc>().add(OnOrderCancelEvent());
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: BlocBuilder<OrderCancelBloc, OrderCancelState>(
-        builder: (context, state) {
-          if (state is OrderCancelLoading) {
-            return Center(
-              child: Lottie.asset(
-                'assets/lotties/loading_state.json',
-                height: 180,
-                width: 180,
-              ),
-            );
-          }
-          if (state is OrderCancelHasData) {
-            return ListView.builder(
-              shrinkWrap: true,
-              itemCount: state.result.length,
-              itemBuilder: (context, index) {
-                final order = state.result[index];
-                return CardOrderCancel(
-                  dataHistoryOrder: order,
-                );
-              },
-            );
-          } else if (state is OrderCancelError) {
-            return ErrorSection(
-              isLoading: _isLoading,
-              onPressed: _retry,
-              message: state.message,
-            );
-          } else if (state is OrderCancelEmpty) {
-            return const EmptySection();
-          } else {
-            return const Center(
-              child: Text('Error Get History'),
-            );
-          }
-        },
+      body: RefreshIndicator(
+        onRefresh: _refresh,
+        child: BlocBuilder<OrderCancelBloc, OrderCancelState>(
+          builder: (context, state) {
+            if (state is OrderCancelLoading) {
+              return Center(
+                child: Lottie.asset(
+                  'assets/lotties/loading_state.json',
+                  height: 180,
+                  width: 180,
+                ),
+              );
+            } else if (state is OrderCancelHasData) {
+              return ListView.builder(
+                itemCount: state.result.length,
+                itemBuilder: (context, index) {
+                  final order = state.result[index];
+                  return CardOrderCancel(
+                    dataHistoryOrder: order,
+                  );
+                },
+              );
+            } else if (state is OrderCancelError) {
+              return ErrorSection(
+                isLoading: _isLoading,
+                onPressed: _retry,
+                message: state.message,
+              );
+            } else if (state is OrderCancelEmpty) {
+              return const EmptySection();
+            } else {
+              return const Center(
+                child: Text('Error Get History'),
+              );
+            }
+          },
+        ),
       ),
     );
   }

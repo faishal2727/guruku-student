@@ -69,7 +69,7 @@ class _DetailPresentContentState extends State<DetailPresentContent> {
                     children: [
                       Text(widget.dataHistoryOrder.teacher.name!,
                           style: AppTextStyle.body2.setMedium()),
-                      Text(widget.dataHistoryOrder.teacher.typeTeaching!,
+                      Text(widget.dataHistoryOrder.mapel,
                           style: AppTextStyle.body4.setRegular()),
                     ],
                   ),
@@ -99,12 +99,77 @@ class _DetailPresentContentState extends State<DetailPresentContent> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
+                  'Id Transaksi',
+                  style: AppTextStyle.body3.setRegular(),
+                ),
+                Text(
+                  "${widget.dataHistoryOrder.code}",
+                  style: AppTextStyle.body3.setRegular(),
+                )
+              ],
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  'Status Pembayaran',
+                  style: AppTextStyle.body3.setRegular(),
+                ),
+                Text(
+                  "${widget.dataHistoryOrder.paymentStatus}",
+                  style: AppTextStyle.body3.setRegular(),
+                )
+              ],
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  'Metode Pembayaran',
+                  style: AppTextStyle.body3.setRegular(),
+                ),
+                Text(
+                  widget.dataHistoryOrder.bank!.toUpperCase(),
+                  style: AppTextStyle.body3.setRegular(),
+                )
+              ],
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
                   'Tanggal Pertemuan',
                   style: AppTextStyle.body3.setRegular(),
                 ),
                 Text(
                   formatDate(
                       widget.dataHistoryOrder.meetingTime!.toIso8601String()),
+                  style: AppTextStyle.body3.setRegular(),
+                )
+              ],
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  'Waktu Transaksi',
+                  style: AppTextStyle.body3.setRegular(),
+                ),
+                Text(
+                  formatDate(
+                      widget.dataHistoryOrder.createdAt.toIso8601String()),
                   style: AppTextStyle.body3.setRegular(),
                 )
               ],

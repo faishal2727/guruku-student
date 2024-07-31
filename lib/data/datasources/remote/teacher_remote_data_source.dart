@@ -30,6 +30,7 @@ abstract class TeacherRemoteDataSource {
     String education,
     String jurusan,
     String tahunLulus,
+    String gelar,
     String idCard,
     String file,
   );
@@ -43,7 +44,7 @@ class TeacherRemoteDataSourceImpl implements TeacherRemoteDataSource {
   @override
   Future<List<TeacherModel>> getAllTeacher() async {
     final response = await client
-        .get(Uri.parse('https://faizal.simagang.my.id/faisol/v1/teacher'));
+        .get(Uri.parse('https://faizal.simagang.my.id/faisol/v1/teacher-acc/true'));
     if (response.statusCode == 200) {
       return TeacherResponse.fromJson(json.decode(response.body)).data;
     } else {
@@ -171,8 +172,9 @@ class TeacherRemoteDataSourceImpl implements TeacherRemoteDataSource {
     String education,
     String jurusan,
     String tahunLulus,
+    String gelar,
     String idCard,
-    String file,
+    String file
   ) async {
     const requestUrl =
         'https://faizal.simagang.my.id/faisol/v1/teacher/register';
@@ -187,6 +189,7 @@ class TeacherRemoteDataSourceImpl implements TeacherRemoteDataSource {
       'education': education,
       'jurusan': jurusan,
       'tahun_lulus': tahunLulus,
+      'gelar': gelar,
       'id_card': idCard,
       'file': file,
     });

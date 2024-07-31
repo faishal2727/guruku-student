@@ -88,7 +88,7 @@ class CardOrderPresent extends StatelessWidget {
                     children: [
                       Text(dataHistoryOrder.teacher.name!,
                           style: AppTextStyle.body2.setMedium()),
-                      Text(dataHistoryOrder.teacher.typeTeaching!,
+                      Text(dataHistoryOrder.mapel!,
                           style: AppTextStyle.body4.setRegular()),
                     ],
                   ),

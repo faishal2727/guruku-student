@@ -14,9 +14,21 @@ enum RequestStatePayment { initial, empty, loading, loaded, error }
 
 enum RequestStateOrder { initial, empty, loading, loaded, error }
 
+enum RequestStateOrderPackages { initial, empty, loading, loaded, error }
+
+enum RequestStateOrderCancel { initial, empty, loading, loaded, error }
+
 enum RequestState { initial, empty, loading, loaded, error }
 
 enum RequestStateReview { initial, empty, loading, loaded, error }
+
+enum RequestStatePackages { initial, empty, loading, loaded, error }
+
+enum RequestStateAddPackages { initial, empty, loading, loaded, error }
+
+enum RequestStateUpdatePackages { initial, empty, loading, loaded, error }
+
+enum RequestStatePackagesDetail { initial, empty, loading, loaded, error }
 
 enum RequestStateDetail { initial, empty, loading, loaded, error }
 
@@ -44,5 +56,14 @@ enum ReqPresent { initial, empty, loading, loaded, error }
 
 enum ReqTidak { initial, empty, loading, loaded, error }
 
+enum ReqPresentPac { initial, empty, loading, loaded, error }
+
 enum ReqStateNotif { initial, empty, loading, loaded, error }
 
+enum RequestStateWd { initial, empty, loading, loaded, error }
+
+enum ReqStateListWd { initial, empty, loading, loaded, error }
+
+enum ReqStateListWdStudent { initial, empty, loading, loaded, error }
+
+enum ReqStateWdDetail { initial, empty, loading, loaded, error }

@@ -2,6 +2,7 @@
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:guruku_student/common/constants.dart';
 import 'package:guruku_student/common/themes/themes.dart';
 import 'package:guruku_student/domain/entity/teacher/teacher.dart';
 import 'package:guruku_student/presentation/pages/detail_teacher/screens/detail_teacher_page.dart';
@@ -76,35 +77,6 @@ class CardTeacherVertical extends StatelessWidget {
                               child: Icon(Icons.warning, color: Colors.red),
                             ),
                     ),
-                    Positioned(
-                      bottom: 0,
-                      right: 0,
-                      child: Container(
-                        padding: const EdgeInsets.all(4),
-                        width: 50,
-                        height: 25,
-                        decoration: BoxDecoration(
-                          color: AppColors.primary.pr01,
-                          borderRadius: const BorderRadius.only(
-                            topLeft: Radius.circular(12),
-                            bottomRight: Radius.circular(13),
-                          ),
-                        ),
-                        child: Row(
-                          children: [
-                            Icon(
-                              Icons.star,
-                              color: AppColors.warning.wn05,
-                              size: 18,
-                            ),
-                            Text(
-                              '4.5',
-                              style: AppTextStyle.body4.setSemiBold(),
-                            ),
-                          ],
-                        ),
-                      ),
-                    )
                   ],
                 ),
               ),
@@ -126,12 +98,34 @@ class CardTeacherVertical extends StatelessWidget {
                       children: [
                         Icon(Icons.book,
                             size: 15, color: AppColors.primary.pr10),
-                        Text(
-                          maxLines: 1,
-                          teacher.typeTeaching ?? "",
-                          style: AppTextStyle.body4.setRegular(),
-                          overflow: TextOverflow.ellipsis,
-                        )
+                        // Padding(
+                        //         padding: const EdgeInsets.only(left: 16),
+                        //         child: teacher.typeTeaching != null &&
+                        //                 teacher.typeTeaching!.isNotEmpty
+                        //             ? Wrap(
+                        //                 direction: Axis.horizontal,
+                        //                 spacing: 8.0, // Atur jarak antar item
+                        //                 children: teacher.typeTeaching!
+                        //                     .map((type) {
+                        //                   return Text(
+                        //                     type,
+                        //                     style: AppTextStyle.body3
+                        //                         .setSemiBold()
+                        //                         .copyWith(
+                        //                           color: AppColors.primary.pr13,
+                        //                         ),
+                        //                   );
+                        //                 }).toList(),
+                        //               )
+                        //             : Text(
+                        //                 "No teaching types available",
+                        //                 style: AppTextStyle.body3
+                        //                     .setSemiBold()
+                        //                     .copyWith(
+                        //                       color: AppColors.primary.pr13,
+                        //                     ),
+                        //               ),
+                        //       ),
                       ],
                     ),
                     const SizedBox(height: 4),
@@ -150,12 +144,7 @@ class CardTeacherVertical extends StatelessWidget {
                       ],
                     ),
                     const SizedBox(height: 4),
-                    Text(
-                      "Rp. ${teacher.price}/Meet",
-                      style: AppTextStyle.body3
-                          .setSemiBold()
-                          .copyWith(color: AppColors.primary.pr13),
-                    ),
+                    Text('${teacher.distance!.toStringAsFixed(2)} Km dari Lokasi anda', style: AppTextStyle.body3.setSemiBold().copyWith(color: pr13),) // Update jarak dengan data jarak yang dihitung
                   ],
                 ),
               ),
@@ -166,3 +155,35 @@ class CardTeacherVertical extends StatelessWidget {
     );
   }
 }
+
+
+
+ // Positioned(
+                    //   bottom: 0,
+                    //   right: 0,
+                    //   child: Container(
+                    //     padding: const EdgeInsets.all(4),
+                    //     width: 50,
+                    //     height: 25,
+                    //     decoration: BoxDecoration(
+                    //       color: AppColors.primary.pr01,
+                    //       borderRadius: const BorderRadius.only(
+                    //         topLeft: Radius.circular(12),
+                    //         bottomRight: Radius.circular(13),
+                    //       ),
+                    //     ),
+                    //     child: Row(
+                    //       children: [
+                    //         Icon(
+                    //           Icons.star,
+                    //           color: AppColors.warning.wn05,
+                    //           size: 18,
+                    //         ),
+                    //         Text(
+                    //           '4.5',
+                    //           style: AppTextStyle.body4.setSemiBold(),
+                    //         ),
+                    //       ],
+                    //     ),
+                    //   ),
+                    // )

@@ -6,11 +6,15 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:guruku_student/common/constants.dart';
 import 'package:guruku_student/common/themes/themes.dart';
 import 'package:guruku_student/presentation/blocs/login/login_bloc.dart';
+import 'package:guruku_student/presentation/pages/packages/screens/history_order_packages_page.dart';
+import 'package:guruku_student/presentation/pages/profile/balance/screens/balance_user_page.dart';
 import 'package:guruku_student/presentation/pages/profile/detail_profile/screens/detail_profile_page.dart';
+import 'package:guruku_student/presentation/pages/profile/faq/screens/faq_page.dart';
 import 'package:guruku_student/presentation/pages/profile/main/widgets/avatar_content.dart';
 import 'package:guruku_student/presentation/pages/profile/main/widgets/my_order_widget.dart';
 import 'package:guruku_student/presentation/pages/profile/main/widgets/profile_list_item.dart';
 import 'package:guruku_student/presentation/pages/profile/wishlist/screens/wishlist_page.dart';
+import 'package:guruku_student/presentation/pages/teacher/pages/register_teacher/screens/tac_page.dart';
 import 'package:restart_app/restart_app.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -69,6 +73,15 @@ class _ProfilePageState extends State<ProfilePage> {
                   ProfileListItem(
                     onTap: () {
                       Navigator.pushNamed(
+                          context, HistoryOrderPackagesPage.ROUTE_NAME);
+                    },
+                    icon: Icons.shop,
+                    menuProfile: 'Pesanan Paketan',
+                  ),
+                  const SizedBox(height: 8),
+                  ProfileListItem(
+                    onTap: () {
+                      Navigator.pushNamed(
                           context, DetailProfilePage.ROUTE_NAME);
                     },
                     icon: Icons.person,
@@ -81,6 +94,30 @@ class _ProfilePageState extends State<ProfilePage> {
                     },
                     icon: Icons.favorite,
                     menuProfile: 'Wishlist',
+                  ),
+                  const SizedBox(height: 8),
+                  ProfileListItem(
+                    onTap: () {
+                      Navigator.pushNamed(context, BalanceUserPage.ROUTE_NAME);
+                    },
+                    icon: Icons.wallet_travel_sharp,
+                    menuProfile: 'Saldo',
+                  ),
+                  const SizedBox(height: 8),
+                  ProfileListItem(
+                    onTap: () {
+                      Navigator.pushNamed(context, TacPage.ROUTE_NAME);
+                    },
+                    icon: Icons.settings,
+                    menuProfile: 'Syarat & Ketentuan',
+                  ),
+                  const SizedBox(height: 8),
+                  ProfileListItem(
+                    onTap: () {
+                      Navigator.pushNamed(context, FaqPage.ROUTE_NAME);
+                    },
+                    icon: Icons.question_answer,
+                    menuProfile: 'FaQ',
                   ),
                   const SizedBox(height: 8),
                   ProfileListItem(
@@ -111,7 +148,7 @@ class _ProfilePageState extends State<ProfilePage> {
       floatingActionButton: FloatingActionButton(
         onPressed: _composeMail,
         tooltip: 'Pusat Bantuan',
-        child: const Icon(Icons.mail),
+        child: const Icon(Icons.help_center_outlined),
       ),
     );
   }

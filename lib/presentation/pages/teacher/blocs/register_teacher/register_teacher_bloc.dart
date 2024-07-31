@@ -29,40 +29,26 @@ class RegisterTeacherBloc
         final String education = event.education;
         final String jurusan = event.jurusan;
         final String tahunLulus = event.tahunLulus;
+        final String gelar = event.gelar;
         final String idCard = event.idCard;
         final String file = event.file;
 
         if (user != null) {
-          final result = await register.execute(
-            user.token,
-            username,
-            email,
-            phone,
-            education,
-            jurusan,
-            tahunLulus,
-            idCard,
-            file,
-          );
+          final result = await register.execute(user.token, username, email,
+              phone, education, jurusan, tahunLulus, gelar, idCard, file);
           result.fold((failure) {
             emit(
-              state.copyWith(
-                stateRegister: ReqStateRegisTeacher.error,
-              ),
+              state.copyWith(stateRegister: ReqStateRegisTeacher.error),
             );
           }, (data) {
             debugPrint("KODEKU $data");
-            emit(
-              state.copyWith(
+            emit(state.copyWith(
                 stateRegister: ReqStateRegisTeacher.loaded,
                 registerData: data,
-                message: "Berhasil Register Teacher",
-              ),
-            );
+                message: "Berhasil Register Teacher"));
           });
         }
       },
     );
-
   }
 }

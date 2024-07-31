@@ -19,6 +19,7 @@ class DetailProfileResponseModel extends Equatable {
   String? lon;
   String? gender;
   String? role;
+  String? balanceUser;
   int? teacherId;
   String? status;
   TeacherModel? teacher;
@@ -38,6 +39,7 @@ class DetailProfileResponseModel extends Equatable {
     required this.lon,
     required this.gender,
     required this.role,
+    required this.balanceUser,
     required this.teacherId,
     required this.status,
     this.teacher,
@@ -59,6 +61,7 @@ class DetailProfileResponseModel extends Equatable {
         lon: json['data']['lon'],
         gender: json['data']['gender'],
         role: json['data']['role'],
+        balanceUser: json["data"]["balance_user"],
         teacherId: json['data']['teacher_id'],
         status: json['data']['status'],
         teacher: json['data']['data'] != null
@@ -81,6 +84,7 @@ class DetailProfileResponseModel extends Equatable {
         'lon': lon,
         'gender': gender,
         'role': role,
+        'balance_user': balanceUser,
         'teacher_id': teacherId,
         'status': status,
         'data': teacher?.toJson()
@@ -102,6 +106,7 @@ class DetailProfileResponseModel extends Equatable {
         lon: lon,
         gender: gender,
         role: role,
+        balanceUser: balanceUser,
         teacherId: teacherId,
         status: status,
         teacher: teacher?.toEntity());
@@ -123,27 +128,10 @@ class DetailProfileResponseModel extends Equatable {
         lon,
         gender,
         role,
+        balanceUser,
         teacherId,
         status,
         teacher,
       ];
 }
 
-
-
-  // factory DetailProfileResponseModel.fromEntity(DetailProfileResponse data) =>
-  //     DetailProfileResponseModel(
-  //       id: data.id,
-  //       username: data.username,
-  //       name: data.name,
-  //       email: data.email,
-  //       password: data.password,
-  //       phone: data.phone,
-  //       education: data.education,
-  //       images: data.images,
-  //       bod: data.bod,
-  //       address: data.address,
-  //       lat: data.lat,
-  //       lon: data.lon,
-  //       gender: data.gender,
-  //     );

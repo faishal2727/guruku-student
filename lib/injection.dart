@@ -1,37 +1,41 @@
 import 'package:get_it/get_it.dart';
-import 'package:guruku_student/data/datasources/db/database_helper.dart';
 import 'package:guruku_student/data/datasources/local/auth_local_data_source.dart';
-import 'package:guruku_student/data/datasources/local/teacher_local_data_source.dart';
 import 'package:guruku_student/data/datasources/remote/auth_remote_data_source.dart';
 import 'package:guruku_student/data/datasources/remote/notif_remote_data_source.dart';
 import 'package:guruku_student/data/datasources/remote/order_remote_data_source.dart';
 import 'package:guruku_student/data/datasources/remote/order_teacher_remote_data_source.dart';
+import 'package:guruku_student/data/datasources/remote/packages_remote_data_source.dart';
 import 'package:guruku_student/data/datasources/remote/payment_remote_data_sorce.dart';
 import 'package:guruku_student/data/datasources/remote/profile_remote_data_source.dart';
 import 'package:guruku_student/data/datasources/remote/register_teacher_remote_data_source.dart';
 import 'package:guruku_student/data/datasources/remote/review_remote_data_source.dart';
 import 'package:guruku_student/data/datasources/remote/teacher_remote_data_source.dart';
 import 'package:guruku_student/data/datasources/remote/wishlist_remote_data_source.dart';
+import 'package:guruku_student/data/datasources/remote/withdraw_remote_data_source.dart';
 import 'package:guruku_student/data/repositories/auth_repository_impl.dart';
 import 'package:guruku_student/data/repositories/my_data_teacher_repository_impl.dart';
 import 'package:guruku_student/data/repositories/notif_repository_impl.dart';
 import 'package:guruku_student/data/repositories/order_repository_impl.dart';
 import 'package:guruku_student/data/repositories/order_teacher_repository_impl.dart';
+import 'package:guruku_student/data/repositories/packages_repository_impl.dart';
 import 'package:guruku_student/data/repositories/payment_repository_impl.dart';
 import 'package:guruku_student/data/repositories/profile_repository_impl.dart';
 import 'package:guruku_student/data/repositories/review_repository_impl.dart';
 import 'package:guruku_student/data/repositories/teacher_repository_impl.dart';
 import 'package:guruku_student/data/repositories/wishlist_repository_impl.dart';
+import 'package:guruku_student/data/repositories/withdraw_repository_impl.dart';
 import 'package:guruku_student/domain/repositories/auth_repository.dart';
 import 'package:guruku_student/domain/repositories/my_data_teacher_repository.dart';
 import 'package:guruku_student/domain/repositories/notif_repository.dart';
 import 'package:guruku_student/domain/repositories/order_repository.dart';
 import 'package:guruku_student/domain/repositories/order_teacher_repository.dart';
+import 'package:guruku_student/domain/repositories/packages_repository.dart';
 import 'package:guruku_student/domain/repositories/payment_repository.dart';
 import 'package:guruku_student/domain/repositories/profile_repository.dart';
 import 'package:guruku_student/domain/repositories/review_repository.dart';
 import 'package:guruku_student/domain/repositories/teacher_repository.dart';
 import 'package:guruku_student/domain/repositories/wishlist_repository.dart';
+import 'package:guruku_student/domain/repositories/withdraw_repository.dart';
 import 'package:guruku_student/domain/usecase/auth/get_auth.dart';
 import 'package:guruku_student/domain/usecase/auth/login.dart';
 import 'package:guruku_student/domain/usecase/auth/refresh_otp.dart';
@@ -40,22 +44,27 @@ import 'package:guruku_student/domain/usecase/auth/remove_auth.dart';
 import 'package:guruku_student/domain/usecase/auth/req_forgot_password.dart';
 import 'package:guruku_student/domain/usecase/auth/save_auth.dart';
 import 'package:guruku_student/domain/usecase/auth/verify_otp.dart';
-import 'package:guruku_student/domain/usecase/bookmark/get_bookmark_status.dart';
-import 'package:guruku_student/domain/usecase/bookmark/get_bookmark_teacher_list.dart';
-import 'package:guruku_student/domain/usecase/bookmark/remove_bookmark_teacher.dart';
-import 'package:guruku_student/domain/usecase/bookmark/save_bookmark_teacher.dart';
 import 'package:guruku_student/domain/usecase/notif/get_notif_student.dart';
 import 'package:guruku_student/domain/usecase/order/get_all_present.dart';
+import 'package:guruku_student/domain/usecase/order/get_all_tidak_hadir.dart';
 import 'package:guruku_student/domain/usecase/order/get_detail_order.dart';
 import 'package:guruku_student/domain/usecase/order/history_order_cancel.dart';
+import 'package:guruku_student/domain/usecase/order/history_order_packages.dart';
 import 'package:guruku_student/domain/usecase/order/history_order_pending.dart';
 import 'package:guruku_student/domain/usecase/order/history_order_success.dart';
 import 'package:guruku_student/domain/usecase/order/order.dart';
+import 'package:guruku_student/domain/usecase/order/do_cancel.dart' as t;
+import 'package:guruku_student/domain/usecase/order/order_packages.dart';
 import 'package:guruku_student/domain/usecase/order_teacher/order_cancel_teacher.dart';
 import 'package:guruku_student/domain/usecase/order_teacher/order_detail_teacher.dart';
 import 'package:guruku_student/domain/usecase/order_teacher/order_done_teacher.dart';
 import 'package:guruku_student/domain/usecase/order_teacher/order_pending_teacher.dart';
 import 'package:guruku_student/domain/usecase/order_teacher/order_present_teacher.dart';
+import 'package:guruku_student/domain/usecase/packages/add_packages.dart';
+import 'package:guruku_student/domain/usecase/packages/get_detail_packages.dart';
+import 'package:guruku_student/domain/usecase/packages/get_list_packages.dart';
+import 'package:guruku_student/domain/usecase/packages/get_my_packages.dart';
+import 'package:guruku_student/domain/usecase/packages/update_packages.dart';
 import 'package:guruku_student/domain/usecase/payment/payment.dart';
 import 'package:guruku_student/domain/usecase/profile/detail_profile.dart';
 import 'package:guruku_student/domain/usecase/profile/update_avatar.dart';
@@ -78,17 +87,22 @@ import 'package:guruku_student/domain/usecase/wishlist.dart/add_wishlist.dart';
 import 'package:guruku_student/domain/usecase/wishlist.dart/get_all_wishlist.dart';
 import 'package:guruku_student/domain/usecase/wishlist.dart/get_detail_wishlist.dart';
 import 'package:guruku_student/domain/usecase/wishlist.dart/remove_wishlist.dart';
-import 'package:guruku_student/presentation/blocs/bookmark/bookmark_teacher_bloc.dart';
+import 'package:guruku_student/domain/usecase/withdraw/get_detail_wd.dart';
+import 'package:guruku_student/domain/usecase/withdraw/list_wd_student.dart';
+import 'package:guruku_student/domain/usecase/withdraw/list_wd_teacher.dart';
+import 'package:guruku_student/domain/usecase/withdraw/withdraw.dart';
 import 'package:guruku_student/presentation/blocs/detail_order/detail_order_bloc.dart';
 import 'package:guruku_student/presentation/blocs/detail_teacher/detail_teacher_bloc.dart';
 import 'package:guruku_student/presentation/blocs/get_present/get_present_bloc.dart';
 import 'package:guruku_student/presentation/blocs/history_order_cancel/order_cancel_bloc.dart';
+import 'package:guruku_student/presentation/blocs/history_order_packages/history_order_packages_bloc.dart';
 import 'package:guruku_student/presentation/blocs/history_order_pending/order_pending_bloc.dart';
 import 'package:guruku_student/presentation/blocs/history_order_success/order_success_bloc.dart';
 import 'package:guruku_student/presentation/blocs/login/login_bloc.dart';
 import 'package:guruku_student/presentation/blocs/main/main_bloc.dart';
 import 'package:guruku_student/presentation/blocs/notif/notif_bloc.dart';
 import 'package:guruku_student/presentation/blocs/order/order_bloc.dart';
+import 'package:guruku_student/presentation/blocs/packages/packages_bloc.dart';
 import 'package:guruku_student/presentation/blocs/payment/payment_bloc.dart';
 import 'package:guruku_student/presentation/blocs/profile/profile_bloc.dart';
 import 'package:guruku_student/presentation/blocs/refresh_otp/refresh_otp_bloc.dart';
@@ -103,6 +117,7 @@ import 'package:guruku_student/presentation/blocs/teacher_math/teacher_math_bloc
 import 'package:guruku_student/presentation/blocs/teacher_search/teacher_search_bloc.dart';
 import 'package:guruku_student/presentation/blocs/verify_otp/verify_otp_bloc.dart';
 import 'package:guruku_student/presentation/blocs/wishlist/wishlist_bloc.dart';
+import 'package:guruku_student/presentation/blocs/withdraw/withdraw_bloc.dart';
 import 'package:guruku_student/presentation/pages/teacher/blocs/add_data_teacher/add_data_teacher_bloc.dart';
 import 'package:guruku_student/presentation/pages/teacher/blocs/my_data_teacher/my_data_teacher_bloc.dart';
 import 'package:guruku_student/presentation/pages/teacher/blocs/order_teacher/order_teacher_bloc.dart';
@@ -136,21 +151,25 @@ void init() {
   locator.registerFactory(() => TeacherIndoBloc(locator()));
   locator.registerFactory(() => TeacherBiologyBloc(locator()));
   locator.registerFactory(() => TeacherSearchBloc(locator()));
-  locator.registerFactory(
-    () => BookmarkTeacherBloc(
-      locator(),
-      locator(),
-      locator(),
-      locator(),
-    ),
-  );
+  // locator.registerFactory(
+  //   () => BookmarkTeacherBloc(
+  //     locator(),
+  //     locator(),
+  //     locator(),
+  //     locator(),
+  //   ),
+  // );
   locator.registerFactory(() => PaymentBloc(payment: locator()));
-  locator
-      .registerFactory(() => OrderBloc(order: locator(), getAuth: locator()));
+  locator.registerFactory(() => OrderBloc(
+      order: locator(),
+      doCancel: locator(),
+      getAuth: locator(),
+      orderPackages: locator()));
   locator.registerFactory(() => OrderPendingBloc(locator(), locator()));
   locator.registerFactory(() => OrderSuccessBloc(locator(), locator()));
-  locator.registerFactory(() => OrderCancelBloc(locator(), locator()));
-  locator.registerFactory(() => DetailOrderBloc(locator(), locator()));
+  locator
+      .registerFactory(() => OrderCancelBloc(locator(), locator(), locator()));
+  locator.registerFactory(() => DetailOrderBloc(locator(), locator(), locator()));
   locator.registerFactory(
     () => ReviewBloc(
       listReview: locator(),
@@ -160,16 +179,32 @@ void init() {
   );
   locator.registerFactory(
       () => WishlistBloc(getAuth: locator(), getAllWishlist: locator()));
-  locator.registerFactory(() => GetPresentBloc(locator(), locator()));
+  locator
+      .registerFactory(() => GetPresentBloc(locator(), locator(), locator()));
   locator.registerFactory(
       () => RegisterTeacherBloc(register: locator(), getAuth: locator()));
   locator.registerFactory(
       () => AddDataTeacherBloc(locator(), locator(), locator()));
   locator.registerFactory(
       () => MyDataTeacherBloc(getAuth: locator(), myDataTeacher: locator()));
-  locator.registerFactory(() => OrderTeacherBloc(
-      locator(), locator(), locator(), locator(), locator(), locator(), locator(), locator()));
+  locator.registerFactory(() => OrderTeacherBloc(locator(), locator(),
+      locator(), locator(), locator(), locator(), locator(), locator(), locator()));
   locator.registerFactory(() => NotifBloc(locator(), locator()));
+  locator.registerFactory(() => WithdrawBloc(
+      withdraw: locator(),
+      listWdTeacher: locator(),
+      getAuth: locator(),
+      listWdStudent: locator(),
+      getDetailWd: locator()));
+  locator.registerFactory(() => PackagesBloc(
+        listPackages: locator(),
+        getMyPackages: locator(),
+        detailPackages: locator(),
+        addPackages: locator(),
+        updatePackages: locator(),
+        getAuth: locator(),
+      ));
+  locator.registerFactory(() => HistoryOrderPackagesBloc(locator(), locator(), locator()));
 
   // datasource
   locator.registerLazySingleton<AuthLocalDataSource>(
@@ -180,8 +215,8 @@ void init() {
       () => ProfileRemoteDataSourceImpl(client: locator()));
   locator.registerLazySingleton<TeacherRemoteDataSource>(
       () => TeacherRemoteDataSourceImpl(client: locator()));
-  locator.registerLazySingleton<TeacherLocalDataSource>(
-      () => TeacherLocalDataSourceImpl(databaseHelper: locator()));
+  // locator.registerLazySingleton<TeacherLocalDataSource>(
+  //     () => TeacherLocalDataSourceImpl(databaseHelper: locator()));
   locator.registerLazySingleton<PaymentRemoteDataSource>(
       () => PaymentRemoteDataSourceImpl(client: locator()));
   locator.registerLazySingleton<OrderRemoteDataSource>(
@@ -196,6 +231,10 @@ void init() {
       () => OrderTeacherRemoteDataSourceImpl(client: locator()));
   locator.registerLazySingleton<NotifRemoteDataSource>(
       () => NotifRemoteDataSourceImpl(client: locator()));
+  locator.registerLazySingleton<WithdrawRemoteDataSource>(
+      () => WithdrawRemoteDataSourceImpl(client: locator()));
+  locator.registerLazySingleton<PackagesRemoteDataSource>(
+      () => PackagesRemoteDataSourceImpl(client: locator()));
 
   // usecase
   locator.registerLazySingleton(() => Login(locator()));
@@ -213,10 +252,10 @@ void init() {
   locator.registerLazySingleton(() => GetTeacherIndonesian(locator()));
   locator.registerLazySingleton(() => GetTeacherBiology(locator()));
   locator.registerLazySingleton(() => GetSearchTeacher(locator()));
-  locator.registerLazySingleton(() => GetBookmarkStatus(locator()));
-  locator.registerLazySingleton(() => GetBookmarkTeacherList(locator()));
-  locator.registerLazySingleton(() => RemoveBookmarkTeacher(locator()));
-  locator.registerLazySingleton(() => SaveBookmarkTeacher(locator()));
+  // locator.registerLazySingleton(() => GetBookmarkStatus(locator()));
+  // locator.registerLazySingleton(() => GetBookmarkTeacherList(locator()));
+  // locator.registerLazySingleton(() => RemoveBookmarkTeacher(locator()));
+  // locator.registerLazySingleton(() => SaveBookmarkTeacher(locator()));
   locator.registerLazySingleton(() => ReqForgotPassword(locator()));
   locator.registerLazySingleton(() => RefreshOtp(locator()));
   locator.registerLazySingleton(() => UpdateAvatar(locator()));
@@ -225,6 +264,7 @@ void init() {
   locator.registerLazySingleton(() => HistoryOrderPending(locator()));
   locator.registerLazySingleton(() => HistoryOrderSuccess(locator()));
   locator.registerLazySingleton(() => HistoryOrderCancel(locator()));
+  locator.registerLazySingleton(() => HistoryOrderCanceled(locator()));
   locator.registerLazySingleton(() => GetDetailOrder(locator()));
   locator.registerLazySingleton(() => ListReview(locator()));
   locator.registerLazySingleton(() => PostReview(locator()));
@@ -245,6 +285,22 @@ void init() {
   locator.registerLazySingleton(() => OrderCancelTeacher(locator()));
   locator.registerLazySingleton(() => OrderDetailTeacher(locator()));
   locator.registerLazySingleton(() => GetNotifStudent(locator()));
+  locator.registerLazySingleton(() => GetAllTidakHadir(locator()));
+  locator.registerLazySingleton(() => ListWdTeacher(locator()));
+  locator.registerLazySingleton(() => ListWdStudent(locator()));
+  locator.registerLazySingleton(() => Withdraw(locator()));
+  locator.registerLazySingleton(() => GetDetailWd(locator()));
+  locator.registerLazySingleton(() => t.DoCancel(locator()));
+  locator.registerLazySingleton(() => GetListPackages(locator()));
+  locator.registerLazySingleton(() => GetDetailPackages(locator()));
+  locator.registerLazySingleton(() => AddPackages(locator()));
+  locator.registerLazySingleton(() => GetMyPackages(locator()));
+  locator.registerLazySingleton(() => UpdatePackages(locator()));
+  locator.registerLazySingleton(() => OrderPackages(locator()));
+  locator.registerLazySingleton(() => HistoryOrderPackages(locator()));
+  locator.registerLazySingleton(() => GetDetailOrderPackages(locator()));
+  locator.registerLazySingleton(() => OrderPackageTeacher(locator()));
+  locator.registerLazySingleton(() => UpdatePresentPackages(locator()));
 
   // repository
   locator.registerLazySingleton<AuthRepository>(() => AuthRepositoryImpl(
@@ -253,7 +309,7 @@ void init() {
       () => ProfileRepositoryImpl(remoteDataSource: locator()));
   locator.registerLazySingleton<TeacherRepository>(() => TeacherRepositoryImpl(
         remoteDataSource: locator(),
-        localDataSource: locator(),
+        // localDataSource: locator(),
         teacherRemoteDataSource: locator(),
       ));
   locator.registerLazySingleton<PaymentRepository>(
@@ -270,7 +326,12 @@ void init() {
       () => OrderTeacherRepositoryImpl(dataSource: locator()));
   locator.registerLazySingleton<NotifRepository>(
       () => NotifRepositoryImpl(locator()));
+  locator.registerLazySingleton<WithdrawRepository>(
+      () => WithdrawRepositoryImpl(dataSource: locator()));
+  locator.registerLazySingleton<PackagesRepository>(
+      () => PackagesRepositoryImpl(dataSource: locator()));
+
   // external
   locator.registerLazySingleton(() => http.Client());
-  locator.registerLazySingleton(() => DatabaseHelper());
+  // locator.registerLazySingleton(() => DatabaseHelper());
 }

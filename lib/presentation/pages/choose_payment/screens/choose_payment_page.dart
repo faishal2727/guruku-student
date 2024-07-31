@@ -97,9 +97,9 @@ class _ChoosePaymentPageState extends State<ChoosePaymentPage> {
                       color: AppColors.neutral.ne01,
                       elevation: 1,
                       child: ListTile(
-                        leading: Image.asset("assets/payment/bca.webp"),
+                        leading: Image.asset("assets/payment/cimb.png"),
                         title: Text(
-                          'Bank BCA',
+                          'Bank CIMB',
                           style: Theme.of(context)
                               .textTheme
                               .bodyMedium!
@@ -107,13 +107,35 @@ class _ChoosePaymentPageState extends State<ChoosePaymentPage> {
                         ),
                         onTap: () {
                           Navigator.pop(context, {
-                            'name': 'Transfer Bank - Bank BCA',
+                            'name': 'Transfer Bank - Bank CIMB',
                             'paymentType': 'bank_transfer',
-                            'bankVa': 'bca'
+                            'bankVa': 'cimb'
                           });
                         },
                       ),
                     ),
+                    // Card(
+                    //   margin: const EdgeInsets.fromLTRB(12, 4, 12, 16),
+                    //   color: AppColors.neutral.ne01,
+                    //   elevation: 1,
+                    //   child: ListTile(
+                    //     leading: Image.asset("assets/payment/bca.webp"),
+                    //     title: Text(
+                    //       'Bank BCA',
+                    //       style: Theme.of(context)
+                    //           .textTheme
+                    //           .bodyMedium!
+                    //           .copyWith(fontSize: 14),
+                    //     ),
+                    //     onTap: () {
+                    //       Navigator.pop(context, {
+                    //         'name': 'Transfer Bank - Bank BCA',
+                    //         'paymentType': 'bank_transfer',
+                    //         'bankVa': 'bca'
+                    //       });
+                    //     },
+                    //   ),
+                    // ),
                   ],
                 ),
               ),
@@ -121,69 +143,69 @@ class _ChoosePaymentPageState extends State<ChoosePaymentPage> {
             const SizedBox(
               height: 8,
             ),
-            Card(
-              color: Colors.white,
-              elevation: 2,
-              child: Theme(
-                data: Theme.of(context).copyWith(
-                  dividerColor: Colors.transparent,
-                ),
-                child: ExpansionTile(
-                  title: Text(
-                    'CSTORE',
-                    style: Theme.of(context)
-                        .textTheme
-                        .headlineSmall!
-                        .copyWith(fontSize: 16),
-                  ),
-                  children: [
-                    Card(
-                      margin: const EdgeInsets.symmetric(
-                          horizontal: 12, vertical: 4),
-                      color: AppColors.neutral.ne01,
-                      elevation: 1,
-                      child: ListTile(
-                        title: Text(
-                          'Indomaret',
-                          style: Theme.of(context)
-                              .textTheme
-                              .bodyMedium!
-                              .copyWith(fontSize: 14),
-                        ),
-                        onTap: () {
-                          Navigator.pop(context, {
-                            'name': 'cstore - Indomaret',
-                            'paymentType': 'cstore',
-                            'bankVa': 'indomaret'
-                          });
-                        },
-                      ),
-                    ),
-                    Card(
-                      margin: const EdgeInsets.fromLTRB(12, 4, 12, 16),
-                      color: AppColors.neutral.ne01,
-                      elevation: 1,
-                      child: ListTile(
-                        title: Text(
-                          'Alfamart',
-                          style: Theme.of(context)
-                              .textTheme
-                              .bodyMedium!
-                              .copyWith(fontSize: 14),
-                        ),
-                        onTap: () {
-                          Navigator.pop(context, {
-                            'name': 'cstore - Alfamart',
-                            'paymentType': 'cstore',
-                            'bankVa': 'alfamart'
-                          });
-                        },
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
+            // Card(
+            //   color: Colors.white,
+            //   elevation: 2,
+            //   child: Theme(
+            //     data: Theme.of(context).copyWith(
+            //       dividerColor: Colors.transparent,
+            //     ),
+            //     child: ExpansionTile(
+            //       title: Text(
+            //         'CSTORE',
+            //         style: Theme.of(context)
+            //             .textTheme
+            //             .headlineSmall!
+            //             .copyWith(fontSize: 16),
+            //       ),
+            //       children: [
+            //         Card(
+            //           margin: const EdgeInsets.symmetric(
+            //               horizontal: 12, vertical: 4),
+            //           color: AppColors.neutral.ne01,
+            //           elevation: 1,
+            //           child: ListTile(
+            //             title: Text(
+            //               'Indomaret',
+            //               style: Theme.of(context)
+            //                   .textTheme
+            //                   .bodyMedium!
+            //                   .copyWith(fontSize: 14),
+            //             ),
+            //             onTap: () {
+            //               Navigator.pop(context, {
+            //                 'name': 'cstore - Indomaret',
+            //                 'paymentType': 'cstore',
+            //                 'bankVa': 'indomaret'
+            //               });
+            //             },
+            //           ),
+            //         ),
+            //         Card(
+            //           margin: const EdgeInsets.fromLTRB(12, 4, 12, 16),
+            //           color: AppColors.neutral.ne01,
+            //           elevation: 1,
+            //           child: ListTile(
+            //             title: Text(
+            //               'Alfamart',
+            //               style: Theme.of(context)
+            //                   .textTheme
+            //                   .bodyMedium!
+            //                   .copyWith(fontSize: 14),
+            //             ),
+            //             onTap: () {
+            //               Navigator.pop(context, {
+            //                 'name': 'cstore - Alfamart',
+            //                 'paymentType': 'cstore',
+            //                 'bankVa': 'alfamart'
+            //               });
+            //             },
+            //           ),
+            //         ),
+            //       ],
+            //     ),
+            //   ),
+            // ),
           ],
         ),
       ),

@@ -14,7 +14,6 @@ class UpdatePresent {
   }
 }
 
-
 class UpdateTidakHadir {
   final OrderTeacherRepository repository;
 
@@ -22,6 +21,26 @@ class UpdateTidakHadir {
 
   Future<Either<Failure, UpdateProfileResponse>> execute(
       String token, int id) async {
-    return repository.updatePresent(token, id);
+    return repository.updateTidakHadir(token, id);
+  }
+}
+
+class UpdatePresentPackages {
+  final OrderTeacherRepository repository;
+
+  UpdatePresentPackages(this.repository);
+
+  Future<Either<Failure, UpdateProfileResponse>> execute(
+    String token,
+    int packageId,
+    int orderId,
+    String status,
+  ) async {
+    return repository.updatePresentPackage(
+      token,
+      packageId,
+      orderId,
+      status,
+    );
   }
 }

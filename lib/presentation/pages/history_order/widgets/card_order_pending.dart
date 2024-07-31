@@ -86,7 +86,7 @@ class CardOrderPending extends StatelessWidget {
                     children: [
                       Text(dataHistoryOrder.teacher.name!,
                           style: AppTextStyle.body2.setMedium()),
-                      Text(dataHistoryOrder.teacher.typeTeaching!,
+                      Text(dataHistoryOrder.mapel!,
                           style: AppTextStyle.body4.setRegular()),
                     ],
                   ),
@@ -113,9 +113,9 @@ class CardOrderPending extends StatelessWidget {
               children: [
                 Flexible(
                   child: Text(
-                    'Bayar sebelum ${formatDate(dataHistoryOrder.expired!.toIso8601String())} dengan ${dataHistoryOrder.bank!.toUpperCase()}',
+                    'Bayar sebelum ${formatDate(dataHistoryOrder.expired!.add(const Duration(hours: 7)).toIso8601String())} dengan ${dataHistoryOrder.bank!.toUpperCase()}',
                     style: AppTextStyle.body4.setRegular(),
-                  ),
+                  )
                 ),
                 const SizedBox(width: 10),
                 ElevatedButton(

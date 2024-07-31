@@ -27,7 +27,7 @@ class ReqForgotPwBloc extends Bloc<ReqForgotPwEvent, ReqForgotPwState> {
             emit(state.copyWith(stateReq: RequestStateReqForgotPw.error));
           },
           (data) {
-            debugPrint("Success: ${data.data}");
+            debugPrint("Success: ${data.message}");
             emit(
               state.copyWith(
                 stateReq: RequestStateReqForgotPw.loaded,

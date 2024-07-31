@@ -4,11 +4,14 @@ import 'package:guruku_student/common/constants.dart';
 import 'package:guruku_student/common/enum_sate.dart';
 import 'package:guruku_student/common/themes/themes.dart';
 import 'package:guruku_student/domain/entity/register_teacher/my_data_teacher_response.dart';
-import 'package:guruku_student/presentation/pages/profile/balance/screens/setting_page.dart';
 import 'package:guruku_student/presentation/pages/teacher/blocs/order_teacher/order_teacher_bloc.dart';
 import 'package:guruku_student/presentation/pages/teacher/pages/add_schedule/screen/schedule_page.dart';
 import 'package:guruku_student/presentation/pages/teacher/pages/add_teacher/screens/teacher_page.dart';
+import 'package:guruku_student/presentation/pages/teacher/pages/balance/screens/balance_teacher_page.dart';
 import 'package:guruku_student/presentation/pages/teacher/pages/history_order/screens/history_order_teacher_page.dart';
+import 'package:guruku_student/presentation/pages/teacher/pages/packages/screens/add_packages_page.dart';
+import 'package:guruku_student/presentation/pages/teacher/pages/packages/screens/history_package_teacher_page.dart';
+import 'package:guruku_student/presentation/pages/teacher/pages/packages/screens/my_packages_page.dart';
 
 class DashboardContent extends StatefulWidget {
   final MyDataTeacherResponse data;
@@ -22,7 +25,7 @@ class DashboardContent extends StatefulWidget {
 }
 
 class _DashboardContentState extends State<DashboardContent> {
-    @override
+  @override
   void initState() {
     super.initState();
     Future.microtask(() {
@@ -162,10 +165,17 @@ class _DashboardContentState extends State<DashboardContent> {
                         ),
                       ),
                     ),
+                  ],
+                ),
+                const SizedBox(height: 16),
+                Row(
+                  children: [
                     Expanded(
                       child: InkWell(
-                        onTap: (){
-                          Navigator.pushNamed(context, SettingPage.ROUTE_NAME);
+                        onTap: () {
+                          Navigator.pushNamed(
+                              context, BalanceTeacherPage.ROUTE_NAME,
+                              arguments: widget.data);
                         },
                         child: Column(
                           children: [
@@ -187,8 +197,91 @@ class _DashboardContentState extends State<DashboardContent> {
                         ),
                       ),
                     ),
+                    Expanded(
+                      child: InkWell(
+                        onTap: () {
+                          Navigator.pushNamed(
+                              context, AddPackagesPage.ROUTE_NAME);
+                        },
+                        child: Column(
+                          children: [
+                            Container(
+                              padding: const EdgeInsets.all(12),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(8),
+                                color: pr13,
+                              ),
+                              child: const Icon(
+                                Icons.book,
+                                color: pr11,
+                              ),
+                            ),
+                            const SizedBox(height: 8),
+                            Text('Tambah Paket',
+                                style: AppTextStyle.body4.setMedium()),
+                          ],
+                        ),
+                      ),
+                    ),
                   ],
-                )
+                ),
+                const SizedBox(height: 16),
+                Row(
+                  children: [
+                    Expanded(
+                      child: InkWell(
+                        onTap: () {
+                          Navigator.pushNamed(
+                              context, MyPackagesPage.ROUTE_NAME);
+                        },
+                        child: Column(
+                          children: [
+                            Container(
+                              padding: const EdgeInsets.all(12),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(8),
+                                color: pr13,
+                              ),
+                              child: const Icon(
+                                Icons.book,
+                                color: pr11,
+                              ),
+                            ),
+                            const SizedBox(height: 8),
+                            Text('List Paket',
+                                style: AppTextStyle.body4.setMedium()),
+                          ],
+                        ),
+                      ),
+                    ),
+                    Expanded(
+                      child: InkWell(
+                        onTap: () {
+                          Navigator.pushNamed(
+                              context, HistoryPackageTeacherPage.ROUTE_NAME);
+                        },
+                        child: Column(
+                          children: [
+                            Container(
+                              padding: const EdgeInsets.all(12),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(8),
+                                color: pr13,
+                              ),
+                              child: const Icon(
+                                Icons.book,
+                                color: pr11,
+                              ),
+                            ),
+                            const SizedBox(height: 8),
+                            Text('List Order Paket',
+                                style: AppTextStyle.body4.setMedium()),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
               ],
             ),
           )

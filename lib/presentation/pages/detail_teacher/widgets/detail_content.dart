@@ -35,6 +35,9 @@ class DetailContent extends StatefulWidget {
 class _DetailContentState extends State<DetailContent> {
   @override
   void initState() {
+    print("PACUUUUL${widget.teacher.typeTeaching}"); // Debug output
+    print("PACUUUUUL${widget.teacher.skill}"); // Deug output
+
     super.initState();
     Future.microtask(() {
       context.read<ReviewBloc>().add(GetListReviewEvent(widget.teacher.id));
@@ -42,6 +45,13 @@ class _DetailContentState extends State<DetailContent> {
           .read<DetailTeacherBloc>()
           .add(LoadWishlistStatusEvent(widget.teacher.id));
     });
+  }
+
+  List<String> processTypeTeaching(List<dynamic> data) {
+    if (data.isNotEmpty && data[0] is List) {
+      return List<String>.from(data[0]);
+    }
+    return List<String>.from(data);
   }
 
   @override
@@ -160,10 +170,12 @@ class _DetailContentState extends State<DetailContent> {
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceBetween,
                                   children: [
-                                    Text(
-                                      widget.teacher.name ?? '',
-                                      style:
-                                          AppTextStyle.heading5.setSemiBold(),
+                                    Expanded(
+                                      child: Text(
+                                        widget.teacher.name ?? '',
+                                        style:
+                                            AppTextStyle.heading5.setSemiBold(),
+                                      ),
                                     ),
                                     Text(
                                       'Rp. ${widget.teacher.price ?? ''} /meet',
@@ -176,26 +188,36 @@ class _DetailContentState extends State<DetailContent> {
                                   ],
                                 ),
                               ),
-                              const SizedBox(height: 8),
+                              const SizedBox(height: 16),
                               Padding(
-                                padding: const EdgeInsets.symmetric(
-                                    horizontal: 16.0),
-                                child: Row(
-                                  children: [
-                                    Icon(
-                                      Icons.book,
-                                      color: AppColors.primary.pr13,
-                                    ),
-                                    Text(
-                                      widget.teacher.typeTeaching ?? "",
-                                      style: AppTextStyle.body3
-                                          .setSemiBold()
-                                          .copyWith(
-                                            color: AppColors.primary.pr13,
-                                          ),
-                                    ),
-                                  ],
-                                ),
+                                padding: const EdgeInsets.only(left: 16),
+                                child: processTypeTeaching(
+                                            widget.teacher.typeTeaching!)
+                                        .isNotEmpty
+                                    ? Wrap(
+                                        direction: Axis.horizontal,
+                                        spacing: 8.0, // Atur jarak antar item
+                                        children: processTypeTeaching(
+                                                widget.teacher.typeTeaching!)
+                                            .map((type) {
+                                          return Text(
+                                            type,
+                                            style: AppTextStyle.body3
+                                                .setSemiBold()
+                                                .copyWith(
+                                                  color: AppColors.primary.pr13,
+                                                ),
+                                          );
+                                        }).toList(),
+                                      )
+                                    : Text(
+                                        "No teaching types available",
+                                        style: AppTextStyle.body3
+                                            .setSemiBold()
+                                            .copyWith(
+                                              color: AppColors.primary.pr13,
+                                            ),
+                                      ),
                               ),
                               Padding(
                                 padding: const EdgeInsets.symmetric(
@@ -235,8 +257,7 @@ class _DetailContentState extends State<DetailContent> {
                                         ),
                                         const SizedBox(width: 4),
                                         Text(
-                                          widget.teacher.timeExperience ??
-                                              '3 tahun pengalaman',
+                                          "${widget.teacher.timeExperience} Tahun Pengalaman",
                                           style:
                                               AppTextStyle.body3.setSemiBold(),
                                         )
@@ -245,7 +266,6 @@ class _DetailContentState extends State<DetailContent> {
                                   ],
                                 ),
                               ),
-                              const SizedBox(height: 8),
                               const SizedBox(height: 8),
                               Padding(
                                 padding:
@@ -270,6 +290,72 @@ class _DetailContentState extends State<DetailContent> {
                                       fontWeight: FontWeight.bold),
                                 ),
                               ),
+                              const SizedBox(height: 8),
+                              Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: 16),
+                                child: Text(
+                                  'Mengajar Siswa :',
+                                  style: AppTextStyle.body2.setSemiBold(),
+                                ),
+                              ),
+                              const SizedBox(height: 8),
+                              Padding(
+                                padding: const EdgeInsets.only(left: 16),
+                                child: widget.teacher.typeTeaching != null &&
+                                        widget.teacher.typeTeaching!.isNotEmpty
+                                    ? Wrap(
+                                        direction: Axis.horizontal,
+                                        spacing: 8.0, // Atur jarak antar item
+                                        children: widget.teacher.typeTeaching!
+                                            .map((type) {
+                                          return Text(
+                                            type,
+                                            style: AppTextStyle.body3
+                                                .setSemiBold()
+                                                .copyWith(
+                                                  color: AppColors.primary.pr13,
+                                                ),
+                                          );
+                                        }).toList(),
+                                      )
+                                    : Text(
+                                        "No teaching types available",
+                                        style: AppTextStyle.body3
+                                            .setSemiBold()
+                                            .copyWith(
+                                              color: AppColors.primary.pr13,
+                                            ),
+                                      ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.only(left: 16),
+                                child: widget.teacher.skill != null &&
+                                        widget.teacher.skill!.isNotEmpty
+                                    ? Wrap(
+                                        direction: Axis.horizontal,
+                                        spacing: 8.0, // Atur jarak antar item
+                                        children:
+                                            widget.teacher.skill!.map((type) {
+                                          return Text(
+                                            type,
+                                            style: AppTextStyle.body3
+                                                .setSemiBold()
+                                                .copyWith(
+                                                  color: AppColors.primary.pr13,
+                                                ),
+                                          );
+                                        }).toList(),
+                                      )
+                                    : Text(
+                                        "No teaching types available",
+                                        style: AppTextStyle.body3
+                                            .setSemiBold()
+                                            .copyWith(
+                                              color: AppColors.primary.pr13,
+                                            ),
+                                      ),
+                              ),
                               const SizedBox(height: 16),
                               Padding(
                                 padding:
@@ -287,7 +373,7 @@ class _DetailContentState extends State<DetailContent> {
                                   children: [
                                     Text(
                                       'Gelar : ${widget.teacher.gelar}',
-                                      style: AppTextStyle.body4.setMedium(),
+                                      style: AppTextStyle.body3.setMedium(),
                                     ),
                                   ],
                                 ),
@@ -299,7 +385,7 @@ class _DetailContentState extends State<DetailContent> {
                                   children: [
                                     Text(
                                       'Jurusan : ${widget.teacher.jurusan}',
-                                      style: AppTextStyle.body4.setMedium(),
+                                      style: AppTextStyle.body3.setMedium(),
                                     ),
                                   ],
                                 ),
@@ -311,12 +397,12 @@ class _DetailContentState extends State<DetailContent> {
                                   children: [
                                     Text(
                                       'Tahun Lulus : ${widget.teacher.tahunLulus}',
-                                      style: AppTextStyle.body4.setMedium(),
+                                      style: AppTextStyle.body3.setMedium(),
                                     ),
                                   ],
                                 ),
                               ),
-                              const SizedBox(height: 8),
+                              const SizedBox(height: 16),
                               Divider(
                                 thickness: 10,
                                 color: pr16,
@@ -489,8 +575,9 @@ class _DetailContentState extends State<DetailContent> {
                     final isAddedToWishlist = state.isAddedToWishlist;
                     return Container(
                       decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(16),
-                          color: AppColors.primary.pr14),
+                        borderRadius: BorderRadius.circular(16),
+                        color: AppColors.primary.pr14,
+                      ),
                       child: IconButton(
                         onPressed: () {
                           if (!isAddedToWishlist) {
@@ -523,7 +610,6 @@ class _DetailContentState extends State<DetailContent> {
     );
   }
 }
-
 
 
 // class DetailContent extends StatefulWidget {

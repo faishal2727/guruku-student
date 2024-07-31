@@ -8,9 +8,9 @@ import 'package:guruku_student/injection.dart' as di;
 import 'package:guruku_student/presentation/blocs/detail_teacher/detail_teacher_bloc.dart';
 import 'package:guruku_student/presentation/blocs/main/main_bloc.dart';
 import 'package:guruku_student/presentation/pages/detail_teacher/widgets/detail_content.dart';
+import 'package:guruku_student/presentation/pages/packages/screens/packages_page.dart';
 import 'package:guruku_student/presentation/pages/pick_schedule/screen/pick.dart';
 import 'package:lottie/lottie.dart';
-
 class DetailTeacherPage extends StatefulWidget {
   static const ROUTE_NAME = '/detail';
   final int id;
@@ -103,34 +103,67 @@ class _DetailTeacherPageState extends State<DetailTeacherPage> {
               ),
               BlocBuilder<MainBloc, MainState>(
                 builder: (context, authState) {
-                  return Expanded(
-                    flex: 3,
-                    child: InkWell(
-                      onTap: () async {
-                        Navigator.pushNamed(
-                          context,
-                          Pick.ROUTE_NAME,
-                          arguments: widget.id,
-                        );
-                      },
-                      child: Container(
-                        margin: const EdgeInsets.symmetric(
-                            horizontal: 16, vertical: 16),
-                        height: 50,
-                        width: MediaQuery.of(context).size.width,
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10),
-                            color: AppColors.primary.pr13),
-                        child: Center(
-                          child: Text(
-                            'Atur Pertemuan',
-                            style: AppTextStyle.body1
-                                .setRegular()
-                                .copyWith(color: AppColors.primary.pr11),
+                  return Row(
+                    children: [
+                      Expanded(
+                        flex: 3,
+                        child: InkWell(
+                          onTap: () async {
+                            Navigator.pushNamed(
+                              context,
+                              PackagesPage.ROUTE_NAME,
+                              arguments: widget.id
+                            );
+                          },
+                          child: Container(
+                            margin: const EdgeInsets.symmetric(
+                                horizontal: 16, vertical: 16),
+                            height: 50,
+                            width: MediaQuery.of(context).size.width,
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(10),
+                                color: AppColors.primary.pr13),
+                            child: Center(
+                              child: Text(
+                                'Paket',
+                                style: AppTextStyle.body1
+                                    .setRegular()
+                                    .copyWith(color: AppColors.primary.pr11),
+                              ),
+                            ),
                           ),
                         ),
                       ),
-                    ),
+                      Expanded(
+                        flex: 3,
+                        child: InkWell(
+                          onTap: () async {
+                            Navigator.pushNamed(
+                              context,
+                              Pick.ROUTE_NAME,
+                              arguments: widget.id,
+                            );
+                          },
+                          child: Container(
+                            margin: const EdgeInsets.symmetric(
+                                horizontal: 16, vertical: 16),
+                            height: 50,
+                            width: MediaQuery.of(context).size.width,
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(10),
+                                color: AppColors.primary.pr13),
+                            child: Center(
+                              child: Text(
+                                'Per Hari',
+                                style: AppTextStyle.body1
+                                    .setRegular()
+                                    .copyWith(color: AppColors.primary.pr11),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
                   );
                 },
               ),
@@ -141,6 +174,8 @@ class _DetailTeacherPageState extends State<DetailTeacherPage> {
     );
   }
 }
+
+
 
 
 // class DetailTeacherPage extends StatefulWidget {

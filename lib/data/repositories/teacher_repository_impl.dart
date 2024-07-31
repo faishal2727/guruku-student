@@ -1,13 +1,11 @@
-// ignore_for_file: use_rethrow_when_possible
+// ignore_for_file: use_rethrow_when_possible, override_on_non_overriding_member
 
 import 'dart:io';
 import 'package:dartz/dartz.dart';
 import 'package:guruku_student/common/exception.dart';
 import 'package:guruku_student/common/failure.dart';
-import 'package:guruku_student/data/datasources/local/teacher_local_data_source.dart';
 import 'package:guruku_student/data/datasources/remote/register_teacher_remote_data_source.dart';
 import 'package:guruku_student/data/datasources/remote/teacher_remote_data_source.dart';
-import 'package:guruku_student/data/model/teacher_model/teacher_table.dart';
 import 'package:guruku_student/domain/entity/register_teacher/add_data_teacher_response.dart';
 import 'package:guruku_student/domain/entity/register_teacher/register_teacher_response.dart';
 import 'package:guruku_student/domain/entity/teacher/bookmark_teacher_respone.dart';
@@ -18,11 +16,11 @@ import 'package:guruku_student/domain/repositories/teacher_repository.dart';
 class TeacherRepositoryImpl implements TeacherRepository {
   final TeacherRemoteDataSource remoteDataSource;
   final RegisterTeacherRemoteDataSource teacherRemoteDataSource;
-  final TeacherLocalDataSource localDataSource;
+  // final TeacherLocalDataSource localDataSource;
 
   TeacherRepositoryImpl({
     required this.remoteDataSource,
-    required this.localDataSource,
+    // required this.localDataSource,
     required this.teacherRemoteDataSource,
   });
 
@@ -130,45 +128,45 @@ class TeacherRepositoryImpl implements TeacherRepository {
     }
   }
 
-  @override
-  Future<Either<Failure, String>> saveBookmarkTeacher(
-      TeacherDetail teacher) async {
-    try {
-      final result = await localDataSource.insertBookmark(
-        TeacherTable.fromEntity(teacher),
-      );
-      return Right(result);
-    } on DatabaseException catch (e) {
-      return Left(DatabaseFailure(e.message));
-    } catch (e) {
-      throw e;
-    }
-  }
+  // @override
+  // Future<Either<Failure, String>> saveBookmarkTeacher(
+  //     TeacherDetail teacher) async {
+  //   try {
+  //     final result = await localDataSource.insertBookmark(
+  //       TeacherTable.fromEntity(teacher),
+  //     );
+  //     return Right(result);
+  //   } on DatabaseException catch (e) {
+  //     return Left(DatabaseFailure(e.message));
+  //   } catch (e) {
+  //     throw e;
+  //   }
+  // }
 
-  @override
-  Future<Either<Failure, String>> removeBookmarkTeacher(
-      TeacherDetail teacher) async {
-    try {
-      final result = await localDataSource.removeBookmark(
-        TeacherTable.fromEntity(teacher),
-      );
-      return Right(result);
-    } on DatabaseException catch (e) {
-      return Left(DatabaseFailure(e.message));
-    }
-  }
+  // @override
+  // Future<Either<Failure, String>> removeBookmarkTeacher(
+  //     TeacherDetail teacher) async {
+  //   try {
+  //     final result = await localDataSource.removeBookmark(
+  //       TeacherTable.fromEntity(teacher),
+  //     );
+  //     return Right(result);
+  //   } on DatabaseException catch (e) {
+  //     return Left(DatabaseFailure(e.message));
+  //   }
+  // }
 
-  @override
-  Future<bool> issAddedToBookmark(int id) async {
-    final result = await localDataSource.getBookmarkById(id);
-    return result != null;
-  }
+  // @override
+  // Future<bool> issAddedToBookmark(int id) async {
+  //   final result = await localDataSource.getBookmarkById(id);
+  //   return result != null;
+  // }
 
-  @override
-  Future<Either<Failure, List<Teacher>>> getBookmarkList() async {
-    final result = await localDataSource.getBookmarkList();
-    return Right(result.map((data) => data.toEntity()).toList());
-  }
+  // @override
+  // Future<Either<Failure, List<Teacher>>> getBookmarkList() async {
+  //   final result = await localDataSource.getBookmarkList();
+  //   return Right(result.map((data) => data.toEntity()).toList());
+  // }
 
   @override
   Future<Either<Failure, RegisterTeacherResponse>> register(
@@ -179,6 +177,7 @@ class TeacherRepositoryImpl implements TeacherRepository {
     String education,
     String jurusan,
     String tahunLulus,
+    String gelar,
     String idCard,
     String file,
   ) async {
@@ -191,6 +190,7 @@ class TeacherRepositoryImpl implements TeacherRepository {
         education,
         jurusan,
         tahunLulus,
+        gelar,
         idCard,
         file,
       );
@@ -210,12 +210,13 @@ class TeacherRepositoryImpl implements TeacherRepository {
     String token,
     String name,
     String desc,
-    String typeTeaching,
+    List<String> typeTeaching,
     String price,
     String timeExperience,
     String lat,
     String lon,
     String address,
+    List<String> skill,
   ) async {
     try {
       final result = await teacherRemoteDataSource.addDataTeacher(
@@ -229,6 +230,7 @@ class TeacherRepositoryImpl implements TeacherRepository {
         lat,
         lon,
         address,
+        skill,
       );
       return Right(result.toEntity());
     } on ServerException {

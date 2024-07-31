@@ -27,56 +27,63 @@ class CardReview extends StatelessWidget {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Container(
-            height: 60,
-            width: 60,
-            decoration: const ShapeDecoration(
-              color: pr15,
-              shape: OvalBorder(),
+          Expanded(
+            flex: 1,
+            child: Container(
+              height: 60,
+              width: 60,
+              decoration: const ShapeDecoration(
+                color: pr15,
+                shape: OvalBorder(),
+              ),
             ),
           ),
           const SizedBox(width: 16),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                review.student.username,
-                style: AppTextStyle.body3.setSemiBold(),
-              ),
-              Row(
-                children: [
-                  RatingBarIndicator(
-                    rating: double.parse(review.rate) / 1,
-                    itemCount: 5,
-                    itemBuilder: (context, index) => const Icon(
-                      Icons.star,
-                      color: kMikadoYellow,
+          Expanded(
+            flex: 5,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  review.student.username,
+                  style: AppTextStyle.body3.setSemiBold(),
+                ),
+                Row(
+                  children: [
+                    RatingBarIndicator(
+                      rating: double.parse(review.rate) / 1,
+                      itemCount: 5,
+                      itemBuilder: (context, index) => const Icon(
+                        Icons.star,
+                        color: kMikadoYellow,
+                      ),
+                      itemSize: 18,
                     ),
-                    itemSize: 18,
-                  ),
-                  Text('${review.rate}')
-                ],
-              ),
-              const SizedBox(height: 4),
-              Container(
-                padding: const EdgeInsets.symmetric(horizontal: 6),
-                decoration: BoxDecoration(
-                    color: pr14, borderRadius: BorderRadius.circular(4)),
-                child: Text(review.detail!),
-              ),
-              const SizedBox(height: 4),
-              Text(
-                review.desc,
-                style: AppTextStyle.body4.setRegular(),
-              ),
-              const SizedBox(height: 4),
-              Text(
-                formatDate(review.createdAt.toIso8601String()),
-                style: AppTextStyle.body4
-                    .setRegular()
-                    .copyWith(color: Colors.grey.shade500),
-              ),
-            ],
+                    Text('${review.rate}')
+                  ],
+                ),
+                const SizedBox(height: 4),
+                Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 6),
+                  decoration: BoxDecoration(
+                      color: pr14, borderRadius: BorderRadius.circular(4)),
+                  child: Text(review.detail!),
+                ),
+                const SizedBox(height: 4),
+                Text(
+                  review.desc,
+                   softWrap: true,
+                  style: AppTextStyle.body4.setRegular(),
+                ),
+                const SizedBox(height: 4),
+                Text(
+                  formatDate(review.createdAt.toIso8601String()),
+                  style: AppTextStyle.body4
+                      .setRegular()
+                      .copyWith(color: Colors.grey.shade500),
+                ),
+              ],
+            ),
           ),
         ],
       ),

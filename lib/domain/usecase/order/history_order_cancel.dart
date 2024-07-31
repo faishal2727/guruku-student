@@ -14,3 +14,15 @@ class HistoryOrderCancel {
     return repository.historyOrderCancel(token);
   }
 }
+
+class HistoryOrderCanceled {
+  final OrderRepository repository;
+
+  HistoryOrderCanceled(this.repository);
+
+  Future<Either<Failure, List<DataHistoryOrder>>> execute(
+      {required String token}) async {
+    return repository.historyOrderCanceled(token);
+  }
+}
+

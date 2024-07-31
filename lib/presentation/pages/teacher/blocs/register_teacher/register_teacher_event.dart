@@ -14,6 +14,7 @@ class DoRegisterTeacher extends RegisterTeacherEvent {
   final String education;
   final String jurusan;
   final String tahunLulus;
+  final String gelar;
   final String idCard;
   final String file;
 
@@ -24,6 +25,7 @@ class DoRegisterTeacher extends RegisterTeacherEvent {
     required this.education,
     required this.jurusan,
     required this.tahunLulus,
+    required this.gelar,
     required this.idCard,
     required this.file,
   });

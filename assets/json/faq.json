@@ -1,0 +1,32 @@
+{
+  "faq": [
+    {
+      "pertanyaan": "Bagaimana ketika tidak bisa login ?",
+      "jawaban": [
+        "1. Cek koneksi internet",
+        "2. Pastikan email dan password benar"
+      ]
+    },
+    {
+      "pertanyaan": "Bagaimana melakukan presensi guru ketika guru datang ?",
+      "jawaban": [
+        "1. Buka history order (bagian tab sudah bayar)",
+        "2. Klik detail history yang akan dipilih",
+        "3. Klik button 'Lihat QR Code'",
+        "4. Berikan QR Code ke guru anda, persilahkan guru men scan QR Code tersebut",
+        "5. Selesai"
+      ]
+    },
+
+    {
+      "pertanyaan": "Bagaimana ketika terjadi tindakan kurang menyenangkan guru terhadap siswa ?",
+      "jawaban": [
+        "1. Anda bisa menghubungi kami lewat email",
+        "2. Buka menu profile dan klik floating button di kanan bawah pojok",
+        "3. Anda akan diarahkan ke email guruku.corp@gmail.com",
+        "4. Kirim bukti bahwa guru melakukan tindakan kurang menyenangkan"
+      ]
+    }
+  ]
+}
+

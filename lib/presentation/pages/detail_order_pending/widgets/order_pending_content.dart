@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:guruku_student/common/constants.dart';
+import 'package:guruku_student/common/enum_sate.dart';
 import 'package:guruku_student/common/themes/themes.dart';
 import 'package:guruku_student/common/utils/date_utils.dart';
 import 'package:guruku_student/domain/entity/history_order/detail_history_order.dart';
+import 'package:guruku_student/presentation/blocs/order/order_bloc.dart';
 import 'package:guruku_student/presentation/pages/detail_order_pending/utils/payment_utils.dart';
-
+import 'package:guruku_student/presentation/pages/detail_order_pending/widgets/button_cancel.dart';
 
 class OrderPendingContent extends StatefulWidget {
   final DetailHistoryOrder dataHistoryOrder;
@@ -29,6 +32,12 @@ class _OrderPendingContentState extends State<OrderPendingContent> {
         _paymentMethods = value;
       });
     });
+  }
+
+  void _order() {
+    context
+        .read<OrderBloc>()
+        .add(DoCancel(code: widget.dataHistoryOrder.code.toString()));
   }
 
   @override
@@ -71,7 +80,7 @@ class _OrderPendingContentState extends State<OrderPendingContent> {
                   ),
                   Text(
                     formatDate(
-                      widget.dataHistoryOrder.expired.toString(),
+                      widget.dataHistoryOrder.expired!.add(const Duration(hours: 7)).toString(),
                     ),
                     style:
                         AppTextStyle.body2.setRegular().copyWith(color: pr13),
@@ -139,10 +148,39 @@ class _OrderPendingContentState extends State<OrderPendingContent> {
             if (widget.dataHistoryOrder.bank != null)
               ...buildPaymentMethods(
                   context, _paymentMethods, widget.dataHistoryOrder.bank!),
+            BlocListener<OrderBloc, OrderState>(
+              listener: (context, state) {
+                if (state.stateOrderCancel == RequestStateOrderCancel.error) {
+                  ScaffoldMessenger.of(context)
+                    ..removeCurrentSnackBar()
+                    ..showSnackBar(
+                      SnackBar(
+                        content: const Text(
+                          'Gagal Membuat Order',
+                          style: TextStyle(color: Colors.black),
+                        ),
+                        backgroundColor: Colors.red[400],
+                      ),
+                    );
+                } else if (state.stateOrderCancel ==
+                    RequestStateOrderCancel.loaded) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(
+                      content: Text(
+                        'Berhasil Order',
+                        style: TextStyle(color: Colors.white),
+                      ),
+                      backgroundColor: Colors.green,
+                    ),
+                  );
+                  Navigator.pop(context);
+                }
+              },
+              child: ButtonCancel(onPressed: _order, title: 'Batalkan Pesanan'),
+            ),
           ],
         ),
       );
     }
   }
-  
 }

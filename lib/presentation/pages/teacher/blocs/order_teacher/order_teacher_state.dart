@@ -4,6 +4,7 @@ class OrderTeacherState extends Equatable {
   final List<DataHistoryOrder>? listData;
   final DetailHistoryOrder? detailData;
   final UpdateProfileResponse? present;
+  final UpdateProfileResponse? presentPac;
   final String message;
   final ReqOdrTeacPen statePending;
   final ReqOdrTeacSuc stateSuccess;
@@ -11,13 +12,14 @@ class OrderTeacherState extends Equatable {
   final ReqOdrTeacCan stateCancel;
   final ReqOdrTeacDone stateDone;
   final ReqPresent statePresent;
-   final ReqTidak tidak;
-  
+  final ReqTidak tidak;
+  final ReqPresentPac pac;
 
   const OrderTeacherState({
     required this.listData,
     required this.detailData,
     required this.present,
+    required this.presentPac,
     required this.message,
     required this.statePending,
     required this.stateSuccess,
@@ -26,12 +28,14 @@ class OrderTeacherState extends Equatable {
     required this.stateDone,
     required this.statePresent,
     required this.tidak,
+    required this.pac,
   });
 
   OrderTeacherState copyWith({
     List<DataHistoryOrder>? listData,
     DetailHistoryOrder? detailData,
     UpdateProfileResponse? present,
+    UpdateProfileResponse? presentPac,
     String? message,
     ReqOdrTeacPen? statePending,
     ReqOdrTeacSuc? stateSuccess,
@@ -40,11 +44,13 @@ class OrderTeacherState extends Equatable {
     ReqOdrTeacDone? stateDone,
     ReqPresent? statePresent,
     ReqTidak? tidak,
+    ReqPresentPac? pac,
   }) {
     return OrderTeacherState(
       listData: listData ?? this.listData,
       detailData: detailData ?? this.detailData,
-      present: present?? this.present,
+      present: present ?? this.present,
+      presentPac: presentPac ?? this.presentPac,
       message: message ?? this.message,
       statePending: statePending ?? this.statePending,
       stateSuccess: stateSuccess ?? this.stateSuccess,
@@ -53,6 +59,7 @@ class OrderTeacherState extends Equatable {
       stateDone: stateDone ?? this.stateDone,
       statePresent: statePresent ?? this.statePresent,
       tidak: tidak ?? this.tidak,
+      pac: pac ?? this.pac,
     );
   }
 
@@ -61,14 +68,16 @@ class OrderTeacherState extends Equatable {
       listData: null,
       detailData: null,
       present: null,
+      presentPac: null,
       message: "",
       statePending: ReqOdrTeacPen.empty,
       stateSuccess: ReqOdrTeacSuc.empty,
       stateDetail: ReqOdrTeacDetail.empty,
       stateCancel: ReqOdrTeacCan.empty,
       stateDone: ReqOdrTeacDone.empty,
-      statePresent:  ReqPresent.empty,
+      statePresent: ReqPresent.empty,
       tidak: ReqTidak.empty,
+      pac: ReqPresentPac.empty,
     );
   }
 
@@ -77,6 +86,7 @@ class OrderTeacherState extends Equatable {
         listData,
         detailData,
         present,
+        presentPac,
         message,
         statePending,
         stateSuccess,
@@ -85,6 +95,7 @@ class OrderTeacherState extends Equatable {
         stateDone,
         statePresent,
         tidak,
+        pac,
       ];
 }
 // abstract class OrderTeacherState extends Equatable {}

@@ -34,6 +34,7 @@ class CardOrderDone extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
+                Text(dataHistoryOrder.id.toString()),
                 Row(
                   children: [
                     const Icon(Icons.store, color: pr13),
@@ -45,7 +46,7 @@ class CardOrderDone extends StatelessWidget {
                   decoration: BoxDecoration(
                       color: AppColors.warning.wn04,
                       borderRadius: BorderRadius.circular(8)),
-                  child: Text('Sudah Bayar',
+                  child: Text('Sudah Bayar y',
                       style: AppTextStyle.body3.setMedium()),
                 )
               ],
@@ -87,7 +88,7 @@ class CardOrderDone extends StatelessWidget {
                     children: [
                       Text(dataHistoryOrder.teacher.name!,
                           style: AppTextStyle.body2.setMedium()),
-                      Text(dataHistoryOrder.teacher.typeTeaching!,
+                      Text(dataHistoryOrder.mapel!,
                           style: AppTextStyle.body4.setRegular()),
                     ],
                   ),

@@ -22,12 +22,13 @@ class OnAddDataTeacher extends AddDataTeacherEvent {
   final String picture;
   final String name;
   final String desc;
-  final String typeTeaching;
+  final List<String> typeTeaching;
   final String price;
   final String timeExperience;
   final String lat;
   final String lon;
   final String address;
+  final List<String> skill;
 
   const OnAddDataTeacher({
     required this.picture,
@@ -39,6 +40,7 @@ class OnAddDataTeacher extends AddDataTeacherEvent {
     required this.lat,
     required this.lon,
     required this.address,
+    required this.skill,
   });
 
   @override

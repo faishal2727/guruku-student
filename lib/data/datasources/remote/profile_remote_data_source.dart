@@ -43,20 +43,14 @@ class ProfileRemoteDataSourceImpl implements ProfileRemoteDataSource {
   @override
   Future<UpdateProfileResponseModel> updateProfile(
       UpdateProfileRequestModel updateData, String token) async {
-    final uri = Uri.parse('https://faizal.simagang.my.id/faisol/v1/user/update');
-
-    final response = await client.put(
-      uri,
-      headers: {
-        'Authorization': 'Bearer $token',
-        'Content-Type': 'application/json',
-      },
-      body: json.encode(updateData.toJson()),
-    );
-
-    debugPrint('Response Status Code: ${response.statusCode}');
-    debugPrint('Response Body: ${response.body}');
-
+    final uri =
+        Uri.parse('https://faizal.simagang.my.id/faisol/v1/user/update');
+    final response = await client.put(uri,
+        headers: {
+          'Authorization': 'Bearer $token',
+          'Content-Type': 'application/json'
+        },
+        body: json.encode(updateData.toJson()));
     if (response.statusCode == 200) {
       return UpdateProfileResponseModel.fromJson(json.decode(response.body));
     } else {
@@ -68,7 +62,8 @@ class ProfileRemoteDataSourceImpl implements ProfileRemoteDataSource {
   Future<UpdateProfileResponseModel> updateAvatar(
       List<int> bytes, String fileName, String token) async {
     try {
-      final uri = Uri.parse('https://faizal.simagang.my.id/faisol/v1/user/update');
+      final uri =
+          Uri.parse('https://faizal.simagang.my.id/faisol/v1/user/update');
       var request = http.MultipartRequest('PUT', uri);
 
       final multiPartFile = http.MultipartFile.fromBytes(

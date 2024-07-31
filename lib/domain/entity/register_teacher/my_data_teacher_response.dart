@@ -12,7 +12,7 @@ class MyDataTeacherResponse extends Equatable {
   String? picture;
   String? phone;
   List<MySchedule>? schedule;
-  String? typeTeaching;
+  List<String>? typeTeaching;
   String? price;
   String? description;
   String? timeExperience;
@@ -21,6 +21,10 @@ class MyDataTeacherResponse extends Equatable {
   String? lon;
   String? address;
   int? userId;
+  String? balance;
+  List<String>? skill;
+  String? idCard;
+  String? file;
 
   MyDataTeacherResponse({
     required this.id,
@@ -40,10 +44,13 @@ class MyDataTeacherResponse extends Equatable {
     required this.lon,
     required this.address,
     required this.userId,
+    required this.balance,
+    required this.skill,
+    required this.idCard,
+    required this.file,
   });
 
   @override
-  // TODO: implement props
   List<Object?> get props => [
         id,
         username,
@@ -62,5 +69,9 @@ class MyDataTeacherResponse extends Equatable {
         lon,
         address,
         userId,
+        balance,
+        skill,
+        idCard,
+        file,
       ];
 }

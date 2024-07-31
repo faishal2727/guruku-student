@@ -17,12 +17,12 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
   final GetAuth getAuth;
   final RemoveAuth removeAuth;
 
-  LoginBloc({
-    required this.login,
-    required this.saveAuth,
-    required this.getAuth,
-    required this.removeAuth,
-  }) : super(LoginState.initial()) {
+  LoginBloc(
+      {required this.login,
+      required this.saveAuth,
+      required this.getAuth,
+      required this.removeAuth})
+      : super(LoginState.initial()) {
     on<DoLogin>(
       (event, emit) async {
         emit(state.copyWith(stateLogin: RequestStateLogin.loading));
@@ -32,24 +32,16 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
         final result = await login.execute(email: email, password: password);
 
         result.fold(
-          (failure) => emit(
-            state.copyWith(
-              stateLogin: RequestStateLogin.error,
-              message: failure.message,
-            ),
-          ),
-          (data) {
-            saveAuth.execute(data);
-            emit(
-              state.copyWith(
-                stateLogin: RequestStateLogin.loaded,
-                loginResponse: data,
-                message: data.message,
-                role: data.role,
-              ),
-            );
-          },
-        );
+            (failure) => emit(state.copyWith(
+                stateLogin: RequestStateLogin.error,
+                message: failure.message)), (data) {
+          saveAuth.execute(data);
+          emit(state.copyWith(
+              stateLogin: RequestStateLogin.loaded,
+              loginResponse: data,
+              message: data.message,
+              role: data.role));
+        });
       },
     );
 

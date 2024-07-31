@@ -11,8 +11,8 @@ class CardCategory extends StatelessWidget {
     return Column(
   children: [
     Container(
-      height: 60,
-      width: 60,
+      height: 55,
+      width: 55,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(50),
         color: AppColors.primary.pr14,
@@ -26,7 +26,7 @@ class CardCategory extends StatelessWidget {
     const SizedBox(height: 8),
     Text(
       category,
-      style: AppTextStyle.body4.setSemiBold(),
+      style: AppTextStyle.body4.setRegular(),
     )
   ],
 );

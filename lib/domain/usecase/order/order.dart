@@ -16,3 +16,4 @@ class Order {
     return await repository.doOrder(orderRequest, token);
   }
 }
+

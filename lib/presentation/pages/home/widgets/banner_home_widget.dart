@@ -4,7 +4,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:guruku_student/common/themes/themes.dart';
 import 'package:guruku_student/presentation/cubits/carousel/carousel_cubit.dart';
-
 class BannerHomeWidget extends StatelessWidget {
   const BannerHomeWidget({super.key});
 
@@ -12,13 +11,14 @@ class BannerHomeWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final items = [
       const _Content(
-        svgPath: 'assets/images/img-carousel.svg',
+        svgPath: 'assets/images/pana.svg',
+        title: 'Selamat Datang \ndi Guruku',
+        subtitle: 'Cari guru terbaikmu dan \nraih prestasi tertinggi',
       ),
       const _Content(
         svgPath: 'http://source.unsplash.com/1000x600?laptop',
-      ),
-      const _Content(
-        svgPath: 'http://source.unsplash.com/1000x600?laptop',
+        title: 'Belajar dengan Nyaman',
+        subtitle: 'Temukan kenyamanan belajar \ndengan teknologi terbaik',
       ),
     ];
 
@@ -39,6 +39,7 @@ class BannerHomeWidget extends StatelessWidget {
           CarouselSlider.builder(
             itemCount: items.length,
             itemBuilder: (context, index, realIndex) {
+              final item = items[index];
               return Card(
                 color: AppColors.primary.pr13,
                 surfaceTintColor: AppColors.primary.pr13,
@@ -56,14 +57,14 @@ class BannerHomeWidget extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              'Selamat Datang \ndi Guruku',
+                              item.title,
                               style: AppTextStyle.heading5
                                   .setSemiBold()
                                   .copyWith(color: AppColors.neutral.ne01),
                             ),
                             const SizedBox(height: 8),
                             Text(
-                              'Cari guru terbaikmu dan \nraih prestasi tertiggi ',
+                              item.subtitle,
                               style: AppTextStyle.body4
                                   .setRegular()
                                   .copyWith(color: AppColors.neutral.ne01),
@@ -73,7 +74,7 @@ class BannerHomeWidget extends StatelessWidget {
                       ),
                       Expanded(
                           flex: 1,
-                          child: SvgPicture.asset('assets/images/pana.svg'))
+                          child: SvgPicture.asset(item.svgPath))
                     ],
                   ),
                 ),
@@ -92,9 +93,15 @@ class BannerHomeWidget extends StatelessWidget {
 }
 
 class _Content extends StatelessWidget {
-  const _Content({required this.svgPath});
+  const _Content({
+    required this.svgPath,
+    required this.title,
+    required this.subtitle,
+  });
 
   final String svgPath;
+  final String title;
+  final String subtitle;
 
   @override
   Widget build(BuildContext context) {

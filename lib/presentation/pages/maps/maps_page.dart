@@ -256,7 +256,7 @@ class _MapsPageState extends State<MapsPage> {
                 ),
                 const SizedBox(width: 8),
                 Text(
-                  'Untuk melihat guru dengan \njarak kurang dari 15 Km \ndari posisi anda sekarang, \nKlik Button Paling Atas',
+                  'Untuk melihat guru dengan \njarak kurang dari 10 Km \ndari posisi anda sekarang, \nKlik Button Paling Atas',
                   style: AppTextStyle.body3.setMedium(),
                 ),
               ],
@@ -311,7 +311,7 @@ class _MapsPageState extends State<MapsPage> {
           double.parse(teacher.lat ?? '0.0'),
           double.parse(teacher.lon ?? '0.0'),
         );
-        if (distance <= 15.0) {
+        if (distance <= 10.0) {
           teachersWithinRadius.add(teacher);
         }
       }
@@ -327,7 +327,7 @@ class _MapsPageState extends State<MapsPage> {
         Circle(
           circleId: const CircleId("radius"),
           center: latLng,
-          radius: 15000,
+          radius: 10000,
           strokeWidth: 2,
           strokeColor: Colors.blue,
           fillColor: Colors.blue.withOpacity(0.3),
@@ -348,13 +348,16 @@ class _MapsPageState extends State<MapsPage> {
     });
   }
 
+
+  // Menghitung jarak antara dua koordinat menggunakan rumus Haversine.
   double getDistance(
-    double startLatitude,
-    double startLongitude,
-    double endLatitude,
-    double endLongitude,
+    double startLatitude,  //Lintang titik awal.
+    double startLongitude, //Bujur titik awal.
+    double endLatitude,  //Lintang titik tujuan.
+    double endLongitude,  //Bujur titik tujuan.
   ) {
-    const int radiusOfEarth = 6371; // Radius bumi dalam kilometer
+    const int radiusOfEarth = 6371;  //radius bumi
+    // Menghitung perbedaan lintang dan bujur antara titik awal dan titik tujuan, kemudian mengonversi nilai tersebut dari derajat ke radian menggunakan metode degreesToRadians.
     final double latDistance = degreesToRadians(endLatitude - startLatitude);
     final double lonDistance = degreesToRadians(endLongitude - startLongitude);
     final double a = sin(latDistance / 2) * sin(latDistance / 2) +

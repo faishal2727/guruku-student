@@ -90,7 +90,7 @@ class OrderCancelContent extends StatelessWidget {
                       children: [
                         Text(dataHistoryOrder.teacher.name!,
                             style: AppTextStyle.body2.setMedium()),
-                        Text(dataHistoryOrder.teacher.typeTeaching!,
+                        Text(dataHistoryOrder.mapel,
                             style: AppTextStyle.body4.setRegular()),
                         const SizedBox(height: 8),
                         Align(
@@ -159,6 +159,21 @@ class OrderCancelContent extends StatelessWidget {
                           .copyWith(color: AppColors.neutral.ne04))
                 ],
               ),
+              const SizedBox(height: 8),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text('Status Pembayaran',
+                      style: AppTextStyle.body4
+                          .setMedium()
+                          .copyWith(color: AppColors.neutral.ne04)),
+                  Text(dataHistoryOrder.paymentStatus!,
+                      style: AppTextStyle.body4
+                          .setMedium()
+                          .copyWith(color: AppColors.neutral.ne04))
+                ],
+              ),
+              const SizedBox(height: 8),
             ],
           ),
         )

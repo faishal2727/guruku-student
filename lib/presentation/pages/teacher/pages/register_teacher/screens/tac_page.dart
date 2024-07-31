@@ -5,6 +5,7 @@ import 'dart:convert';
 import 'package:flutter/services.dart' show rootBundle;
 
 class TacPage extends StatefulWidget {
+  static const ROUTE_NAME = "/tac-page";
   const TacPage({Key? key}) : super(key: key);
 
   @override
@@ -36,10 +37,10 @@ class _TacPageState extends State<TacPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Syarat dan Ketentuan'),
+        title: const Text('Syarat dan Ketentuan'),
       ),
       body: SingleChildScrollView(
-        padding: EdgeInsets.all(16),
+        padding: const EdgeInsets.all(4),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -53,22 +54,30 @@ class _TacPageState extends State<TacPage> {
   }
 
   Widget _buildSection(String title, List<dynamic> rules) {
-    return ExpansionTile(
-      title: Text(
-        title,
-        style: TextStyle(fontWeight: FontWeight.bold),
+    return Theme(
+      data: Theme.of(context).copyWith(dividerColor: Colors.transparent),
+      child: ExpansionTile(
+        title: Text(
+          title,
+          style:
+              Theme.of(context).textTheme.titleMedium!.copyWith(fontSize: 16),
+        ),
+        children: rules.map<Widget>((rule) {
+          List<dynamic> content = rule['content'] ?? rule['rules'];
+          return Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: content.map<Widget>((item) {
+              return ListTile(
+                title: Text(item,
+                    style: Theme.of(context)
+                        .textTheme
+                        .titleMedium!
+                        .copyWith(fontSize: 12)),
+              );
+            }).toList(),
+          );
+        }).toList(),
       ),
-      children: rules.map<Widget>((rule) {
-        List<dynamic> content = rule['content'] ?? rule['rules'];
-        return Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: content.map<Widget>((item) {
-            return ListTile(
-              title: Text(item),
-            );
-          }).toList(),
-        );
-      }).toList(),
     );
   }
 }

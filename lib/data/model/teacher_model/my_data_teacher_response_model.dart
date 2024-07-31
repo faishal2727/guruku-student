@@ -1,5 +1,4 @@
 // ignore_for_file: must_be_immutable
-
 import 'package:equatable/equatable.dart';
 import 'package:guruku_student/data/model/teacher_model/my_schedule_model.dart';
 import 'package:guruku_student/domain/entity/register_teacher/my_data_teacher_response.dart';
@@ -13,7 +12,7 @@ class MyDataTeacherResponseModel extends Equatable {
   String? picture;
   String? phone;
   List<MyScheduleModel>? schedule;
-  String? typeTeaching;
+  List<String>? typeTeaching;
   String? price;
   String? description;
   String? timeExperience;
@@ -22,6 +21,10 @@ class MyDataTeacherResponseModel extends Equatable {
   String? lon;
   String? address;
   int? userId;
+  String? balance;
+  List<String>? skill;
+  String? idCard;
+  String? file;
 
   MyDataTeacherResponseModel({
     required this.id,
@@ -41,6 +44,10 @@ class MyDataTeacherResponseModel extends Equatable {
     required this.lon,
     required this.address,
     required this.userId,
+    required this.balance,
+    required this.skill,
+    required this.idCard,
+    required this.file,
   });
   factory MyDataTeacherResponseModel.fromJson(Map<String, dynamic> json) {
     return MyDataTeacherResponseModel(
@@ -55,7 +62,7 @@ class MyDataTeacherResponseModel extends Equatable {
           ? List<MyScheduleModel>.from(
               json["data"]["schedule"].map((x) => MyScheduleModel.fromJson(x)))
           : null,
-      typeTeaching: json["data"]["type_teaching"],
+      typeTeaching: List<String>.from(json["data"]["type_teaching"]),
       price: json["data"]["price"],
       description: json["data"]["description"],
       timeExperience: json["data"]["time_experience"],
@@ -64,6 +71,10 @@ class MyDataTeacherResponseModel extends Equatable {
       lon: json["data"]["lon"],
       address: json["data"]["address"],
       userId: json["data"]["user_id"],
+      balance: json["data"]["balance"],
+      skill: List<String>.from(json["data"]['skill'] ?? []),
+      idCard: json["data"]["id_card"],
+      file: json["data"]["file"],
     );
   }
 
@@ -87,6 +98,10 @@ class MyDataTeacherResponseModel extends Equatable {
         "lon": lon,
         "addess": address,
         "user_id": userId,
+        "balance": balance,
+        "skill": skill,
+        "id_card": idCard,
+        "file": file,
       };
 
   MyDataTeacherResponse toEntity() {
@@ -110,31 +125,40 @@ class MyDataTeacherResponseModel extends Equatable {
       lon: lon,
       address: address,
       userId: userId,
+      balance: balance,
+      skill: skill,
+      idCard: idCard,
+      file: file,
     );
   }
 
   factory MyDataTeacherResponseModel.fromEntity(MyDataTeacherResponse entity) {
-  return MyDataTeacherResponseModel(
-    id: entity.id,
-    username: entity.username,
-    name: entity.name,
-    email: entity.email,
-    avatar: entity.avatar,
-    picture: entity.picture,
-    phone: entity.phone,
-    schedule: entity.schedule?.map((sche) => MyScheduleModel.fromEntity(sche)).toList(),
-    typeTeaching: entity.typeTeaching,
-    price: entity.price,
-    description: entity.description,
-    timeExperience: entity.timeExperience,
-    education: entity.education,
-    lat: entity.lat,
-    lon: entity.lon,
-    address: entity.address,
-    userId: entity.userId,
-  );
-}
-
+    return MyDataTeacherResponseModel(
+      id: entity.id,
+      username: entity.username,
+      name: entity.name,
+      email: entity.email,
+      avatar: entity.avatar,
+      picture: entity.picture,
+      phone: entity.phone,
+      schedule: entity.schedule
+          ?.map((sche) => MyScheduleModel.fromEntity(sche))
+          .toList(),
+      typeTeaching: entity.typeTeaching,
+      price: entity.price,
+      description: entity.description,
+      timeExperience: entity.timeExperience,
+      education: entity.education,
+      lat: entity.lat,
+      lon: entity.lon,
+      address: entity.address,
+      userId: entity.userId,
+      balance: entity.balance,
+      skill: entity.skill,
+      idCard: entity.idCard,
+      file: entity.file,
+    );
+  }
 
   @override
   List<Object?> get props => [
@@ -155,5 +179,9 @@ class MyDataTeacherResponseModel extends Equatable {
         lon,
         address,
         userId,
+        balance,
+        skill,
+        idCard,
+        file
       ];
 }

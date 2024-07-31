@@ -9,12 +9,10 @@ class CardShimmerVertical extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 160,
       child: ListView.builder(
         shrinkWrap: true,
         itemCount: 8,
-       
-        scrollDirection: Axis.horizontal,
+        scrollDirection: Axis.vertical,
         itemBuilder: (context, index) {
           return const Padding(
             padding: EdgeInsets.symmetric(vertical: 8, horizontal: 8),
@@ -32,8 +30,8 @@ class ShimmerCardUy extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-   
-      width: MediaQuery.of(context).size.width * 0.8, 
+      height: 150,
+      width: MediaQuery.of(context).size.width * 0.8,
       child: Shimmer.fromColors(
         baseColor: const Color.fromARGB(255, 228, 227, 227),
         highlightColor: const Color.fromARGB(255, 201, 201, 201),

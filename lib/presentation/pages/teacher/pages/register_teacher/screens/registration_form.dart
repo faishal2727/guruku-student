@@ -30,21 +30,21 @@ class _RegistrationFormState extends State<RegistrationForm> {
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _phoneController = TextEditingController();
-  final TextEditingController _gelarController = TextEditingController();
-  final TextEditingController _jurusanController = TextEditingController();
-  final TextEditingController _tahunLulusController = TextEditingController();
   final TextEditingController _educationController = TextEditingController();
   String? _selectedEducation;
+  final TextEditingController _jurusanController = TextEditingController();
+  final TextEditingController _gelarController = TextEditingController();
+  final TextEditingController _tahunLulusController = TextEditingController();
 
   void _reqTeacher() async {
     setState(() {
-      isLoading = true; // Tampilkan indikator loading
+      isLoading = true; 
     });
 
     final cubit = context.read<ImagePickerCubit>();
     final bloc = context.read<RegisterTeacherBloc>();
     final state = cubit.state;
-    List<String?> fileUrls = []; // Menyimpan URL semua file yang diunggah
+    List<String?> fileUrls = [];
 
     // Memastikan ada file gambar yang dipilih
     if (state.imageFile == null) {
@@ -52,7 +52,7 @@ class _RegistrationFormState extends State<RegistrationForm> {
         const SnackBar(content: Text('No image selected')),
       );
       setState(() {
-        isLoading = false; // Sembunyikan indikator loading
+        isLoading = false; 
       });
       return;
     }
@@ -74,7 +74,7 @@ class _RegistrationFormState extends State<RegistrationForm> {
         ),
       );
       setState(() {
-        isLoading = false; // Sembunyikan indikator loading
+        isLoading = false;
       });
       return;
     }
@@ -100,7 +100,7 @@ class _RegistrationFormState extends State<RegistrationForm> {
           ),
         );
         setState(() {
-          isLoading = false; // Sembunyikan indikator loading
+          isLoading = false;
         });
         return;
       }
@@ -112,7 +112,8 @@ class _RegistrationFormState extends State<RegistrationForm> {
       username: _nameController.text,
       email: _emailController.text,
       phone: _phoneController.text,
-      education: _educationController.text,
+      education: _selectedEducation.toString(),
+      gelar: _gelarController.text,
       jurusan: _jurusanController.text,
       tahunLulus: _tahunLulusController.text,
       idCard: idCardUrl,
@@ -120,7 +121,7 @@ class _RegistrationFormState extends State<RegistrationForm> {
     ));
 
     setState(() {
-      isLoading = false; // Sembunyikan indikator loading setelah selesai
+      isLoading = false;
     });
   }
 

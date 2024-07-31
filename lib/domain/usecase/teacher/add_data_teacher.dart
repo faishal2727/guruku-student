@@ -13,12 +13,13 @@ class AddDataTeacher {
     String token,
     String name,
     String desc,
-    String typeTeaching,
+    List<String> typeTeaching,
     String price,
     String timeExperience,
     String lat,
     String lon,
     String address,
+    List<String> skill,
   ) async {
     return await repository.addDataTeacher(
       picture,
@@ -31,6 +32,7 @@ class AddDataTeacher {
       lat,
       lon,
       address,
+      skill,
     );
   }
 }

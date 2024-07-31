@@ -15,7 +15,7 @@ class TeacherDetailModel extends Equatable {
   String? picture;
   String? phone;
   List<ScheduleModel>? schedule;
-  String? typeTeaching;
+  List<String>? typeTeaching;
   String? price;
   String? description;
   String? timeExperience;
@@ -30,6 +30,8 @@ class TeacherDetailModel extends Equatable {
   String? gelar;
   String? jurusan;
   String? tahunLulus;
+  String? balance;
+  List<String>? skill;
 
   TeacherDetailModel({
     required this.id,
@@ -43,6 +45,7 @@ class TeacherDetailModel extends Equatable {
     required this.typeTeaching,
     required this.price,
     required this.description,
+    required this.timeExperience,
     required this.education,
     required this.lat,
     required this.lon,
@@ -54,6 +57,8 @@ class TeacherDetailModel extends Equatable {
     required this.gelar,
     required this.jurusan,
     required this.tahunLulus,
+    required this.balance,
+    required this.skill,
   });
 
   factory TeacherDetailModel.fromJson(Map<String, dynamic> json) {
@@ -69,9 +74,14 @@ class TeacherDetailModel extends Equatable {
           ? List<ScheduleModel>.from(
               json["data"]["schedule"].map((x) => ScheduleModel.fromJson(x)))
           : null,
-      typeTeaching: json["data"]["type_teaching"],
+      typeTeaching: json["data"]["type_teaching"] is List
+          ? List<String>.from(json["data"]["type_teaching"])
+          : json["data"]["type_teaching"] is String
+              ? [json["data"]["type_teaching"]]
+              : [],
       price: json["data"]["price"],
       description: json["data"]["description"],
+      timeExperience: json["data"]["time_experience"],
       education: json["data"]["education"],
       lat: json["data"]["lat"],
       lon: json["data"]["lon"],
@@ -86,6 +96,12 @@ class TeacherDetailModel extends Equatable {
       gelar: json["data"]["gelar"],
       jurusan: json["data"]["jurusan"],
       tahunLulus: json["data"]["tahun_lulus"],
+      balance: json["data"]["balance"],
+      skill: json["data"]["skill"] is List
+          ? List<String>.from(json["data"]["skill"])
+          : json["data"]["skill"] is String
+              ? [json["data"]["skill"]]
+              : [],
     );
   }
 
@@ -115,6 +131,8 @@ class TeacherDetailModel extends Equatable {
         "gelar": gelar,
         "jurusan": jurusan,
         "tahun_lulus": tahunLulus,
+        "balance": balance,
+        "skill": skill,
       };
 
   TeacherDetail toEntity() {
@@ -144,6 +162,8 @@ class TeacherDetailModel extends Equatable {
       gelar: gelar,
       jurusan: jurusan,
       tahunLulus: tahunLulus,
+      balance: balance,
+      skill: skill,
     );
   }
 
@@ -171,5 +191,7 @@ class TeacherDetailModel extends Equatable {
         gelar,
         jurusan,
         tahunLulus,
+        balance,
+        skill,
       ];
 }

@@ -19,9 +19,9 @@ class DataHistoryOrderModel extends Equatable {
   final DateTime? expired;
   final String? va;
   final String? bank;
-  final StudentModel student; 
+  final StudentModel student;
   final TeacherModel teacher;
-
+  final String? mapel;
 
   const DataHistoryOrderModel({
     required this.id,
@@ -41,11 +41,12 @@ class DataHistoryOrderModel extends Equatable {
     required this.bank,
     required this.student,
     required this.teacher,
+    required this.mapel,
   });
 
   factory DataHistoryOrderModel.fromJson(Map<String, dynamic> json) =>
       DataHistoryOrderModel(
-       id: json['id'],
+        id: json['id'],
         code: json["code"],
         idStudent: json["id_student"],
         idTeacher: json["id_teacher"],
@@ -54,14 +55,15 @@ class DataHistoryOrderModel extends Equatable {
         note: json["note"],
         phone: json["phone"],
         email: json["email"],
-        meetingTime:  DateTime.parse(json["meeting_time"]),
+        meetingTime: DateTime.parse(json["meeting_time"]),
         present: json["present"],
         paymentStatus: json["payment_status"],
         expired: DateTime.parse(json["expired"]),
         va: json["va"],
         bank: json["bank"],
         student: StudentModel.fromJson(json["student"]),
-        teacher: TeacherModel.fromJson(json["teacher"])
+        teacher: TeacherModel.fromJson(json["teacher"]),
+        mapel: json["mapel"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -81,7 +83,8 @@ class DataHistoryOrderModel extends Equatable {
         "va": va,
         "bank": bank,
         "student": student.toJson(),
-        "teacher":teacher.toJson(),
+        "teacher": teacher.toJson(),
+        "mapel": mapel,
       };
 
   DataHistoryOrder toEntity() => DataHistoryOrder(
@@ -102,6 +105,7 @@ class DataHistoryOrderModel extends Equatable {
         bank: bank,
         student: student.toEntity(),
         teacher: teacher.toEntity(),
+        mapel: mapel,
       );
 
   @override
@@ -121,6 +125,7 @@ class DataHistoryOrderModel extends Equatable {
         expired,
         va,
         bank,
+        mapel,
         // student,
         // teacher,
       ];

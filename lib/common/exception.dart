@@ -7,6 +7,11 @@ class AuthException implements Exception {
   AuthException({required this.message});
 }
 
+class WDException implements Exception {
+  final String message;
+  WDException({required this.message});
+}
+
 class OrderException implements Exception {
   final String message;
   OrderException({required this.message});

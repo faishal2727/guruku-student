@@ -20,6 +20,7 @@ class DataHistoryOrder extends Equatable {
   final String? bank;
   final Student student;
   final Teacher teacher;
+  final String? mapel;
 
   const DataHistoryOrder({
     required this.id,
@@ -39,6 +40,7 @@ class DataHistoryOrder extends Equatable {
     required this.bank,
     required this.student,
     required this.teacher,
+    required this.mapel,
 
   });
 
@@ -61,5 +63,6 @@ class DataHistoryOrder extends Equatable {
         bank,
         student,
         teacher,
+        mapel,
       ];
 }

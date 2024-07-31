@@ -41,6 +41,7 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
   final http.Client client;
 
   // login student
+ 
   @override
   Future<LoginResonseModel> login({
     required String email,
@@ -57,15 +58,29 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
       }),
     );
 
+    debugPrint('Response status: ${response.statusCode}');
+    debugPrint('Response body: ${response.body}');
+
     if (response.statusCode == 200) {
-      final tokenModel = LoginResonseModel.fromJson(json.decode(response.body));
-      return tokenModel;
+      try {
+        final tokenModel = LoginResonseModel.fromJson(json.decode(response.body));
+        return tokenModel;
+      } catch (e) {
+        debugPrint('Error parsing JSON: $e');
+        throw AuthException(message: 'Failed to parse response');
+      }
     } else {
-      final errorResponse = json.decode(response.body);
-      final errorMessage = errorResponse['message'] ?? 'Unknown error';
-      debugPrint(
-          'Login gagal: $errorMessage (status code ${response.statusCode})');
-      throw AuthException(message: errorMessage);
+      try {
+        final errorResponse = json.decode(response.body);
+        final errorMessage = errorResponse['message'] ?? 'Unknown error';
+        debugPrint(
+            'Login failed: $errorMessage (status code ${response.statusCode})');
+        throw AuthException(message: errorMessage);
+      } catch (e) {
+        debugPrint('Error parsing error response: $e');
+        throw AuthException(
+            message: 'Failed to parse error response, status code: ${response.statusCode}');
+      }
     }
   }
 
@@ -164,18 +179,12 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
   @override
   Future<ReqForgotPwResponseModel> reqForgotPw({required String email}) async {
     final response = await client.post(
-      Uri.parse(
-          'https://faizal.simagang.my.id/faisol//v1/user/req-forgot-password'),
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: json.encode(
-        {
-          'email': email,
-        },
-      ),
-    );
-    if (response.statusCode == 201) {
+        Uri.parse('https://faizal.simagang.my.id/faisol/v1/user/forgot'),
+        headers: {'Content-Type': 'application/json'},
+        body: json.encode(
+          {'email': email},
+        ));
+    if (response.statusCode == 200) {
       final data =
           ReqForgotPwResponseModel.fromJson(json.decode(response.body));
       return data;

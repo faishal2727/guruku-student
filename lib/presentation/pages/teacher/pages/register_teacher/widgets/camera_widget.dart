@@ -1,3 +1,5 @@
+// ignore_for_file: use_super_parameters
+
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 

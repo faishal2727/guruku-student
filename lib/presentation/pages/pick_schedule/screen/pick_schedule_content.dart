@@ -40,6 +40,7 @@ class _PickScheduleContentState extends State<PickScheduleContent> {
   DateTime? _rangeEnd;
   // Waktu yang dipilih
   String? _selectedTime;
+  String? _selectedSubject;
 
   @override
   void initState() {
@@ -57,11 +58,70 @@ class _PickScheduleContentState extends State<PickScheduleContent> {
     super.dispose();
   }
 
-  // Mendapatkan daftar event untuk hari tertentu
-  List<Event> _getEventsForDay(DateTime day) {
-    List<Event> events = [];
+  String _extractStartTime(String time) {
+    if (time.contains('-')) {
+      return time.split('-')[0].trim();
+    }
+    return time.trim();
+  }
 
-    if (widget.teacher.schedule != null) {
+  // Mendapatkan daftar event untuk hari tertentu
+  // Fungsi untuk mengambil waktu sebelum tanda hubung
+// String _extractStartTime(String time) {
+//   if (time.contains('-')) {
+//     return time.split('-')[0].trim();
+//   }
+//   return time.trim();
+// }
+
+// Fungsi untuk mendapatkan daftar event pada hari tertentu
+List<Event> _getEventsForDay(DateTime day) {
+  List<Event> events = [];
+
+  if (widget.teacher.schedule != null) {
+    for (var schedule in widget.teacher.schedule!) {
+      if (schedule.day == _getDayOfWeek(day)) {
+        DateTime dateTime = DateTime.parse(schedule.day);
+        String formattedDate = _formatDate(dateTime);
+        List<String> times = schedule.time;
+        List<String> availableTimes = [];
+
+        for (String time in times) {
+          // Ambil waktu sebelum tanda hubung
+          String startTime = _extractStartTime(time);
+
+          bool isBooked = widget.teacher.histories.any((history) {
+            DateTime bookedTime =
+                DateTime.parse(history.meetingTime.toString());
+            bool isSameTime = bookedTime.isAtSameMomentAs(dateTime.add(Duration(
+              hours: int.parse(startTime.split(':')[0]),
+              minutes: int.parse(startTime.split(':')[1]),
+            )));
+            return isSameTime &&
+                history.paymentStatus != "expired" &&
+                history.paymentStatus != "cancel";
+          });
+
+          if (!isBooked) {
+            availableTimes.add(time); // Tetap simpan waktu asli
+          }
+        }
+
+        if (availableTimes.isNotEmpty) {
+          events.add(Event(schedule.day, formattedDate, availableTimes));
+        }
+      }
+    }
+  }
+  return events;
+}
+
+// Fungsi untuk mendapatkan daftar event dalam rentang waktu tertentu
+List<Event> _getEventsForRange(DateTime start, DateTime end) {
+  List<Event> events = [];
+
+  if (widget.teacher.schedule != null) {
+    for (var day in daysInRange(start, end)) {
       for (var schedule in widget.teacher.schedule!) {
         if (schedule.day == _getDayOfWeek(day)) {
           DateTime dateTime = DateTime.parse(schedule.day);
@@ -70,19 +130,24 @@ class _PickScheduleContentState extends State<PickScheduleContent> {
           List<String> availableTimes = [];
 
           for (String time in times) {
+            // Ambil waktu sebelum tanda hubung
+            String startTime = _extractStartTime(time);
+
             bool isBooked = widget.teacher.histories.any((history) {
               DateTime bookedTime =
                   DateTime.parse(history.meetingTime.toString());
               bool isSameTime =
                   bookedTime.isAtSameMomentAs(dateTime.add(Duration(
-                hours: int.parse(time.split(':')[0]),
-                minutes: int.parse(time.split(':')[1]),
+                hours: int.parse(startTime.split(':')[0]),
+                minutes: int.parse(startTime.split(':')[1]),
               )));
-              return isSameTime && history.paymentStatus != "expired";
+              return isSameTime &&
+                  history.paymentStatus != "expired" &&
+                  history.paymentStatus != "cancel";
             });
 
             if (!isBooked) {
-              availableTimes.add(time);
+              availableTimes.add(time); // Tetap simpan waktu asli
             }
           }
 
@@ -92,47 +157,10 @@ class _PickScheduleContentState extends State<PickScheduleContent> {
         }
       }
     }
-    return events;
   }
+  return events;
+}
 
-  List<Event> _getEventsForRange(DateTime start, DateTime end) {
-    List<Event> events = [];
-
-    if (widget.teacher.schedule != null) {
-      for (var day in daysInRange(start, end)) {
-        for (var schedule in widget.teacher.schedule!) {
-          if (schedule.day == _getDayOfWeek(day)) {
-            DateTime dateTime = DateTime.parse(schedule.day);
-            String formattedDate = _formatDate(dateTime);
-            List<String> times = schedule.time;
-            List<String> availableTimes = [];
-
-            for (String time in times) {
-              bool isBooked = widget.teacher.histories.any((history) {
-                DateTime bookedTime =
-                    DateTime.parse(history.meetingTime.toString());
-                bool isSameTime =
-                    bookedTime.isAtSameMomentAs(dateTime.add(Duration(
-                  hours: int.parse(time.split(':')[0]),
-                  minutes: int.parse(time.split(':')[1]),
-                )));
-                return isSameTime && history.paymentStatus != "expired";
-              });
-
-              if (!isBooked) {
-                availableTimes.add(time);
-              }
-            }
-
-            if (availableTimes.isNotEmpty) {
-              events.add(Event(schedule.day, formattedDate, availableTimes));
-            }
-          }
-        }
-      }
-    }
-    return events;
-  }
 
   // Memformat tanggal menjadi string dengan format tertentu
   String _formatDate(DateTime dateTime) {
@@ -205,247 +233,280 @@ class _PickScheduleContentState extends State<PickScheduleContent> {
     }
   }
 
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          'Pilih Pertemuan',
-          style: AppTextStyle.heading5.setSemiBold(),
-        ),
-        backgroundColor: pr11,
+@override
+Widget build(BuildContext context) {
+  return Scaffold(
+    appBar: AppBar(
+      title: Text(
+        'Pilih Pertemuan',
+        style: AppTextStyle.heading5.setSemiBold(),
       ),
-      body: Column(
-        children: [
-          Card(
-            margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 16),
-            color: pr11,
-            child: Padding(
-              padding: const EdgeInsets.all(8),
-              child: TableCalendar<Event>(
-                firstDay: kFirstDay,
-                lastDay: kLastDay,
-                focusedDay: _focusedDay,
-                selectedDayPredicate: (day) => isSameDay(_selectedDay, day),
-                rangeStartDay: _rangeStart,
-                rangeEndDay: _rangeEnd,
-                calendarFormat: _calendarFormat,
-                rangeSelectionMode: _rangeSelectionMode,
-                eventLoader: _getEventsForDay,
-                startingDayOfWeek: StartingDayOfWeek.monday,
-                calendarStyle: const CalendarStyle(
-                  outsideDaysVisible: false,
-                  markerDecoration: BoxDecoration(
-                    color: kRed,
-                    shape: BoxShape.circle,
-                  ),
-                  selectedDecoration: BoxDecoration(
-                    color: pr13,
-                    shape: BoxShape.circle,
-                  ),
-                  disabledDecoration: BoxDecoration(
-                    color: Color.fromARGB(19, 158, 158, 158),
-                    shape: BoxShape.circle,
-                  ),
+      backgroundColor: pr11,
+    ),
+    body: Column(
+      children: [
+        Card(
+          margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 16),
+          color: pr11,
+          child: Padding(
+            padding: const EdgeInsets.all(8),
+            child: TableCalendar<Event>(
+              firstDay: kFirstDay,
+              lastDay: kLastDay,
+              focusedDay: _focusedDay,
+              selectedDayPredicate: (day) => isSameDay(_selectedDay, day),
+              rangeStartDay: _rangeStart,
+              rangeEndDay: _rangeEnd,
+              calendarFormat: _calendarFormat,
+              rangeSelectionMode: _rangeSelectionMode,
+              eventLoader: _getEventsForDay,
+              startingDayOfWeek: StartingDayOfWeek.monday,
+              calendarStyle: const CalendarStyle(
+                outsideDaysVisible: false,
+                markerDecoration: BoxDecoration(
+                  color: kRed,
+                  shape: BoxShape.circle,
                 ),
-                enabledDayPredicate: (day) {
-                  return !day.isBefore(DateTime.now());
-                },
-                onDaySelected: _onDaySelected,
-                onRangeSelected: _onRangeSelected,
-                onFormatChanged: (format) {
-                  if (_calendarFormat != format) {
-                    setState(() {
-                      _calendarFormat = format;
-                    });
-                  }
-                },
-                onPageChanged: (focusedDay) {
-                  _focusedDay = focusedDay;
-                },
+                selectedDecoration: BoxDecoration(
+                  color: pr13,
+                  shape: BoxShape.circle,
+                ),
+                disabledDecoration: BoxDecoration(
+                  color: Color.fromARGB(19, 158, 158, 158),
+                  shape: BoxShape.circle,
+                ),
               ),
+              enabledDayPredicate: (day) {
+                return !day.isBefore(DateTime.now());
+              },
+              onDaySelected: _onDaySelected,
+              onRangeSelected: _onRangeSelected,
+              onFormatChanged: (format) {
+                if (_calendarFormat != format) {
+                  setState(() {
+                    _calendarFormat = format;
+                  });
+                }
+              },
+              onPageChanged: (focusedDay) {
+                _focusedDay = focusedDay;
+              },
             ),
           ),
-
-          Divider(
-            color: pr14,
+        ),
+        Divider(
+          color: pr14,
+        ),
+        Visibility(
+          visible: false,
+          child: Column(
+            children: widget.teacher.histories.map((history) {
+              return Text(history.meetingTime.toString());
+            }).toList(),
           ),
-          Visibility(
-            visible: false,
-            child: Column(
-              children: widget.teacher.histories.map((history) {
-                return Text(history.meetingTime.toString());
-              }).toList(),
-            ),
-          ),
-
-          // Menampilkan daftar event yang dipilih
-
-          Expanded(
-            child: ValueListenableBuilder<List<Event>>(
-              valueListenable: _selectedEvents,
-              builder: (context, value, _) {
-                return ListView.builder(
-                  itemCount: value.length,
-                  itemBuilder: (context, index) {
-                    Event event = value[index];
-                    String title = event.title;
-                    String detailedTitle = event.detailedTitle;
-                    List<String> times = event.time;
-
-                    return Padding(
-                      padding: const EdgeInsets.all(16),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Visibility(
+        ),
+        // Menampilkan daftar event yang dipilih
+        Expanded(
+          child: ValueListenableBuilder<List<Event>>(
+            valueListenable: _selectedEvents,
+            builder: (context, value, _) {
+              return ListView.builder(
+                itemCount: value.length,
+                itemBuilder: (context, index) {
+                  Event event = value[index];
+                  String title = event.title;
+                  String detailedTitle = event.detailedTitle;
+                  List<String> times = event.time;
+                  return Padding(
+                    padding: const EdgeInsets.all(16),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Visibility(
                             visible: false,
-                            child: Text(
-                              title,
-                              style: AppTextStyle.body3
-                                  .setSemiBold()
-                                  .copyWith(color: Colors.transparent),
-                            ),
-                          ),
-                          Text(
-                            'Waktu yang tesedia :',
-                            style: AppTextStyle.body2.setSemiBold(),
-                          ),
-                          const SizedBox(height: 8),
-                          Text(
-                            detailedTitle,
-                            style: AppTextStyle.body3.setSemiBold(),
-                          ),
-                          const SizedBox(height: 8),
-                          ListView.builder(
+                            child: Text(title,
+                                style: AppTextStyle.body3
+                                    .setSemiBold()
+                                    .copyWith(color: Colors.transparent))),
+                        Text('Mata Pelajaran',
+                            style: AppTextStyle.body2.setSemiBold()),
+                        const SizedBox(height: 8),
+                        Padding(
+                          padding: const EdgeInsets.only(left: 8),
+                          child: widget.teacher.typeTeaching != null &&
+                                  widget.teacher.typeTeaching!.isNotEmpty
+                              ? Wrap(
+                                  direction: Axis.horizontal,
+                                  spacing: 8.0,
+                                  children: widget.teacher.typeTeaching!
+                                      .map((type) {
+                                    bool isSelected =
+                                        _selectedSubject == type;
+                                    return ChoiceChip(
+                                      label: Text(
+                                        type,
+                                        style: AppTextStyle.body3
+                                            .setSemiBold()
+                                            .copyWith(
+                                              color: isSelected
+                                                  ? Colors.white
+                                                  : AppColors.primary.pr13,
+                                            ),
+                                      ),
+                                      selected: isSelected,
+                                      onSelected: (selected) {
+                                        setState(() {
+                                          _selectedSubject =
+                                              selected ? type : null;
+                                        });
+                                      },
+                                      selectedColor: AppColors.primary.pr13,
+                                    );
+                                  }).toList(),
+                                )
+                              : Text(
+                                  "No teaching types available",
+                                  style: AppTextStyle.body3
+                                      .setSemiBold()
+                                      .copyWith(
+                                        color: AppColors.primary.pr13,
+                                      ),
+                                ),
+                        ),
+                        const SizedBox(height: 8),
+                        Text('Waktu yang tesedia :',
+                            style: AppTextStyle.body2.setSemiBold()),
+                        const SizedBox(height: 8),
+                        Text(detailedTitle,
+                            style: AppTextStyle.body3.setSemiBold()),
+                        const SizedBox(height: 8),
+                        ListView.builder(
                             shrinkWrap: true,
                             physics: const NeverScrollableScrollPhysics(),
                             itemCount: times.length,
                             itemBuilder: (context, timeIndex) {
                               String time = times[timeIndex];
+                              String startTime = _extractStartTime(time);
                               bool isBooked =
                                   widget.teacher.histories.any((history) {
                                 DateTime bookedTime = DateTime.parse(
                                     history.meetingTime.toString());
                                 bool isSameTime = bookedTime.isAtSameMomentAs(
-                                  _selectedDay!.add(Duration(
-                                    hours: int.parse(time.split(':')[0]),
-                                    minutes: int.parse(time.split(':')[1]),
-                                  )),
-                                );
+                                    _selectedDay!.add(Duration(
+                                  hours: int.parse(startTime.split(':')[0]),
+                                  minutes: int.parse(startTime.split(':')[1]),
+                                )));
                                 return isSameTime &&
-                                    history.paymentStatus != "expired";
+                                    history.paymentStatus != "expired" &&
+                                    history.paymentStatus != "cancel";
                               });
                               bool isSelected = _selectedTime == time;
 
                               return Card(
-                                color: isSelected
-                                    ? pr13
-                                    : (isBooked
-                                        ? Colors.grey.shade400
-                                        : Colors.grey.shade100),
-                                margin:
-                                    const EdgeInsets.symmetric(vertical: 4.0),
-                                child: ListTile(
-                                  onTap: () {
-                                    if (!isBooked) {
-                                      setState(() {
-                                        _selectedTime = time;
-                                      });
-                                    }
-                                  },
-                                  title: Text(
-                                    "Jam $time",
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .bodyMedium!
-                                        .copyWith(
-                                          fontSize: 14,
-                                          color: isBooked
-                                              ? Colors.grey
-                                              : Colors.black,
-                                        ),
-                                  ),
-                                ),
-                              );
-                            },
-                          ),
-                        ],
-                      ),
-                    );
-                  },
-                );
-              },
-            ),
+                                  color: isSelected
+                                      ? pr13
+                                      : (isBooked
+                                          ? Colors.grey.shade400
+                                          : Colors.grey.shade100),
+                                  margin: const EdgeInsets.symmetric(
+                                      vertical: 4.0),
+                                  child: ListTile(
+                                      onTap: () {
+                                        if (!isBooked) {
+                                          setState(() {
+                                            _selectedTime = time;
+                                          });
+                                        }
+                                      },
+                                      title: Text("Jam $time",
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .bodyMedium!
+                                              .copyWith(
+                                                  fontSize: 14,
+                                                  color: isBooked
+                                                      ? Colors.grey
+                                                      : Colors.black))));
+                            })
+                      ],
+                    ),
+                  );
+                },
+              );
+            },
           ),
-        ],
-      ),
-      // Tombol navigasi untuk memilih jadwal
-      bottomNavigationBar: Stack(
-        children: [
-          Container(
-            decoration: BoxDecoration(
-              borderRadius: const BorderRadius.only(
-                topLeft: Radius.circular(8),
-                topRight: Radius.circular(8),
+        ),
+      ],
+    ),
+    // Tombol navigasi untuk memilih jadwal
+    bottomNavigationBar: Stack(
+      children: [
+        Container(
+          decoration: BoxDecoration(
+            borderRadius: const BorderRadius.only(
+              topLeft: Radius.circular(8),
+              topRight: Radius.circular(8),
+            ),
+            color: pr11,
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black.withOpacity(0.1),
+                spreadRadius: 3,
+                blurRadius: 5,
+                offset: const Offset(0, -2),
               ),
-              color: pr11,
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.black.withOpacity(0.1),
-                  spreadRadius: 3,
-                  blurRadius: 5,
-                  offset: const Offset(0, -2),
-                ),
-              ],
-            ),
-            height: 80,
+            ],
           ),
-          Expanded(
-            flex: 3,
-            child: InkWell(
-              onTap: () {
-                if (_selectedDay != null && _selectedTime != null) {
-                  Navigator.pushReplacement(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => OrderContent(
-                        teacher: widget.teacher,
-                        date: _selectedDay!,
-                        time: _selectedTime!,
-                      ),
+          height: 80,
+        ),
+        Expanded(
+          flex: 3,
+          child: InkWell(
+            onTap: () {
+              if (_selectedDay != null &&
+                  _selectedTime != null &&
+                  _selectedSubject != null) {
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => OrderContent(
+                      teacher: widget.teacher,
+                      date: _selectedDay!,
+                      time: _selectedTime!,
+                      selectedSubject: _selectedSubject!,
                     ),
-                  );
-                } else {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(
-                      content: Text('Please select a date and time.'),
-                    ),
-                  );
-                }
-              },
-              child: Container(
-                margin:
-                    const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
-                height: 50,
-                width: MediaQuery.of(context).size.width,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10),
-                  color: AppColors.primary.pr13,
-                ),
-                child: Center(
-                  child: Text(
-                    'Pilih Jadwal',
-                    style: AppTextStyle.body1
-                        .setRegular()
-                        .copyWith(color: AppColors.primary.pr11),
                   ),
+                );
+              } else {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(
+                    content: Text('Please select a date, time, and subject.'),
+                  ),
+                );
+              }
+            },
+            child: Container(
+              margin:
+                  const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+              height: 50,
+              width: MediaQuery.of(context).size.width,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10),
+                color: AppColors.primary.pr13,
+              ),
+              child: Center(
+                child: Text(
+                  'Pilih Jadwal',
+                  style: AppTextStyle.body1
+                      .setRegular()
+                      .copyWith(color: AppColors.primary.pr11),
                 ),
               ),
             ),
           ),
-        ],
-      ),
-    );
-  }
+        ),
+      ],
+    ),
+  );
+}
 }

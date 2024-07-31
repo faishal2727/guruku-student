@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:guruku_student/common/enum_sate.dart';
 import 'package:guruku_student/presentation/blocs/req_forgot_pw/req_forgot_pw_bloc.dart';
-import 'package:guruku_student/presentation/pages/auth/screens/verify_otp_forgot_pw.dart';
 import 'package:guruku_student/presentation/pages/auth/widgets/button_req_email.dart';
 import 'package:guruku_student/presentation/pages/auth/widgets/my_text_form_field.dart';
 
@@ -64,11 +63,6 @@ class _ReqForgotPasswordPageState extends State<ReqForgotPasswordPage> {
                 ),
                 backgroundColor: Colors.green,
               ),
-            );
-            Navigator.pushNamed(
-              context,
-              VerifyOtpForgotPwPage.ROUTE_NAME,
-              arguments: _emailController.text,
             );
           }
         },
