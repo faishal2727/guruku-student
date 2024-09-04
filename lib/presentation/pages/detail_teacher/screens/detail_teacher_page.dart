@@ -105,35 +105,35 @@ class _DetailTeacherPageState extends State<DetailTeacherPage> {
                 builder: (context, authState) {
                   return Row(
                     children: [
-                      Expanded(
-                        flex: 3,
-                        child: InkWell(
-                          onTap: () async {
-                            Navigator.pushNamed(
-                              context,
-                              PackagesPage.ROUTE_NAME,
-                              arguments: widget.id
-                            );
-                          },
-                          child: Container(
-                            margin: const EdgeInsets.symmetric(
-                                horizontal: 16, vertical: 16),
-                            height: 50,
-                            width: MediaQuery.of(context).size.width,
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(10),
-                                color: AppColors.primary.pr13),
-                            child: Center(
-                              child: Text(
-                                'Paket',
-                                style: AppTextStyle.body1
-                                    .setRegular()
-                                    .copyWith(color: AppColors.primary.pr11),
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
+                      // Expanded(
+                      //   flex: 3,
+                      //   child: InkWell(
+                      //     onTap: () async {
+                      //       Navigator.pushNamed(
+                      //         context,
+                      //         PackagesPage.ROUTE_NAME,
+                      //         arguments: widget.id
+                      //       );
+                      //     },
+                      //     child: Container(
+                      //       margin: const EdgeInsets.symmetric(
+                      //           horizontal: 16, vertical: 16),
+                      //       height: 50,
+                      //       width: MediaQuery.of(context).size.width,
+                      //       decoration: BoxDecoration(
+                      //           borderRadius: BorderRadius.circular(10),
+                      //           color: AppColors.primary.pr13),
+                      //       child: Center(
+                      //         child: Text(
+                      //           'Paket',
+                      //           style: AppTextStyle.body1
+                      //               .setRegular()
+                      //               .copyWith(color: AppColors.primary.pr11),
+                      //         ),
+                      //       ),
+                      //     ),
+                      //   ),
+                      // ),
                       Expanded(
                         flex: 3,
                         child: InkWell(
@@ -154,7 +154,7 @@ class _DetailTeacherPageState extends State<DetailTeacherPage> {
                                 color: AppColors.primary.pr13),
                             child: Center(
                               child: Text(
-                                'Per Hari',
+                                'Pesan',
                                 style: AppTextStyle.body1
                                     .setRegular()
                                     .copyWith(color: AppColors.primary.pr11),

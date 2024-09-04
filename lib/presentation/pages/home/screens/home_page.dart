@@ -40,7 +40,8 @@ double degreesToRadians(double degrees) {
 // Function to get address from latitude and longitude
 Future<String> getAddressFromLatLng(double latitude, double longitude) async {
   try {
-    List<Placemark> placemarks = await placemarkFromCoordinates(latitude, longitude);
+    List<Placemark> placemarks =
+        await placemarkFromCoordinates(latitude, longitude);
     Placemark place = placemarks[0];
     return '${place.street}, ${place.subLocality}, ${place.locality}, ${place.postalCode}, ${place.country}';
   } catch (e) {
@@ -101,7 +102,8 @@ class _HomePageState extends State<HomePage> {
     });
 
     if (userLatitude != null && userLongitude != null) {
-      String address = await getAddressFromLatLng(userLatitude!, userLongitude!);
+      String address =
+          await getAddressFromLatLng(userLatitude!, userLongitude!);
       setState(() {
         userAddress = address;
       });
@@ -122,6 +124,15 @@ class _HomePageState extends State<HomePage> {
       body: ListView(
         children: [
           const SizedBox(height: 16),
+          // ElevatedButton(
+          //   style: ButtonStyle(
+          //       backgroundColor:
+          //           MaterialStateProperty.all<Color>(Colors.green)),
+          //   child: Text('I Am  buggy'),
+          //   onPressed: () {
+          //     throw new StateError('HALO GUYS INI COBA ERROR');
+          //   },
+          // ),
           HeaderHomeWidget(
             userLatitude: userLatitude,
             userLongitude: userLongitude,
@@ -167,7 +178,8 @@ class _HomePageState extends State<HomePage> {
                     return false;
                   }
                 }).toList()
-                  ..sort((a, b) => a.distance!.compareTo(b.distance!)); // Sort by distance
+                  ..sort((a, b) =>
+                      a.distance!.compareTo(b.distance!)); // Sort by distance
                 if (nearbyTeachers.isEmpty) {
                   return const NotNearbyTeacher();
                 } else {

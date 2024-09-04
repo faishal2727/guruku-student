@@ -120,7 +120,7 @@ class _SearchPageState extends State<SearchPage> {
                           context.read<TeacherSearchBloc>().add(OnQueryChanged(name));
                         },
                         decoration: InputDecoration(
-                          hintText: 'Cari Guru . . .',
+                          hintText: 'Cari berdasarkan nama,mapel,jenjang . . .',
                           hintStyle: TextStyle(color: AppColors.neutral.ne05),
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(8),

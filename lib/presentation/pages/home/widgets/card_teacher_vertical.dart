@@ -40,65 +40,94 @@ class CardTeacherVertical extends StatelessWidget {
             ),
           ],
         ),
-        child: Expanded(
-          child: Row(
-            children: [
-              Flexible(
-                flex: 2,
-                child: Stack(
-                  children: [
-                    Container(
-                      height: 140,
-                      width: 180,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      child: teacher.picture != null
-                          ? ClipRRect(
-                              borderRadius: BorderRadius.circular(12),
-                              child: CachedNetworkImage(
-                                imageUrl: teacher.picture!,
-                                fit: BoxFit.fill,
-                                width: double.infinity,
-                                height: double.infinity,
-                                placeholder: (context, url) => Center(
-                                  child: Lottie.asset(
-                                      'assets/lotties/loading_state.json',
-                                      height: 180,
-                                      width: 180),
-                                ),
-                                errorWidget: (context, url, error) =>
-                                    const Center(
-                                  child: Icon(Icons.error, color: Colors.red),
-                                ),
+        child: Row(
+          children: [
+            Flexible(
+              flex: 2,
+              child: Stack(
+                children: [
+                  Container(
+                    height: 140,
+                    width: 180,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    child: teacher.picture != null
+                        ? ClipRRect(
+                            borderRadius: BorderRadius.circular(12),
+                            child: CachedNetworkImage(
+                              imageUrl: teacher.picture!,
+                              fit: BoxFit.fill,
+                              width: double.infinity,
+                              height: double.infinity,
+                              placeholder: (context, url) => Center(
+                                child: Lottie.asset(
+                                    'assets/lotties/loading_state.json',
+                                    height: 180,
+                                    width: 180),
                               ),
-                            )
-                          : const Center(
-                              child: Icon(Icons.warning, color: Colors.red),
+                              errorWidget: (context, url, error) =>
+                                  const Center(
+                                child: Icon(Icons.error, color: Colors.red),
+                              ),
                             ),
-                    ),
-                  ],
-                ),
+                          )
+                        : const Center(
+                            child: Icon(Icons.warning, color: Colors.red),
+                          ),
+                  ),
+                ],
               ),
-              const SizedBox(
-                width: 16,
+            ),
+            const SizedBox(width: 16),
+            Flexible(
+              flex: 3,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const SizedBox(height: 8),
+                  Text(
+                    teacher.name ?? "",
+                    style: AppTextStyle.body2.setSemiBold(),
+                  ),
+                  const SizedBox(height: 8),
+                  Row(
+                    children: [
+                      Icon(Icons.book, size: 15, color: AppColors.primary.pr10),
+                    ],
+                  ),
+                  const SizedBox(height: 4),
+                  Row(
+                    children: [
+                      Icon(Icons.location_on,
+                          size: 15, color: AppColors.primary.pr10),
+                      Expanded(
+                        child: Text(
+                          maxLines: 1,
+                          teacher.addess ?? "",
+                          style: AppTextStyle.body4.setRegular(),
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                      )
+                    ],
+                  ),
+                  const SizedBox(height: 4),
+                  Text(
+                    '${teacher.distance!.toStringAsFixed(2)} Km dari Lokasi anda',
+                    style:
+                        AppTextStyle.body3.setSemiBold().copyWith(color: pr13),
+                  ) // Update jarak dengan data jarak yang dihitung
+                ],
               ),
-              Expanded(
-                flex: 3,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const SizedBox(height: 8),
-                    Text(
-                      teacher.name ?? "",
-                      style: AppTextStyle.body2.setSemiBold(),
-                    ),
-                    const SizedBox(height: 8),
-                    Row(
-                      children: [
-                        Icon(Icons.book,
-                            size: 15, color: AppColors.primary.pr10),
-                        // Padding(
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+// Padding(
                         //         padding: const EdgeInsets.only(left: 16),
                         //         child: teacher.typeTeaching != null &&
                         //                 teacher.typeTeaching!.isNotEmpty
@@ -126,35 +155,6 @@ class CardTeacherVertical extends StatelessWidget {
                         //                     ),
                         //               ),
                         //       ),
-                      ],
-                    ),
-                    const SizedBox(height: 4),
-                    Row(
-                      children: [
-                        Icon(Icons.location_on,
-                            size: 15, color: AppColors.primary.pr10),
-                        Expanded(
-                          child: Text(
-                            maxLines: 1,
-                            teacher.addess ?? "",
-                            style: AppTextStyle.body4.setRegular(),
-                            overflow: TextOverflow.ellipsis,
-                          ),
-                        )
-                      ],
-                    ),
-                    const SizedBox(height: 4),
-                    Text('${teacher.distance!.toStringAsFixed(2)} Km dari Lokasi anda', style: AppTextStyle.body3.setSemiBold().copyWith(color: pr13),) // Update jarak dengan data jarak yang dihitung
-                  ],
-                ),
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-}
 
 
 

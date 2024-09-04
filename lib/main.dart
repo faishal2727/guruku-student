@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -101,13 +103,30 @@ import 'package:guruku_student/presentation/pages/teacher/pages/packages/screens
 import 'package:guruku_student/presentation/pages/teacher/pages/register_teacher/screens/tac_page.dart';
 import 'package:guruku_student/presentation/pages/teacher/pages/register_teacher/screens/teacher_landing_page.dart';
 import 'package:location/location.dart';
+import 'package:sentry_flutter/sentry_flutter.dart';
 import 'package:timezone/data/latest.dart' as tz;
 import 'package:timezone/timezone.dart' as tz;
 
-void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
+// void main() async {
+//   WidgetsFlutterBinding.ensureInitialized();
 
-  // WidgetsFlutterBinding.ensureInitialized();
+//   // WidgetsFlutterBinding.ensureInitialized();
+//   tz.initializeTimeZones();
+//   tz.setLocalLocation(tz.getLocation('Asia/Jakarta'));
+
+//   // Mendapatkan status izin lokasi
+//   PermissionStatus permission = await Location().hasPermission();
+
+//   // Jika izin belum diberikan, minta izin
+//   if (permission == PermissionStatus.denied) {
+//     permission = await Location().requestPermission();
+//   }
+//   di.init();
+
+//   runApp(const MyApp());
+// }
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
   tz.initializeTimeZones();
   tz.setLocalLocation(tz.getLocation('Asia/Jakarta'));
 
@@ -119,8 +138,18 @@ void main() async {
     permission = await Location().requestPermission();
   }
   di.init();
+  runZonedGuarded(() async {
+    await SentryFlutter.init(
+      (options) {
+        options.dsn =
+            'https://eca5449cce1b0529039595ef838c038c@o4507696890707968.ingest.us.sentry.io/4507696894902272';
+      },
+    );
 
-  runApp(const MyApp());
+    runApp(const MyApp());
+  }, (exception, stackTrace) async {
+    await Sentry.captureException(exception, stackTrace: stackTrace);
+  });
 }
 
 class MyApp extends StatelessWidget {
